@@ -1,0 +1,68 @@
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 20px;
+}
+
+.funnel-container {
+  padding: 24px; /* Added padding */
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* Gap 16px between rows */
+}
+
+.zone-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--foreground);
+  margin-bottom: 8px;
+}
+
+.funnel-row {
+  display: flex;
+  align-items: center;
+  gap: 16px; /* Gap 16px between label/bar/metrics */
+}
+
+.funnel-label {
+  width: 100px; /* Width: 100px */
+  font-size: 13px; /* Changed from 14px */
+  font-weight: 500; /* Added font weight */
+  color: var(--muted-foreground); /* Changed from var(--foreground) to #64748b */
+  text-align: right; /* Alignment: Right */
+}
+
+.funnel-bar-container {
+  flex: 1;
+  height: 32px; /* Changed from 24px to 32px */
+  background: var(--muted); /* #f1f5f9 */
+  border-radius: 4px; /* Changed from 12px to 4px */
+  overflow: hidden;
+  position: relative;
+}
+
+.funnel-bar {
+  height: 100%;
+  border-radius: 0 4px 4px 0;
+  display: flex;
+  align-items: center;
+  padding-left: 12px;
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  transition: width 0.5s ease;
+  background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+}
+
+.funnel-bar.closed-stage {
+  background: var(--success); /* Solid green for closed/won stage */
+}
+
+.funnel-metrics {
+  width: 80px; /* Changed from 60px to 80px */
+  text-align: right; /* Alignment: Right */
+  font-size: 13px; /* Changed from 14px */
+  font-weight: 600;
+  color: var(--foreground); /* #0f172a */
+}

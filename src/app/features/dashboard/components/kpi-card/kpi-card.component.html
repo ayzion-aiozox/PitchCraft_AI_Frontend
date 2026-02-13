@@ -1,0 +1,33 @@
+<div class="card">
+  <div class="kpi-header">
+    <span class="kpi-label">{{ kpi.label }}</span>
+    <div class="kpi-icon-chip">
+      <iconify-icon [icon]="kpi.icon" width="18" height="18"></iconify-icon>
+    </div>
+  </div>
+  
+  <div class="kpi-value">{{ formatValue(kpi.value, kpi.isPercentage) }}</div>
+  
+  <div class="kpi-footer">
+    <!-- Trend Badge + Text -->
+    <ng-container *ngIf="kpi.trend">
+      <span class="trend-badge" [ngClass]="getTrendClass(kpi.trend.isPositive)">
+        <iconify-icon 
+          *ngIf="getTrendIcon(kpi.trend.isPositive)" 
+          [icon]="'lucide:' + getTrendIcon(kpi.trend.isPositive)" 
+          width="12"
+          height="12">
+        </iconify-icon>
+        <span>{{ kpi.trend.value }}%</span>
+      </span>
+      <span class="footer-text">{{ kpi.footerText }}</span>
+    </ng-container>
+    
+    <!-- Progress Bar -->
+    <ng-container *ngIf="kpi.progressValue !== undefined">
+      <div class="progress-track">
+        <div class="progress-fill" [style.width.%]="kpi.progressValue"></div>
+      </div>
+    </ng-container>
+  </div>
+</div>

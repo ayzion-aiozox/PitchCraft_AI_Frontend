@@ -1,0 +1,128 @@
+<div class="main-wrapper">
+  <header class="top-header strategy-studio-header">
+    <div class="breadcrumb">
+      <span>Strategy Studio</span>
+      <iconify-icon icon="lucide:chevron-right" class="breadcrumb-chevron"></iconify-icon>
+      <span class="breadcrumb-active">{{ campaignTitle }}</span>
+    </div>
+    <div class="header-actions">
+      <span class="saved-indicator">
+        <iconify-icon icon="lucide:check-circle" class="saved-icon"></iconify-icon>
+        Saved {{ savedAgo }}
+      </span>
+      <button type="button" class="btn btn-ghost"><iconify-icon icon="lucide:smartphone"></iconify-icon> Mobile Preview</button>
+      <button type="button" class="btn btn-primary"><iconify-icon icon="lucide:send"></iconify-icon> Launch Campaign</button>
+    </div>
+  </header>
+  <div class="editor-layout">
+    <aside class="context-panel">
+      <div class="panel-section-title">Target Prospect</div>
+      <div class="context-card">
+        <div class="prospect-header">
+          <img [src]="prospectAvatar" class="prospect-avatar" alt="Prospect" />
+          <div>
+            <h3 class="prospect-name">{{ prospectName }}</h3>
+            <p class="prospect-role">{{ prospectRole }}</p>
+          </div>
+        </div>
+        <div class="info-row"><iconify-icon icon="lucide:map-pin"></iconify-icon> {{ prospectLocation }}</div>
+        <div class="info-row"><iconify-icon icon="lucide:activity"></iconify-icon> {{ prospectRecentPost }}</div>
+        <div class="match-score-display">
+          <div class="score-bar"><div class="score-fill" [style.width.%]="matchScore"></div></div>
+          <div class="score-val">{{ matchScore }}%</div>
+        </div>
+      </div>
+      <div class="panel-section-title">Product Focus</div>
+      <div class="context-card">
+        <div class="product-focus-header">
+          <div class="product-icon-wrap"><iconify-icon icon="lucide:database"></iconify-icon></div>
+          {{ productName }}
+        </div>
+        <ul class="feature-list"><li *ngFor="let feature of productFeatures">{{ feature }}</li></ul>
+      </div>
+      <div class="panel-section-title">Strategy Config</div>
+      <div class="context-card">
+        <div class="info-row"><iconify-icon icon="lucide:message-square"></iconify-icon> <strong>Type:</strong> {{ strategyType }}</div>
+        <div class="info-row"><iconify-icon icon="lucide:volume-2"></iconify-icon> <strong>Tone:</strong> {{ strategyTone }}</div>
+        <div class="info-row"><iconify-icon icon="lucide:align-left"></iconify-icon> <strong>Length:</strong> {{ strategyLength }}</div>
+      </div>
+    </aside>
+    <section class="editor-canvas">
+      <div class="editor-toolbar">
+        <div class="tool-group">
+          <button type="button" class="tool-btn"><iconify-icon icon="lucide:bold"></iconify-icon></button>
+          <button type="button" class="tool-btn"><iconify-icon icon="lucide:italic"></iconify-icon></button>
+          <button type="button" class="tool-btn"><iconify-icon icon="lucide:list"></iconify-icon></button>
+          <button type="button" class="tool-btn"><iconify-icon icon="lucide:link"></iconify-icon></button>
+        </div>
+        <div class="tool-divider"></div>
+        <div class="tool-group"><span class="tool-label">Insert:</span><button type="button" class="tool-btn tool-btn-variable">{{ '{{Variable}}' }}</button></div>
+        <div class="tool-spacer"></div>
+        <div class="tool-group">
+          <button type="button" class="ai-tool-btn ai-btn-primary"><iconify-icon icon="lucide:wand-2"></iconify-icon> AI Rewrite</button>
+          <button type="button" class="ai-tool-btn ai-btn-ghost">Shorten</button>
+        </div>
+      </div>
+      <div class="editor-content">
+        <div class="subject-line-container">
+          <div class="subject-label">Subject Line <span class="subject-add-variant">+ Add Variant B</span></div>
+          <div class="subject-input-wrapper">
+            <input type="text" class="subject-input" [(ngModel)]="subjectLine" placeholder="Subject line" />
+            <span class="ab-badge">A</span>
+          </div>
+        </div>
+        <div class="rich-text-area">
+          <p>Hi <span class="token-highlight">{{ '{{FirstName}}' }}</span>,</p>
+          <p><br /></p>
+          <p>Saw your recent post about tech debt at <span class="token-highlight">{{ '{{Company}}' }}</span>. Many CTOs balance shipping features and stabilizing architecture.</p>
+          <p><br /></p>
+          <p>At ScaleDB we help teams minimize that trade-off. Worth a 10-min chat next Tuesday?</p>
+          <p><br /></p>
+          <p>Best, [Your Name]</p>
+        </div>
+        <div class="sequence-section">
+          <div class="sequence-title"><iconify-icon icon="lucide:git-merge"></iconify-icon> Follow-up Sequence</div>
+          <div class="timeline">
+            <div class="timeline-line"></div>
+            <div class="timeline-item" *ngFor="let step of followUpSteps">
+              <div class="timeline-dot"></div>
+              <div class="timeline-card">
+                <div class="timeline-header"><span class="day-label">{{ step.label }}</span></div>
+                <div class="timeline-content" *ngIf="step.content">{{ step.content }}</div>
+              </div>
+            </div>
+            <button type="button" class="btn btn-ghost add-touchpoint" (click)="addTouchpoint()"><iconify-icon icon="lucide:plus"></iconify-icon> Add Touchpoint</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <aside class="intelligence-panel">
+      <div class="panel-tabs">
+        <button type="button" class="panel-tab" [class.active]="activeIntelTab === 'insights'" (click)="activeIntelTab = 'insights'">Insights</button>
+        <button type="button" class="panel-tab" [class.active]="activeIntelTab === 'assets'" (click)="activeIntelTab = 'assets'">Assets</button>
+        <button type="button" class="panel-tab" [class.active]="activeIntelTab === 'history'" (click)="activeIntelTab = 'history'">History</button>
+      </div>
+      <div class="intel-content">
+        <div class="rationale-box" *ngIf="activeIntelTab === 'insights'">
+          <div class="rationale-title"><iconify-icon icon="lucide:sparkles"></iconify-icon> Why this works</div>
+          <div class="psych-tags"><span class="psych-tag" *ngFor="let tag of rationaleTags">{{ tag }}</span></div>
+          <p class="rationale-text">{{ rationaleText }}</p>
+        </div>
+        <div class="assets-list" *ngIf="activeIntelTab === 'assets'">
+          <div class="panel-section-title">Recommended Assets</div>
+          <div class="asset-card" *ngFor="let asset of recommendedAssets">
+            <div class="asset-icon"><iconify-icon [icon]="asset.icon"></iconify-icon></div>
+            <div class="asset-info"><h4>{{ asset.title }}</h4><p>{{ asset.meta }}</p></div>
+            <div class="relevance-score">{{ asset.relevance }}%</div>
+          </div>
+        </div>
+        <div class="history-placeholder" *ngIf="activeIntelTab === 'history'"><p class="text-muted">Version history will appear here.</p></div>
+        <div class="chat-widget">
+          <div class="chat-header"><iconify-icon icon="lucide:bot" class="chat-bot-icon"></iconify-icon> AI Assistant</div>
+          <div class="suggestion-chips"><span class="chip" *ngFor="let chip of suggestionChips">{{ chip }}</span></div>
+          <input type="text" class="chat-input" placeholder="Ask AI to refine..." [(ngModel)]="aiPrompt" />
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+/* kpi-grid.component.scss */
+:host {
+  display: block;
+  width: 100%; /* Ensure the component fills the area given by the parent */
+}
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  width: 100%;
+}
+
+/* Responsive Breakpoints for the Cards themselves */
+@media (max-width: 1200px) {
+  .kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .kpi-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}

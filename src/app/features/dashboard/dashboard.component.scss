@@ -1,0 +1,672 @@
+/* Layout Reset */
+.app-container {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  background-color: #fafafa; /* Global background */
+  color: #0f172a; /* Global text */
+  font-family: Inter, sans-serif; /* Global font */
+  font-size: 14px;
+  line-height: 1.5;
+  overflow: hidden;
+}
+
+.main-wrapper {
+  margin-left: 0; /* Removed because sidebar is external */
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+}
+
+/* Header */
+.top-header {
+  height: 64px; /* Height: 64px */
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.15) 0%, 
+    rgba(255, 255, 255, 0.1) 100%); /* Gradient for depth */
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Light border for glass frame */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px; /* Padding: 0 32px */
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  flex-shrink: 0;
+  
+  /* Enhanced Glassmorphism effect */
+  backdrop-filter: blur(20px) saturate(180%); /* Stronger blur with color saturation */
+  -webkit-backdrop-filter: blur(20px) saturate(180%); /* Safari support */
+  box-shadow: 
+    0 8px 32px rgba(31, 38, 135, 0.15), /* Soft outer glow */
+    inset 0 2px 0 rgba(255, 255, 255, 0.2); /* Inner highlight */
+  
+  /* Enhanced hover effect */
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  
+  &:hover {
+    background: linear-gradient(135deg, 
+      rgba(255, 255, 255, 0.25) 0%, 
+      rgba(255, 255, 255, 0.2) 100%);
+    box-shadow: 
+      0 12px 40px rgba(31, 38, 135, 0.25),
+      inset 0 2px 0 rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px); /* Subtle lift effect */
+  }
+}
+
+.page-title {
+  font-size: 20px; /* Font: 20px */
+  font-weight: 600; /* Weight: 600 */
+  color: #0f172a; /* Color: #0f172a */
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.search-bar {
+  position: relative;
+  width: 320px;
+}
+
+.search-input {
+  width: 100%;
+  height: 40px; /* Height: 40px */
+  padding: 0 16px 0 40px;
+  border-radius: 8px; /* Using 8px instead of var(--radius-md) for consistency */
+  border: 1px solid #e2e8f0; /* Using hex value instead of var(--border) */
+  background-color: #ffffff; /* Using hex value instead of var(--card) */
+  color: #0f172a; /* Using hex value instead of var(--foreground) */
+  font-size: 14px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #64748b; /* Using hex value instead of var(--muted-foreground) */
+}
+
+.icon-btn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: #64748b; /* Using hex value instead of var(--muted-foreground) */
+  cursor: pointer;
+  position: relative;
+  transition: background 0.2s;
+
+  &:hover {
+    background-color: #f1f5f9; /* Using hex value instead of var(--muted) */
+    color: #0f172a; /* Using hex value instead of var(--foreground) */
+  }
+}
+
+.notification-dot {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 8px; /* Size: 8px × 8px */
+  height: 8px; /* Size: 8px × 8px */
+  background-color: #ef4444; /* Color: #ef4444 (destructive) */
+  border-radius: 50%;
+  border: 1px solid #fafafa; /* Using hex value instead of var(--background) */
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.avatar {
+  width: 32px; /* 32px × 32px */
+  height: 32px; /* 32px × 32px */
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user-name {
+  font-size: 14px; /* 14px */
+  font-weight: 500; /* Weight 500 */
+}
+
+/* Dashboard Content */
+.content-area {
+  padding: 32px;
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-areas: 
+    "kpi kpi kpi kpi"
+    "ai ai priority priority" 
+    "funnel funnel funnel vitality";
+  gap: 24px;
+  font-family: Inter, sans-serif; /* Global font */
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* KPI Grid */
+.kpi-grid {
+  grid-area: kpi;
+  /* Removed display: grid since the app-kpi-grid component handles its own grid layout */
+}
+
+.card {
+  background-color: #ffffff; /* Exact: #ffffff */
+  border: 1px solid #e2e8f0; /* Exact: #e2e8f0 */
+  border-radius: 12px; /* Exact: 12px */
+  padding: 20px; /* Exact: 20px */
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+}
+
+.kpi-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.kpi-label {
+  font-size: 14px; /* Exact: 14px */
+  font-weight: 500; /* Exact: weight 500 */
+  color: #64748b; /* Exact: #64748b */
+}
+
+.kpi-icon-chip {
+  width: 32px; /* Exact: 32px */
+  height: 32px; /* Exact: 32px */
+  border-radius: 50%; /* Exact: 50% */
+  background-color: #eff6ff; /* Exact: #eff6ff */
+  color: #1e3a8a; /* Using var(--primary) equivalent #1e3a8a */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.kpi-value {
+  font-size: 28px; /* Exact: 28px */
+  font-weight: 700; /* Exact: weight 700 */
+  color: #0f172a; /* Exact: #0f172a */
+  margin-bottom: 8px; /* Exact: 8px */
+}
+
+.kpi-footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  margin-top: auto;
+}
+
+.trend-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px; /* Exact: 2px 8px */
+  border-radius: 999px; /* Exact: 999px */
+  font-weight: 500; /* Exact: weight 500 */
+
+  &.success {
+    background-color: #d1fae5; /* Exact: #d1fae5 */
+    color: #047857; /* Exact: #047857 */
+  }
+
+  &.neutral {
+    background-color: #f1f5f9; /* Using var(--muted) equivalent */
+    color: #64748b; /* Using var(--muted-foreground) equivalent */
+  }
+  
+  &.danger {
+    background-color: #fee2e2; /* Add danger state for negative trends */
+    color: #b91c1c;
+  }
+}
+
+.footer-text {
+  font-size: 12px; /* Exact: 12px */
+  color: #64748b; /* Exact: #64748b */
+}
+
+.progress-track {
+  height: 6px; /* Exact: 6px */
+  width: 100%;
+  background-color: #f1f5f9; /* Using var(--muted) equivalent */
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #1e3a8a 0%, #06b6d4 100%); /* Exact gradient */
+  border-radius: 999px;
+}
+
+/* AI Section */
+.ai-section {
+  grid-area: ai;
+  height: 500px; /* Increased height */
+  min-height: 500px;
+  max-height: 500px;
+}
+
+/* Priority Section */
+.priority-section {
+  grid-area: priority;
+  height: 400px; /* Fixed height */
+  min-height: 400px;
+  max-height: 400px;
+}
+
+/* Funnel Section */
+.funnel-section {
+  grid-area: funnel;
+}
+
+/* Vitality Section */
+.vitality-section {
+  grid-area: vitality;
+}
+
+.zone-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.zone-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.zone-title {
+  font-size: 16px; /* Exact: 16px */
+  font-weight: 600; /* Exact: weight 600 */
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* AI Chat */
+.chat-card {
+  background: #ffffff; /* Card background */
+  display: flex; /* Flex direction column */
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  max-height: 400px; /* Limit the height to prevent growing */
+}
+
+.chat-area {
+  flex: 1;
+  padding: 20px; /* Exact: 20px */
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background-color: #fafafa; /* Exact: #fafafa */
+  max-height: 300px; /* Set max height for chat area */
+}
+
+.message-bubble {
+  max-width: 80%;
+  padding: 12px 16px; /* Exact: 12px 16px */
+  border-radius: 12px; /* Exact: 12px */
+  font-size: 14px; /* Exact: 14px */
+  line-height: 1.5; /* Exact: 1.5 */
+}
+
+.bubble-user {
+  align-self: flex-end;
+  background-color: #ffffff; /* Exact: white */
+  border: 1px solid #e2e8f0; /* Exact: #e2e8f0 */
+  border-bottom-right-radius: 2px; /* Exact: sharp bottom-right */
+  color: #0f172a; /* Using var(--foreground) equivalent */
+}
+
+.bubble-ai {
+  align-self: flex-start;
+  background-color: #ecfeff; /* Exact: #ecfeff */
+  border: 1px solid transparent;
+  border-left: 3px solid #06b6d4; /* Exact: 3px left border #06b6d4 */
+  border-bottom-left-radius: 2px; /* Exact: sharp bottom-left */
+  color: #0f172a; /* Using var(--foreground) equivalent */
+}
+
+.ai-text {
+  color: #0e7490; /* Exact: #0e7490 */
+  font-style: italic; /* Exact: italic */
+}
+
+.chat-controls {
+  padding: 16px; /* Exact: 16px */
+  background-color: #ffffff; /* Exact: white */
+  border-top: 1px solid #e2e8f0; /* Exact: 1px solid #e2e8f0 */
+}
+
+.chip-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.action-chip {
+  font-size: 12px; /* Exact: 12px */
+  padding: 6px 12px; /* Exact: 6px 12px */
+  border-radius: 999px; /* Exact: 999px */
+  border: 1px solid #cffafe; /* Exact: #cffafe */
+  background-color: #f0fdfa; /* Exact: #f0fdfa */
+  color: #0e7490; /* Exact: #0e7490 */
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: #ccfbf1; /* Exact: #ccfbf1 */
+    border-color: #06b6d4; /* Exact: #06b6d4 */
+  }
+}
+
+.input-group {
+  display: flex;
+  gap: 12px;
+}
+
+.chat-input {
+  flex: 1;
+  height: 40px; /* Exact: 40px */
+  border: 1px solid #e2e8f0; /* Exact: #e2e8f0 */
+  border-radius: 8px; /* Using 8px instead of var(--radius-md) */
+  padding: 0 12px; /* Exact: 0 12px */
+  font-size: 14px; /* Exact: 14px */
+
+  &:focus {
+    border-color: #06b6d4; /* Exact: #06b6d4 */
+    box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1); /* Exact: rgba(6,182,212,0.1) */
+    outline: none;
+  }
+}
+
+.send-btn {
+  height: 40px; /* Exact: 40px */
+  padding: 0 20px; /* Exact: 0 20px */
+  background-color: #06b6d4; /* Exact: #06b6d4 */
+  color: white; /* Exact: white */
+  border: none;
+  border-radius: 8px; /* Using 8px instead of var(--radius-md) */
+  font-weight: 500; /* Exact: weight 500 */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background-color: #0891b2; /* Exact: #0891b2 */
+  }
+}
+
+/* Action List */
+.action-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* Exact: 12px gap */
+  flex: 1;
+  overflow-y: auto;
+}
+
+.action-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px; /* Exact: 16px */
+  background: #ffffff; /* Exact: white */
+  border: 1px solid #e2e8f0; /* Exact: #e2e8f0 */
+  border-radius: 12px; /* Using 12px instead of var(--radius-lg) */
+  transition: border-color 0.2s;
+
+  &:hover {
+    border-color: #06b6d4; /* Exact: #06b6d4 */
+  }
+}
+
+.action-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.action-title {
+  font-weight: 500; /* Exact: weight 500 */
+  color: #0f172a; /* Exact: #0f172a */
+  font-size: 14px; /* Adding exact font size */
+}
+
+.action-meta {
+  font-size: 12px; /* Exact: 12px */
+  color: #64748b; /* Exact: #64748b */
+}
+
+.status-badge {
+  font-size: 10px; /* Exact: 10px */
+  padding: 2px 8px; /* Exact: 2px 8px */
+  border-radius: 999px; /* Exact: 999px */
+  text-transform: uppercase; /* Exact: uppercase */
+  font-weight: 600; /* Exact: weight 600 */
+  letter-spacing: 0.5px; /* Exact: 0.5px */
+  display: inline-block;
+  margin-top: 4px;
+}
+
+.badge-warning {
+  background: #fffbeb; /* Exact: #fffbeb */
+  color: #b45309; /* Exact: #b45309 */
+}
+.badge-info {
+  background: #ecfeff; /* Exact: #ecfeff */
+  color: #0e7490; /* Exact: #0e7490 */
+}
+.badge-success {
+  background: #f0fdf4; /* Exact: #f0fdf4 */
+  color: #15803d; /* Exact: #15803d */
+}
+
+.action-btn {
+  padding: 6px 12px; /* Exact: 6px 12px */
+  background-color: transparent;
+  border: 1px solid #e2e8f0; /* Using hex instead of var(--border) */
+  border-radius: 8px; /* Using 8px instead of var(--radius-md) */
+  font-size: 12px; /* Exact: 12px */
+  font-weight: 500; /* Exact: weight 500 */
+  color: #0f172a; /* Using hex instead of var(--foreground) */
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f1f5f9; /* Using hex instead of var(--muted) */
+  }
+}
+
+/* Funnel */
+.funnel-container {
+  padding: 24px; /* Exact: 24px */
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* Exact: 16px */
+}
+
+.funnel-row {
+  display: flex; /* Exact: flex */
+  align-items: center; /* Exact: center */
+  gap: 16px; /* Exact: 16px */
+  align-items: center; /* Exact: center */
+}
+
+.funnel-label {
+  width: 100px; /* Exact: 100px */
+  font-size: 13px; /* Exact: 13px */
+  font-weight: 500; /* Exact: weight 500 */
+  color: #64748b; /* Exact: #64748b */
+  text-align: right; /* Exact: right */
+}
+
+.funnel-bar-container {
+  flex: 1;
+  position: relative;
+  height: 32px; /* Exact: 32px */
+  background-color: #f1f5f9; /* Using var(--muted) equivalent */
+  border-radius: 4px; /* Exact: 4px */
+  overflow: hidden;
+}
+
+.funnel-bar {
+  height: 100%;
+  border-radius: 0 4px 4px 0; /* Exact: 0 4px 4px 0 */
+  display: flex;
+  align-items: center;
+  padding-left: 12px; /* Exact: 12px */
+  color: white; /* Exact: white */
+  font-size: 12px; /* Exact: 12px */
+  font-weight: 600; /* Exact: weight 600 */
+  transition: width 1s ease;
+  background: linear-gradient(90deg, #1e3a8a 0%, #06b6d4 100%); /* Exact: gradient */
+  /* Opacity steps descending */
+  &:nth-child(1) { opacity: 1.0; }      /* Product: 100% width, opacity 1 */
+  &:nth-child(2) { opacity: 0.9; }      /* Persona: 90% width, opacity 0.9 */
+  &:nth-child(3) { opacity: 0.8; }      /* Lead: 75% width, opacity 0.8 */
+  &:nth-child(4) { opacity: 0.7; }      /* Strategy: 50% width, opacity 0.7 */
+  &:nth-child(5) { 
+    opacity: 0.5;                        /* Closed: 15% width, opacity 0.5 */
+    background: #10b981;                /* Exact: solid #10b981 (no gradient) */
+  }
+}
+
+.funnel-metrics {
+  width: 80px; /* Exact: 80px */
+  text-align: right; /* Exact: right */
+  font-size: 13px; /* Exact: 13px */
+  font-weight: 600; /* Exact: weight 600 */
+  color: #0f172a; /* Adding exact color */
+}
+
+/* Gauge */
+.gauge-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px; /* Exact: 24px */
+  text-align: center;
+}
+
+.gauge-arc {
+  width: 200px; /* Exact: 200px */
+  height: 100px; /* Exact: 100px */
+  background: radial-gradient(circle at 50% 100%, white 60%, transparent 61%),
+              conic-gradient(from 180deg at 50% 100%, #ef4444 0deg 72deg, #f59e0b 72deg 126deg, #10b981 126deg 180deg); /* Exact: conic gradient */
+  border-radius: 200px 200px 0 0; /* Exact: 200px 200px 0 0 */
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.gauge-value {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 32px; /* Exact: 32px */
+  font-weight: 800; /* Exact: weight 800 */
+  color: #0f172a; /* Exact: #0f172a */
+  background: white; /* Adding background to make it visible over the gauge */
+  padding: 0 12px; /* Adding padding for better visibility */
+}
+
+.gauge-needle {
+  width: 4px; /* Exact: 4px */
+  height: 90px; /* Exact: 90px */
+  background: #0f172a; /* Exact: #0f172a */
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform-origin: bottom center;
+  transform: translateX(-50%) rotate(-45deg); /* Exact: -45deg */
+  border-radius: 2px;
+  z-index: 2;
+  transition: transform 1s ease-out;
+}
+
+.gauge-label {
+  font-size: 14px; /* Exact: 14px */
+  font-weight: 500; /* Exact: weight 500 */
+  color: #64748b; /* Exact: #64748b */
+}
+
+.gauge-status {
+  font-size: 16px; /* Exact: 16px */
+  font-weight: 600; /* Exact: weight 600 */
+  color: #10b981; /* Exact: #10b981 */
+  margin-top: 4px; /* Exact: 4px */
+}
+
+/* Util */
+.text-sm {
+  font-size: 12px;
+}
+.text-muted {
+  color: #64748b; /* Using hex instead of var(--muted-foreground) */
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 1280px) {
+  .content-area {
+    grid-template-areas:
+      "kpi kpi"
+      "kpi kpi"
+      "ai priority"
+      "funnel vitality";
+  }
+  
+  .kpi-grid {
+    /* UPDATED for consistency */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  
+  .ai-section, .priority-section {
+    height: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .content-area {
+    grid-template-areas:
+      "kpi" "kpi" "kpi" "kpi"
+      "ai" "priority"
+      "funnel" "vitality";
+    padding: 16px;
+  }
+  
+  .kpi-grid {
+    grid-template-columns: 1fr;
+  }
+}

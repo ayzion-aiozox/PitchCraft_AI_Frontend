@@ -1,0 +1,41 @@
+<div class="zone-container">
+  <div class="zone-header">
+    <div class="zone-title">
+      <iconify-icon icon="lucide:sparkles" style="color: var(--secondary)"></iconify-icon>
+      AI Assistant
+    </div>
+  </div>
+  <div class="card chat-card">
+    <div class="chat-area">
+      <div class="message-bubble" 
+           [class.bubble-ai]="msg.isAi" 
+           [class.bubble-user]="!msg.isAi" 
+           *ngFor="let msg of messages">
+        <div [class.ai-text]="msg.isAi" [innerHTML]="msg.text"></div>
+      </div>
+      
+      <div class="message-bubble bubble-ai" *ngIf="isTyping">
+        <div class="ai-text">Analyzing data...</div>
+      </div>
+    </div>
+    <div class="chat-controls">
+      <div class="chip-row">
+        <button class="action-chip" 
+                *ngFor="let action of quickActions" 
+                (click)="onQuickAction(action)">
+          {{ action }}
+        </button>
+      </div>
+      <div class="input-group">
+        <input type="text" 
+               class="chat-input" 
+               placeholder="Ask PitchCraft anything..." 
+               [(ngModel)]="chatInput" 
+               (keyup.enter)="onSendMessage()" />
+        <button class="send-btn" (click)="onSendMessage()">
+          <iconify-icon icon="lucide:send"></iconify-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

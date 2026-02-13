@@ -1,0 +1,217 @@
+<div class="main-wrapper">
+  <app-page-header
+    title="Prospect Hunter"
+    searchPlaceholder="Find CTOs at fintech startups in London who post about AI..."
+    [userName]="userName"
+    [avatarUrl]="userAvatarUrl"
+  ></app-page-header>
+
+  <div class="content-body">
+    <div class="prospect-search-bar">
+      <div class="search-container">
+        <iconify-icon icon="lucide:sparkles" class="search-icon-left"></iconify-icon>
+        <input
+          type="text"
+          class="search-input"
+          placeholder="Find CTOs at fintech startups in London who post about AI..."
+          [(ngModel)]="searchQuery"
+        />
+        <iconify-icon icon="lucide:mic" class="search-icon-right" (click)="onVoiceSearch()"></iconify-icon>
+      </div>
+    </div>
+    <div class="content-body__main">
+    <!-- Filter Sidebar -->
+    <aside class="filter-sidebar">
+      <div class="filter-section">
+        <div class="filter-title">Persona Context</div>
+        <mat-form-field appearance="outline" subscriptSizing="dynamic" class="persona-select-field">
+          <mat-label>Match persona</mat-label>
+          <mat-select [value]="selectedPersona.id" (selectionChange)="onPersonaChange($event)">
+            @for (p of personaOptions; track p.id) {
+              <mat-option [value]="p.id">
+                <div class="persona-option">
+                  <img [src]="p.avatar" class="persona-option-avatar" [alt]="p.name" />
+                  <span>{{ p.name }}</span>
+                </div>
+              </mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <div class="filter-label" style="display: flex; justify-content: space-between; align-items: center">
+          <span>Match Threshold</span>
+          <span style="color: var(--secondary)">{{ matchThresholdLabel }}</span>
+        </div>
+        <mat-slider min="0" max="100" step="5" discrete color="primary" class="match-threshold-slider">
+          <input matSliderThumb [value]="matchThreshold" (valueChange)="matchThreshold = $event" />
+        </mat-slider>
+      </div>
+
+      <div class="filter-section">
+        <div class="filter-title">
+          Sources
+          <span style="font-size: 10px; color: var(--secondary); cursor: pointer" (click)="resetSources()">Reset</span>
+        </div>
+        @for (source of sources; track source.id) {
+          <div class="source-toggle-row">
+            <div class="source-icon-wrap">
+              <iconify-icon [icon]="source.icon" [style.color]="source.color"></iconify-icon>
+              {{ source.label }}
+            </div>
+            <mat-slide-toggle [checked]="source.active" (change)="source.active = $event.checked" color="primary"></mat-slide-toggle>
+          </div>
+        }
+      </div>
+
+      <div class="filter-section">
+        <div class="filter-title">Seniority</div>
+        @for (level of seniorityLevels; track level.id) {
+          <mat-checkbox [checked]="level.checked" (change)="level.checked = $event.checked" class="seniority-checkbox">
+            {{ level.label }}
+          </mat-checkbox>
+        }
+      </div>
+
+      <div class="filter-section" style="border-bottom: none">
+        <button type="button" class="btn btn-outline" style="width: 100%" (click)="saveSearchCriteria()">
+          Save Search Criteria
+        </button>
+      </div>
+    </aside>
+
+    <!-- Results Area -->
+    <div class="results-area">
+      <div class="results-header">
+        <div class="results-count">Found {{ resultsCount }} leads</div>
+        <div class="action-bar">
+          <mat-form-field appearance="outline" subscriptSizing="dynamic" class="sort-select-field">
+            <mat-select [value]="sortBy" (selectionChange)="onSortChange($event)">
+              <mat-select-trigger>Sort by: {{ sortByLabel }}</mat-select-trigger>
+              @for (opt of sortOptions; track opt.value) {
+                <mat-option [value]="opt.value">{{ opt.label }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+          <div class="view-toggles">
+            <div class="view-btn" [class.active]="viewMode === 'grid'" (click)="viewMode = 'grid'">
+              <iconify-icon icon="lucide:layout-grid" style="font-size: 18px"></iconify-icon>
+            </div>
+            <div class="view-btn" [class.active]="viewMode === 'list'" (click)="viewMode = 'list'">
+              <iconify-icon icon="lucide:list" style="font-size: 18px"></iconify-icon>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cards-grid">
+        @for (lead of leads; track lead.id) {
+          <div class="lead-card" [class.selected]="selectedLeads.has(lead.id)" (click)="toggleLead(lead.id)">
+            <div class="card-header">
+              <div class="profile-info">
+                <img [src]="lead.avatar" class="profile-img" [alt]="lead.name" />
+                <div class="profile-text">
+                  <h3>{{ lead.name }}</h3>
+                  <p>{{ lead.role }}</p>
+                </div>
+              </div>
+              <div class="match-badge">
+                <svg class="match-svg" viewBox="0 0 36 36">
+                  <path
+                    class="match-circle-bg"
+                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                  ></path>
+                  <path
+                    class="match-circle-fill"
+                    [attr.stroke-dasharray]="lead.matchScore + ', 100'"
+                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                  ></path>
+                </svg>
+                <div class="match-val">{{ lead.matchScore }}</div>
+              </div>
+            </div>
+
+            <div class="company-row">
+              <div class="company-logo" [style.background-color]="lead.companyColor"></div>
+              {{ lead.company }} • {{ lead.stage }} • {{ lead.location }}
+            </div>
+
+            <div class="ai-reason">
+              <iconify-icon icon="lucide:sparkles" style="flex-shrink: 0; margin-top: 2px"></iconify-icon>
+              {{ lead.aiReason }}
+            </div>
+
+            <div class="tags-scroll">
+              @for (tag of lead.tags; track tag) {
+                <span class="tag">{{ tag }}</span>
+              }
+            </div>
+
+            <div class="prob-section">
+              <div class="prob-label">
+                <span>Engagement Probability</span>
+                <span [style.color]="lead.probabilityColor" style="font-weight: 600">{{ lead.probabilityLabel }}</span>
+              </div>
+              <div class="prob-bar">
+                <div class="prob-fill" [style.width.%]="lead.probabilityPercent" [style.background]="lead.probabilityColor"></div>
+              </div>
+            </div>
+
+            <div class="card-footer">
+              <div class="card-actions">
+                <div
+                  class="checkbox-box"
+                  [class.checked]="selectedLeads.has(lead.id)"
+                  (click)="$event.stopPropagation(); toggleLead(lead.id)"
+                >
+                  @if (selectedLeads.has(lead.id)) {
+                    <iconify-icon icon="lucide:check" style="font-size: 12px"></iconify-icon>
+                  }
+                </div>
+                <iconify-icon
+                  [icon]="lead.starred ? 'lucide:star' : 'lucide:star'"
+                  [style.color]="lead.starred ? 'var(--warning)' : 'var(--muted-foreground)'"
+                  [style.fill]="lead.starred ? 'var(--warning)' : 'transparent'"
+                  style="cursor: pointer"
+                  (click)="$event.stopPropagation(); toggleStar(lead.id)"
+                ></iconify-icon>
+              </div>
+              <a class="view-link" (click)="$event.stopPropagation(); viewProfile(lead.id)">View Profile →</a>
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- Bulk Action Bar -->
+      @if (selectedLeads.size > 0) {
+        <div class="bulk-bar">
+          <div class="bulk-count">{{ selectedLeads.size }} Selected</div>
+          <div class="bulk-actions">
+            <button type="button" class="bulk-btn" (click)="generateStrategies()">
+              <iconify-icon icon="lucide:wand-2"></iconify-icon>
+              Generate Strategies
+            </button>
+            <button type="button" class="bulk-btn" (click)="addToCampaign()">
+              <iconify-icon icon="lucide:user-plus"></iconify-icon>
+              Add to Campaign
+            </button>
+            <button type="button" class="bulk-btn" (click)="exportCSV()">
+              <iconify-icon icon="lucide:download"></iconify-icon>
+              Export CSV
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+    </div>
+  </div>
+</div>
+
+<!-- SVG Gradient Definition -->
+<svg style="width: 0; height: 0; position: absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="match-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06b6d4"></stop>
+      <stop offset="100%" stop-color="#3b82f6"></stop>
+    </linearGradient>
+  </defs>
+</svg>

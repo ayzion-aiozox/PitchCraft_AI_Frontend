@@ -1,0 +1,20 @@
+/**
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+/**
+ * @module
+ * @description
+ * Entry point for all public APIs of Angular Flex-Layout.
+ */
+export * from '@ngbracket/ngx-layout/core';
+export * from '@ngbracket/ngx-layout/extended';
+export * from '@ngbracket/ngx-layout/flex';
+export * from '@ngbracket/ngx-layout/grid';
+// Flex-Layout Module
+export * from './module';
+export * from './version';
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHVibGljLWFwaS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL3Byb2plY3RzL2xpYnMvZmxleC1sYXlvdXQvcHVibGljLWFwaS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTs7Ozs7O0dBTUc7QUFFSDs7OztHQUlHO0FBQ0gsY0FBYyw0QkFBNEIsQ0FBQztBQUMzQyxjQUFjLGdDQUFnQyxDQUFDO0FBQy9DLGNBQWMsNEJBQTRCLENBQUM7QUFDM0MsY0FBYyw0QkFBNEIsQ0FBQztBQUMzQyxxQkFBcUI7QUFDckIsY0FBYyxVQUFVLENBQUM7QUFDekIsY0FBYyxXQUFXLENBQUMiLCJzb3VyY2VzQ29udGVudCI6WyIvKipcbiAqIEBsaWNlbnNlXG4gKiBDb3B5cmlnaHQgR29vZ2xlIExMQyBBbGwgUmlnaHRzIFJlc2VydmVkLlxuICpcbiAqIFVzZSBvZiB0aGlzIHNvdXJjZSBjb2RlIGlzIGdvdmVybmVkIGJ5IGFuIE1JVC1zdHlsZSBsaWNlbnNlIHRoYXQgY2FuIGJlXG4gKiBmb3VuZCBpbiB0aGUgTElDRU5TRSBmaWxlIGF0IGh0dHBzOi8vYW5ndWxhci5pby9saWNlbnNlXG4gKi9cblxuLyoqXG4gKiBAbW9kdWxlXG4gKiBAZGVzY3JpcHRpb25cbiAqIEVudHJ5IHBvaW50IGZvciBhbGwgcHVibGljIEFQSXMgb2YgQW5ndWxhciBGbGV4LUxheW91dC5cbiAqL1xuZXhwb3J0ICogZnJvbSAnQG5nYnJhY2tldC9uZ3gtbGF5b3V0L2NvcmUnO1xuZXhwb3J0ICogZnJvbSAnQG5nYnJhY2tldC9uZ3gtbGF5b3V0L2V4dGVuZGVkJztcbmV4cG9ydCAqIGZyb20gJ0BuZ2JyYWNrZXQvbmd4LWxheW91dC9mbGV4JztcbmV4cG9ydCAqIGZyb20gJ0BuZ2JyYWNrZXQvbmd4LWxheW91dC9ncmlkJztcbi8vIEZsZXgtTGF5b3V0IE1vZHVsZVxuZXhwb3J0ICogZnJvbSAnLi9tb2R1bGUnO1xuZXhwb3J0ICogZnJvbSAnLi92ZXJzaW9uJztcbiJdfQ==

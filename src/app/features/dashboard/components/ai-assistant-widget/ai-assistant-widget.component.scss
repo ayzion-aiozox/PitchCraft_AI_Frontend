@@ -1,0 +1,182 @@
+.zone-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  height: 500px; /* Increased height */
+  max-height: 500px; /* Ensure it doesn't expand */
+}
+
+.zone-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.zone-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Prevent content overflow */
+}
+
+.chat-card {
+  background: var(--card); /* #ffffff */
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Use full height of container */
+  max-height: 100%; /* Ensure it respects parent constraints */
+  overflow: hidden; /* Prevent expansion beyond container */
+}
+
+.chat-area {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--background); /* #fafafa */
+  padding: 20px;
+  min-height: 0; /* Allow flexbox to shrink */
+  max-height: calc(100% - 120px); /* Reserve space for controls (approx 120px) */
+  
+  /* Custom scrollbar styling */
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: var(--muted);
+    border-radius: 3px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 3px;
+    
+    &:hover {
+      background: var(--muted-foreground);
+    }
+  }
+}
+
+.message-bubble {
+  padding: 12px 16px;
+  border-radius: 12px;
+  max-width: 80%;
+  word-wrap: break-word;
+  line-height: 1.5; /* Changed from 1.4 */
+  font-size: 14px; /* Added font size */
+  overflow-wrap: break-word; /* Ensure long words break properly */
+  word-break: break-word; /* Handle long strings */
+}
+
+.bubble-ai {
+  background: #ecfeff; /* Changed from var(--muted) */
+  align-self: flex-start;
+  border-bottom-left-radius: 2px; /* Changed from 4px */
+  border: 1px solid transparent; /* Added border */
+  border-left: 3px solid var(--secondary); /* Added left border */
+  color: var(--foreground); /* Changed from default */
+}
+
+.bubble-user {
+  background: #ffffff; /* Changed from var(--primary) */
+  border: 1px solid var(--border); /* Added border */
+  color: var(--foreground); /* Changed from var(--primary-foreground) */
+  align-self: flex-end;
+  border-bottom-right-radius: 2px; /* Changed from 4px */
+}
+
+.ai-text {
+  color: #0e7490; /* Changed from var(--foreground) */
+  font-style: italic; /* Added italic */
+}
+
+.chat-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--card); /* #ffffff */
+  border-top: 1px solid var(--border); /* #e2e8f0 */
+  padding: 16px;
+}
+
+.chip-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.action-chip {
+  background: #f0fdfa; /* Changed from var(--accent) */
+  color: #0e7490; /* Changed from var(--accent-foreground) */
+  border: 1px solid #cffafe; /* Added border */
+  border-radius: 999px; /* Changed from 16px */
+  padding: 6px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.action-chip:hover {
+  background: #ccfbf1; /* Changed from var(--primary) */
+  color: #0e7490; /* Changed from var(--primary-foreground) */
+  border-color: var(--secondary); /* Added border color on hover */
+}
+
+.input-group {
+  display: flex;
+  gap: 8px;
+}
+
+.chat-input {
+  flex: 1;
+  height: 40px; /* Added height */
+  padding: 0 12px; /* Changed padding */
+  border: 1px solid var(--border); /* #e2e8f0 */
+  border-radius: var(--radius-md); /* #e2e8f0 */
+  font-size: 14px;
+  outline: none;
+}
+
+.chat-input:focus {
+  border-color: var(--secondary); /* Changed from var(--primary) */
+  box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1); /* Changed from var(--ring) */
+}
+
+.send-btn {
+  height: 40px; /* Changed from 36px */
+  width: auto; /* Changed from fixed width */
+  padding: 0 20px; /* Changed from square to rectangle */
+  border-radius: var(--radius-md); /* Changed from 50% */
+  background: var(--secondary); /* Changed from var(--primary) */
+  color: var(--secondary-foreground); /* Changed from var(--primary-foreground) */
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  font-weight: 500; /* Added font weight */
+}
+
+.send-btn:hover {
+  background: #0891b2; /* Changed from var(--primary-foreground) */
+  color: var(--secondary-foreground); /* Changed from var(--primary) */
+}

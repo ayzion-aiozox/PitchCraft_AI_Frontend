@@ -1,0 +1,9 @@
+import { Component } from '@angular/core';
+
+@Component({
+    selector: 'app-forgot-password-form',
+    standalone: true,
+    templateUrl: './forgot-password-form.component.html',
+    styleUrls: ['./forgot-password-form.component.scss']
+})
+export class ForgotPasswordFormComponent { }

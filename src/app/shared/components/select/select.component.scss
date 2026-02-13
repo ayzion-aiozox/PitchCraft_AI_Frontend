@@ -1,0 +1,8 @@
+/* Target the Angular Material input field */
+.mat-mdc-form-field {
+  width: 100%;
+}
+/* Optional: For better specificity, include more specific class selectors */
+.mat-mdc-form-field.mat-mdc-form-field-type-mat-input {
+  width: 100%;
+}

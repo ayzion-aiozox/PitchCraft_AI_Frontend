@@ -1,0 +1,23 @@
+<mat-form-field appearance="fill">
+  <mat-label>{{ label }}</mat-label>
+  <mat-select
+    [formControl]="selectControl"
+    [multiple]="multiSelect"
+    (selectionChange)="onValueChange($event)"
+  >
+    <!-- Non-Grouped Options -->
+    <ng-container *ngIf="!groupBy">
+      <mat-option *ngFor="let option of options" [value]="option.value">
+        {{ option.viewValue }}
+      </mat-option>
+    </ng-container>
+  </mat-select>
+
+  <!-- Error Messages -->
+  <mat-error *ngIf="selectControl.hasError('required')">
+    {{ label }} is required.
+  </mat-error>
+  
+  <!-- Hint Message -->
+  <mat-hint *ngIf="hint">{{ hint }}</mat-hint>
+</mat-form-field>

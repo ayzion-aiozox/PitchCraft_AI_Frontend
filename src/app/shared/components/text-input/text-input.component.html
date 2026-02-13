@@ -1,0 +1,32 @@
+<mat-form-field appearance="fill">
+  <mat-label>{{ label }}</mat-label>
+  <input
+    matInput
+    [formControl]="selectControl"
+    [placeholder]="placeholder"
+    [type]="type"
+    [disabled]="disabled"
+    (input)="onInput($event)"
+  />
+
+  <!-- Clear Button -->
+  <button
+    *ngIf="value"
+    mat-icon-button
+    matSuffix
+    (click)="clearInput()"
+    aria-label="Clear input"
+  >
+    <mat-icon class="app-text xxlarge warn">close</mat-icon>
+  </button>
+
+  <!-- Error Message -->
+  <mat-error
+    *ngIf="selectControl.hasError('required') && selectControl.touched"
+  >
+    {{ errorMessage || label + " is required." }}
+  </mat-error>
+
+  <!-- Hint Text -->
+  <mat-hint *ngIf="hint">{{ hint }}</mat-hint>
+</mat-form-field>

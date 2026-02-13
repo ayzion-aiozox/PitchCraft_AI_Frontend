@@ -1,0 +1,11 @@
+[
+  { "id": "dashboard", "label": "Command Center", "route": "/dashboard", "icon": "LayoutDashboard" },
+  { "id": "products", "label": "Product Lab", "route": "/products", "icon": "FlaskConical" },
+  { "id": "personas", "label": "Persona Forge", "route": "/personas", "icon": "Users" },
+  { "id": "prospects", "label": "Prospect Hunter", "route": "/prospects", "icon": "Target" },
+  { "id": "strategies", "label": "Strategy Studio", "route": "/strategies", "icon": "Monitor" },
+  { "id": "campaigns", "label": "Campaign Engine", "route": "/campaigns", "icon": "Rocket" },
+  { "id": "analytics", "label": "Intelligence Hub", "route": "/analytics", "icon": "BarChart3" },
+  { "id": "integrations", "label": "Integration Station", "route": "/integrations", "icon": "Puzzle" },
+  { "id": "settings", "label": "Workspace Settings", "route": "/settings", "icon": "Settings" }
+]

@@ -1,0 +1,37 @@
+@use "abstracts/variables";
+
+.mat-icon {
+  // Default styles
+  font-size: variables.$medium-font;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  // Apply border radius globally to all icons
+  border-radius: 4px;
+
+  // Apply colors dynamically
+  @each $color-name, $value in variables.$common-colors {
+    &.#{$color-name} {
+      color: $value !important; // Force override Material styles
+    }
+  }
+
+  // Apply font size dynamically
+  @each $font-name, $value in variables.$common-fonts {
+    &.#{$font-name} {
+      font-size: $value;
+    }
+  }
+
+  // Add weight and style modifiers
+  &.bold {
+    font-weight: bold;
+  }
+  &.light {
+    font-weight: lighter;
+  }
+  &.italic {
+    font-style: italic;
+  }
+}

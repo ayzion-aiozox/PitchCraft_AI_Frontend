@@ -1,0 +1,29 @@
+<div class="stepper-header">
+  <div class="stepper-track">
+    <ng-container *ngFor="let step of steps; let last = last">
+      <!-- Step Item -->
+      <div 
+        class="step-item" 
+        [class]="'step-' + step.status"
+        [class.clickable]="isStepClickable(step)"
+        (click)="onStepClick(step.id)">
+        <div class="step-indicator">
+          <lucide-icon 
+            *ngIf="step.status === 'completed'" 
+            [img]="Check" 
+            [size]="16">
+          </lucide-icon>
+          <span *ngIf="step.status !== 'completed'">{{ step.id }}</span>
+        </div>
+        <span class="step-label">{{ step.label }}</span>
+      </div>
+      
+      <!-- Connector Line -->
+      <div 
+        *ngIf="!last" 
+        class="step-line" 
+        [class.completed]="step.status === 'completed'">
+      </div>
+    </ng-container>
+  </div>
+</div>

@@ -1,0 +1,6 @@
+{
+    "name": "PitchCraft",
+    "short_name": "PitchCraft",
+    "start_url": "/",
+    "display": "standalone"
+}

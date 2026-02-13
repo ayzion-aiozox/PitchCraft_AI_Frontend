@@ -1,0 +1,38 @@
+// colors
+$primary-color: #0091ea;
+$secondary-color: #607d8c;
+$success-color: #4caf50;
+$warn-color: #d84f4f;
+$default-color: #424242;
+$white-color: #ffffff;
+$grey-color: #f5f5f5;
+$black-color: #000000;
+
+//font sizes
+$xsmall-font: 10px;
+$small-font: 12px;
+$default-font: 14px;
+$medium-font: 16px;
+$large-font: 18px;
+$xlarge-font: 20px;
+$xxlarge-font: 24px;
+
+$common-colors: (
+    primary: $primary-color,
+    success: $success-color,
+    secondary: $secondary-color,
+    default: $default-color,
+    grey1: $grey-color,
+    warn: $warn-color,
+    light: $white-color,
+    dark: $black-color
+);
+
+$common-fonts: (
+  xsmall: $xsmall-font,
+  small: $small-font,
+  medium: $medium-font,
+  large: $large-font,
+  xlarge: $xlarge-font,
+  xxlarge: $xxlarge-font,
+);

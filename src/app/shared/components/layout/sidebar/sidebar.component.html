@@ -1,0 +1,54 @@
+<aside class="sidebar">
+  <!-- Logo Header -->
+  <div class="sidebar__header">
+    <div class="logo">
+      <div class="logo__icon">
+        <div class="logo__gradient"></div>
+      </div>
+      <span class="logo__text">PitchCraft AI</span>
+    </div>
+  </div>
+
+  <!-- Main Navigation -->
+  <nav class="sidebar__nav">
+    <ul class="nav-list">
+      <li *ngFor="let item of menuItems$ | async" class="nav-item">
+        <a 
+          [routerLink]="item.route"
+          class="nav-link"
+          [class.nav-link--active]="isActive(item.route)"
+          [title]="item.label"
+        >
+          <i-lucide 
+            [name]="getIcon(item.icon)" 
+            [size]="20" 
+            class="nav-link__icon"
+          ></i-lucide>
+          <span class="nav-link__text">{{ item.label }}</span>
+          <span *ngIf="item.badge" class="nav-link__badge">{{ item.badge }}</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Bottom Section (Settings) -->
+  <div class="sidebar__footer">
+    <ul class="nav-list">
+      <li *ngFor="let item of bottomItems$ | async" class="nav-item">
+        <a 
+          [routerLink]="item.route"
+          class="nav-link nav-link--highlight"
+          [class.nav-link--active]="isActive(item.route)"
+          [title]="item.label"
+        >
+          <i-lucide 
+            [name]="getIcon(item.icon)" 
+            [size]="20" 
+            class="nav-link__icon"
+          ></i-lucide>
+          <span class="nav-link__text">{{ item.label }}</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</aside>

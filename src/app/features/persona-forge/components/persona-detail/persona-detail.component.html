@@ -1,0 +1,174 @@
+<div class="main-wrapper">
+  <app-page-header
+    title="Persona Forge"
+    searchPlaceholder="Search personas..."
+    [userName]="userName"
+    [avatarUrl]="userAvatarUrl"
+  ></app-page-header>
+
+  <div class="content-area">
+    <div class="page-sub-bar">
+      <div class="breadcrumb">
+        <a routerLink="/persona-forge">Persona Forge</a>
+        <iconify-icon icon="lucide:chevron-right" style="font-size: 14px"></iconify-icon>
+        <span class="breadcrumb-active">{{ personaName }} ({{ personaRoleAbbr }})</span>
+      </div>
+      <div class="header-actions">
+        <button type="button" class="btn btn-outline">
+          <iconify-icon icon="lucide:columns" style="font-size: 16px"></iconify-icon>
+          Compare Mode
+        </button>
+        <button type="button" class="btn btn-primary">
+          <iconify-icon icon="lucide:file-text" style="font-size: 16px"></iconify-icon>
+          Generate Strategy
+        </button>
+      </div>
+    </div>
+    <div class="persona-grid">
+      <!-- Left: Profile Overview -->
+      <div class="profile-card">
+        <div class="avatar-wrapper">
+          <img [src]="personaAvatarUrl" class="avatar-img" alt="Persona" />
+          <div class="dept-badge">{{ deptBadge }}</div>
+        </div>
+        <h1 class="persona-name">{{ personaName }}</h1>
+        <div class="persona-role">{{ personaRole }}</div>
+
+        <div class="chip-container" style="justify-content: center; margin-bottom: 24px">
+          @for (chip of personaChips; track chip) {
+            <span class="chip">{{ chip }}</span>
+          }
+        </div>
+
+        <div class="metric-section">
+          <div class="metric-section__label">DECISION POWER</div>
+          <div class="radial-chart-wrapper">
+            <div class="radial-bg"></div>
+            <div class="radial-fill" [style.background]="radialGradient"></div>
+            <div class="radial-value">
+              {{ decisionPower }}<span style="font-size: 14px; color: var(--muted-foreground)">/100</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="width: 100%; margin-top: 24px">
+          <div class="stat-row">
+            <span class="stat-label">Budget Authority</span>
+            <div class="stat-bar-bg">
+              <div class="stat-bar-fill" [style.width.%]="stats.budgetAuthority"></div>
+            </div>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Tech Influence</span>
+            <div class="stat-bar-bg">
+              <div class="stat-bar-fill" [style.width.%]="stats.techInfluence"></div>
+            </div>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Risk Tolerance</span>
+            <div class="stat-bar-bg">
+              <div
+                class="stat-bar-fill"
+                [style.width.%]="stats.riskTolerance"
+                style="background: var(--warning)"
+              ></div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: auto; padding-top: 24px; font-size: 12px; color: var(--muted-foreground)">
+          Generated for
+          <span style="color: var(--primary); font-weight: 500">{{ generatedFor }}</span>
+        </div>
+      </div>
+
+      <!-- Right: Details Tabs -->
+      <div class="details-container">
+        <div class="tabs-nav">
+          @for (tab of detailTabs; track tab.id) {
+            <button
+              type="button"
+              class="tab-link"
+              [class.active]="activeDetailTab === tab.id"
+              (click)="activeDetailTab = tab.id"
+            >
+              {{ tab.label }}
+            </button>
+          }
+        </div>
+
+        <!-- Quote Highlight -->
+        <div class="quote-card">
+          <iconify-icon icon="lucide:quote" class="quote-icon"></iconify-icon>
+          <div class="quote-text">{{ quote }}</div>
+        </div>
+
+        <!-- Pain Points Section -->
+        <div class="card-section">
+          <div class="section-title">
+            <iconify-icon icon="lucide:frown" style="color: var(--destructive); font-size: 20px"></iconify-icon>
+            Core Pain Points
+          </div>
+
+          @for (pain of painPoints; track pain.label) {
+            <div class="pain-point-item">
+              <div class="pain-header">
+                <span>{{ pain.label }}</span>
+                <span [style.color]="pain.color">{{ pain.severity }}</span>
+              </div>
+              <div class="pain-bar">
+                <div class="pain-fill" [ngClass]="pain.barClass" [style.width.%]="pain.percent"></div>
+              </div>
+            </div>
+          }
+        </div>
+
+        <!-- Motivations & KPIs -->
+        <div class="motivation-kpi-grid">
+          <div class="card-section">
+            <div class="section-title">
+              <iconify-icon icon="lucide:target" style="color: var(--primary); font-size: 20px"></iconify-icon>
+              Key Motivations
+            </div>
+            <div class="motivation-grid" style="margin-top: 0; grid-template-columns: 1fr">
+              @for (m of motivations; track m.title) {
+                <div class="motivation-item">
+                  <div class="motivation-icon">
+                    <iconify-icon [icon]="m.icon" style="font-size: 18px"></iconify-icon>
+                  </div>
+                  <div>
+                    <div style="font-weight: 600; font-size: 13px">{{ m.title }}</div>
+                    <div style="font-size: 12px; color: var(--muted-foreground)">{{ m.desc }}</div>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+
+          <div class="card-section">
+            <div class="section-title">
+              <iconify-icon icon="lucide:bar-chart-2" style="color: var(--success); font-size: 20px"></iconify-icon>
+              KPIs They Care About
+            </div>
+            <div class="chip-container">
+              @for (kpi of kpis; track kpi) {
+                <span class="chip chip-green">{{ kpi }}</span>
+              }
+            </div>
+
+            <div style="margin-top: 20px">
+              <div class="section-title" style="font-size: 14px; margin-bottom: 12px">Tech Stack</div>
+              <div class="tech-grid">
+                @for (tech of techStack; track tech.name) {
+                  <div class="tech-logo" [title]="tech.name">
+                    <iconify-icon [icon]="tech.icon"></iconify-icon>
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

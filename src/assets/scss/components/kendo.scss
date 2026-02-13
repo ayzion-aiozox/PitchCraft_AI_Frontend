@@ -1,0 +1,82 @@
+@use "abstracts/variables"; // we can access variables with 'variable' namespace
+
+.kendo-grid-custom {
+  // Table Header Bold
+  .k-grid-header th {
+    font-weight: bold !important;
+    font-size: variables.$medium-font; // Use variables for font size
+  }
+
+  // Pagination Color
+  .k-button-flat-primary {
+    color: variables.$default-color; // Use variables for color
+  }
+}
+.kendo-container {
+  display: flex;
+  align-items: center;
+}
+.text-container {
+  display: flex;
+  flex-direction: column;
+
+
+  .kendo-code {
+    font-weight: bold;
+    color: variables.$primary-color; // Adjust color as needed
+    font-size: variables.$default-font;
+  }
+
+  .kendo-name {
+    color: variables.$default-color; // Adjust color as needed
+    font-size: variables.$small-font;
+  }
+}
+
+.status-column {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding-right: 10px; /* Adjust as needed */
+  box-sizing: border-box; /* Ensure proper alignment */
+}
+.more-vert-icon:hover {
+  color: variables.$primary-color; /* Use Angular Material's primary color */
+}
+.mat-menu-item {
+  display: flex; /* Ensures icon and text are aligned */
+  align-items: center; /* Vertical alignment */
+  margin: 5px 15px; /* Adds spacing on left and right */
+}
+.update {
+  font-size: variables.$medium-font;
+  line-height: 1;
+}
+.custom-menu {
+  padding: 8px 16px; /* Adjust the padding for better appearance */
+}
+.status-column {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding-right: 10px; /* Adjust as needed */
+  box-sizing: border-box; /* Ensure proper alignment */
+}
+.more-vert-icon:hover {
+  color: variables.$primary-color; /* Use Angular Material's primary color */
+}
+.mat-menu-item {
+  display: flex; /* Ensures icon and text are aligned */
+  align-items: center; /* Vertical alignment */
+  margin: 5px 15px; /* Adds spacing on left and right */
+}
+.update {
+  font-size: variables.$medium-font;
+  line-height: 1;
+}
+.custom-menu {
+  padding: 8px 16px; /* Adjust the padding for better appearance */
+
+}

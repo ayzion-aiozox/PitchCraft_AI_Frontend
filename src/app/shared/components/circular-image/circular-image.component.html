@@ -1,0 +1,9 @@
+<div class="circular-image-container">
+  <!-- Circular Container -->
+  <div class="circular-image">
+    <img *ngIf="imageUrl; else noImage" [src]="imageUrl" alt="Corporate Image" />
+    <ng-template #noImage>
+      <mat-icon class="default-icon">account_circle</mat-icon>
+    </ng-template>
+  </div>
+</div>

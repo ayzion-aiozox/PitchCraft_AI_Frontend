@@ -1,0 +1,434 @@
+<div class="main-wrapper product-lab-wrapper">
+  <app-page-header
+    title="Workspace"
+    breadcrumbActive="Product Lab"
+    [showSearch]="true"
+    [showSearchWithBreadcrumb]="true"
+    searchPlaceholder="Search products & insights..."
+    [showUserName]="true"
+  ></app-page-header>
+
+  <div class="pl-tabs">
+    @for (tab of tabs; track tab.id) {
+      <button
+        type="button"
+        class="pl-tab"
+        [class.active]="activeTab === tab.id"
+        (click)="setActiveTab(tab.id)"
+      >
+        {{ tab.label }}
+      </button>
+    }
+  </div>
+
+  <!-- View: Portfolio -->
+  <div
+    id="view-portfolio"
+    class="pl-view"
+    [class.active]="activeTab === 'portfolio'"
+  >
+    <div class="pl-grid-header">
+      <div>
+        <h1>Product Intelligence Portfolio</h1>
+        <p>Manage AI-powered product positioning and strategic analysis models.</p>
+      </div>
+      <app-btn-primary (click)="setActiveTab('wizard')">
+        <iconify-icon icon="lucide:plus"></iconify-icon>
+        New Product
+      </app-btn-primary>
+    </div>
+
+    <div class="pl-portfolio-grid">
+      @for (product of portfolioProducts; track product.id) {
+        <div
+          class="pl-card"
+          (click)="setActiveTab('wizard')"
+        >
+          <div class="pl-card-top">
+            <div class="pl-card-top-inner">
+              <div
+                class="pl-product-icon"
+                [style.background]="product.iconGradient"
+              >
+                <iconify-icon [icon]="product.iconName"></iconify-icon>
+              </div>
+              <div>
+                <h3 class="pl-card-title">{{ product.title }}</h3>
+                <span
+                  class="pl-badge"
+                  [class.active]="product.badge === 'active'"
+                  [class.processing]="product.badge === 'processing'"
+                  [class.draft]="product.badge === 'draft'"
+                >
+                  {{ product.badge === 'active' ? 'Active' : product.badge === 'processing' ? 'Processing' : 'Draft' }}
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="pl-card-subtitle">{{ product.subtitle }}</div>
+
+          <div class="pl-score-row">
+            <svg viewBox="0 0 36 36" class="pl-circular-chart">
+              <path
+                class="pl-circular-bg"
+                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+              ></path>
+              <path
+                class="pl-circular-fill"
+                [class.warning]="product.badge === 'processing'"
+                [attr.stroke-dasharray]="product.scorePercent + ', 100'"
+                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+              ></path>
+              <text x="18" y="20.35" class="pl-percentage">{{ product.scorePercent }}%</text>
+            </svg>
+            <div class="pl-knowledge-bar">
+              <div class="pl-kb-label">
+                <span>{{ product.knowledgeLabel }}</span>
+                <span [class.high]="product.knowledgeStatus === 'High'" [class.wait]="product.knowledgeStatus === 'Wait'">
+                  {{ product.knowledgeStatus }}
+                </span>
+              </div>
+              <div class="pl-track">
+                <div
+                  class="pl-fill"
+                  [style.width.%]="product.knowledgePercent"
+                  [style.background]="product.badge === 'processing' ? 'var(--warning)' : 'var(--primary)'"
+                ></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pl-card-footer">
+            <span>{{ product.editedAgo }}</span>
+            <div class="pl-hover-actions">
+              <button type="button" class="pl-action-btn">Edit</button>
+              <button type="button" class="pl-action-btn">Duplicate</button>
+            </div>
+          </div>
+        </div>
+      }
+
+      <div
+        class="pl-card pl-quick-add"
+        (click)="setActiveTab('wizard')"
+      >
+        <div class="pl-quick-add-icon">
+          <iconify-icon icon="lucide:zap"></iconify-icon>
+        </div>
+        <h3 class="pl-quick-add-title">Instant AI Extraction</h3>
+        <p class="pl-quick-add-desc">
+          Upload docs or paste URL to<br />auto-generate strategy.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- View: Wizard -->
+  <div
+    id="view-wizard"
+    class="pl-view"
+    [class.active]="activeTab === 'wizard'"
+  >
+    <div class="pl-wizard-container">
+      <div class="pl-wizard-stepper">
+        <div class="pl-steps-list">
+          @for (step of wizardSteps; track step.id) {
+            <div
+              class="pl-step"
+              [class.active]="step.status === 'active'"
+              [class.completed]="step.status === 'completed'"
+              (click)="step.status !== 'pending' && setStep(step.id)"
+            >
+              <div class="pl-step-num">{{ step.id }}</div>
+              <div class="pl-step-text">{{ step.label }}</div>
+            </div>
+          }
+        </div>
+        <div class="pl-wizard-completion">
+          <div class="pl-wizard-completion-label">Completion</div>
+          <div class="pl-wizard-completion-value">{{ completionPercent }}%</div>
+        </div>
+      </div>
+
+      <!-- Step 1: Basics -->
+      <div
+        id="step-1"
+        class="pl-step-content"
+        [class.active]="currentStep === 1"
+      >
+        <div class="pl-split-layout">
+          <div class="pl-form-pane">
+            <h2>Strategic Positioning</h2>
+            <div class="pl-form-group">
+              <label class="pl-form-label">Product Name</label>
+              <input
+                type="text"
+                class="pl-form-input"
+                placeholder="e.g. Acme Intelligence Platform"
+                [(ngModel)]="wizardForm.productName"
+              />
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+              <div class="pl-form-group">
+                <label class="pl-form-label">Category</label>
+                <select class="pl-form-select" [(ngModel)]="wizardForm.category">
+                  @for (opt of categoryOptions; track opt) {
+                    <option [value]="opt">{{ opt }}</option>
+                  }
+                </select>
+              </div>
+              <div class="pl-form-group">
+                <label class="pl-form-label">Business Model</label>
+                <select class="pl-form-select" [(ngModel)]="wizardForm.businessModel">
+                  @for (opt of businessModelOptions; track opt) {
+                    <option [value]="opt">{{ opt }}</option>
+                  }
+                </select>
+              </div>
+            </div>
+            <div class="pl-form-group">
+              <label class="pl-form-label">Target Size</label>
+              <div class="pl-chip-group">
+                @for (size of targetSizeOptions; track size) {
+                  <button
+                    type="button"
+                    class="pl-chip"
+                    [class.selected]="isTargetSizeSelected(size)"
+                    (click)="toggleTargetSize(size)"
+                  >
+                    {{ size }}
+                  </button>
+                }
+              </div>
+            </div>
+            <div class="pl-form-group">
+              <label class="pl-form-label">Core USP</label>
+              <textarea
+                class="pl-form-textarea"
+                rows="4"
+                placeholder="What is the single most critical problem you solve?"
+                [(ngModel)]="wizardForm.coreUsp"
+              ></textarea>
+            </div>
+          </div>
+          <div class="pl-intel-pane">
+            <div class="pl-intel-card">
+              <div class="pl-intel-title">
+                <iconify-icon icon="lucide:sparkles"></iconify-icon>
+                Live Intelligence Audit
+              </div>
+              <div style="margin-bottom: 16px">
+                <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 6px; font-weight: 600; color: var(--muted-foreground);">
+                  <span>Positioning Clarity</span>
+                  <span>62%</span>
+                </div>
+                <div class="pl-track">
+                  <div class="pl-fill" style="width: 62%"></div>
+                </div>
+              </div>
+              <div>
+                <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 6px; font-weight: 600; color: var(--muted-foreground);">
+                  <span>Differentiation</span>
+                  <span>45%</span>
+                </div>
+                <div class="pl-track">
+                  <div class="pl-fill" style="width: 45%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2: AI Intelligence -->
+      <div
+        id="step-2"
+        class="pl-step-content"
+        [class.active]="currentStep === 2"
+      >
+        <div class="pl-split-layout">
+          <div class="pl-form-pane">
+            <h2>Deep Context Analysis</h2>
+            <div class="pl-form-group">
+              <label class="pl-form-label">Strategic Description</label>
+              <div style="border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden;">
+                <div style="background: var(--muted); padding: 8px 12px; border-bottom: 1px solid var(--border); display: flex; gap: 12px; color: var(--muted-foreground);">
+                  <iconify-icon icon="lucide:bold"></iconify-icon>
+                  <iconify-icon icon="lucide:italic"></iconify-icon>
+                  <iconify-icon icon="lucide:list"></iconify-icon>
+                </div>
+                <textarea
+                  class="pl-form-textarea"
+                  style="border: none; border-radius: 0; min-height: 150px;"
+                  placeholder="Describe technology, differentiation, outcomes..."
+                  [(ngModel)]="wizardForm.strategicDescription"
+                ></textarea>
+              </div>
+            </div>
+            <div class="pl-upload-zone">
+              <iconify-icon icon="lucide:cloud-upload"></iconify-icon>
+              <div style="font-weight: 600; margin-top: 12px">Upload Product Docs</div>
+              <div style="font-size: 12px; color: var(--muted-foreground)">PDF, PPTX, DOCX or URL</div>
+            </div>
+          </div>
+          <div class="pl-intel-pane">
+            <div class="pl-intel-card">
+              <div class="pl-intel-title">
+                <iconify-icon icon="lucide:brain-circuit"></iconify-icon>
+                AI Analysis Status
+              </div>
+              <div style="text-align: center; padding: 20px">
+                <div style="font-size: 13px; color: var(--muted-foreground); margin-bottom: 8px;">
+                  Waiting for input...
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3: Market -->
+      <div
+        id="step-3"
+        class="pl-step-content"
+        [class.active]="currentStep === 3"
+      >
+        <div class="pl-split-layout">
+          <div class="pl-form-pane">
+            <h2>Market Context</h2>
+            <div class="pl-form-group">
+              <label class="pl-form-label">Target Industries</label>
+              <div class="pl-chip-group">
+                @for (ind of industryOptions; track ind) {
+                  <button
+                    type="button"
+                    class="pl-chip"
+                    [class.selected]="isIndustrySelected(ind)"
+                    (click)="toggleIndustry(ind)"
+                  >
+                    {{ ind }}
+                  </button>
+                }
+              </div>
+            </div>
+            <div class="pl-form-group">
+              <label class="pl-form-label">Top Competitors</label>
+              <input
+                type="text"
+                class="pl-form-input"
+                placeholder="Competitor 1, Competitor 2..."
+                [(ngModel)]="wizardForm.competitors"
+              />
+            </div>
+          </div>
+          <div class="pl-intel-pane">
+            <div class="pl-intel-card">
+              <div class="pl-intel-title">Market Fit Radar</div>
+              <div class="pl-radar-mock">
+                <div class="pl-radar-shape"></div>
+              </div>
+              <div style="text-align: center; font-size: 12px; margin-top: 12px; color: var(--muted-foreground);">
+                Analyzing competitive overlap...
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 4: Value -->
+      <div
+        id="step-4"
+        class="pl-step-content"
+        [class.active]="currentStep === 4"
+      >
+        <div class="pl-step-full">
+          <h2>Value Architecture</h2>
+          <div class="pl-value-grid">
+            <div>
+              <table class="pl-value-table">
+                <thead>
+                  <tr>
+                    <th>Feature</th>
+                    <th>Benefit</th>
+                    <th>Pain Point</th>
+                    <th>Score</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (row of valueRows; track row.feature) {
+                    <tr>
+                      <td>{{ row.feature }}</td>
+                      <td>{{ row.benefit }}</td>
+                      <td>{{ row.painPoint }}</td>
+                      <td>
+                        <span style="color: var(--success)">●</span> {{ row.score }}
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+            <div class="pl-intel-card" style="height: fit-content">
+              <div class="pl-intel-title">Positioning Map</div>
+              <div class="pl-positioning-map">
+                <div style="position: absolute; bottom: 10px; left: 10px; right: 10px; height: 1px; background: var(--border);"></div>
+                <div style="position: absolute; top: 10px; bottom: 10px; left: 10px; width: 1px; background: var(--border);"></div>
+                <div style="position: absolute; top: 20%; right: 20%; width: 12px; height: 12px; background: var(--secondary); border-radius: 50%; box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.2);"></div>
+                <div style="position: absolute; bottom: 30%; left: 40%; width: 10px; height: 10px; background: var(--muted-foreground); border-radius: 50%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 5: Knowledge (placeholder) -->
+      <div
+        id="step-5"
+        class="pl-step-content"
+        [class.active]="currentStep === 5"
+      >
+        <div class="pl-step-full">
+          <h2>Knowledge & Review</h2>
+          <p style="color: var(--muted-foreground);">Review and confirm your product intelligence setup.</p>
+        </div>
+      </div>
+
+      <div class="pl-wizard-footer">
+        <app-btn-secondary (click)="saveDraft()">Save Draft</app-btn-secondary>
+        <app-btn-primary (click)="nextStep()">
+          {{ currentStep < totalWizardSteps ? 'Continue' : 'Finish' }}
+          <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+        </app-btn-primary>
+      </div>
+    </div>
+  </div>
+
+  <!-- View: Templates -->
+  <div
+    id="view-templates"
+    class="pl-view"
+    [class.active]="activeTab === 'templates'"
+  >
+    <div class="pl-grid-header">
+      <h1>Strategic Templates</h1>
+      <app-btn-secondary (click)="setActiveTab('portfolio')">Back to Portfolio</app-btn-secondary>
+    </div>
+    <div class="pl-portfolio-grid">
+      @for (t of templates; track t.id) {
+        <div
+          class="pl-card pl-template-card"
+          (click)="selectTemplate(t)"
+        >
+          <div class="pl-template-icon">
+            <iconify-icon [icon]="t.icon"></iconify-icon>
+          </div>
+          <h3 class="pl-card-title">{{ t.name }}</h3>
+          <p class="pl-card-subtitle">{{ t.desc }}</p>
+          <button type="button" class="btn btn-secondary" style="width: 100%; margin-top: auto;" (click)="selectTemplate(t); $event.stopPropagation()">
+            Use Template
+          </button>
+        </div>
+      }
+    </div>
+  </div>
+</div>

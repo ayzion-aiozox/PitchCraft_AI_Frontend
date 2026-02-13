@@ -1,0 +1,31 @@
+@use "abstracts/variables";
+
+.app-pill {
+  display: inline-block;
+  padding: 5px 10px;
+  color: variables.$white-color;
+  border-radius: 15px;
+  font-size: variables.$small-font;
+  text-align: center;
+  border: none;
+}
+
+// List of common colors to loop through
+$common-colors: (
+  success: variables.$success-color,
+  warn: variables.$warn-color,
+  light: variables.$white-color,
+  dark: variables.$black-color,
+  primary: variables.$primary-color,
+  secondary: variables.$secondary-color,
+  default: variables.$default-color,
+  grey1: variables.$grey-color,
+
+);
+
+// Generate color-specific classes with a space between app-pill and the color class
+@each $name, $color in $common-colors {
+  .app-pill.#{$name} {
+    background-color: $color;
+  }
+}

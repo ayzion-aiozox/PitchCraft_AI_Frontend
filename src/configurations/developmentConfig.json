@@ -1,0 +1,6 @@
+{
+    "apiUrl": "https://192.168.16.229/dev/corporate-portal/WebApi",
+    "authUrl": "https://192.168.16.229/dev/techrefi-admin/auth",
+    "adminPortalUrl":
+      "https://192.168.16.229/dev/techrefi-admin/webapp/#/public/login"
+}

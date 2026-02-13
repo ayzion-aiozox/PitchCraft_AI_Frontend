@@ -1,0 +1,157 @@
+<div class="main-wrapper campaign-engine-wrapper">
+  <app-page-header
+    title="Campaign Engine"
+    [breadcrumbActive]="breadcrumbActive"
+    [userName]="userName"
+    [avatarUrl]="userAvatarUrl"
+    [showUserName]="false"
+  ></app-page-header>
+
+  <div class="control-bar">
+    <div class="control-group">
+      <mat-form-field appearance="fill" subscriptSizing="dynamic" class="campaign-selector-field">
+        <mat-select [(ngModel)]="selectedCampaignId">
+          @for (c of campaigns; track c.id) {
+            <mat-option [value]="c.id">{{ c.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <mat-button-toggle-group [(ngModel)]="viewMode" class="view-toggles" name="viewMode">
+        <mat-button-toggle value="board" class="view-toggle">
+          <iconify-icon icon="lucide:kanban" class="view-toggle-icon"></iconify-icon>
+          Board
+        </mat-button-toggle>
+        <mat-button-toggle value="list" class="view-toggle">
+          <iconify-icon icon="lucide:list" class="view-toggle-icon"></iconify-icon>
+          List
+        </mat-button-toggle>
+        <mat-button-toggle value="calendar" class="view-toggle">
+          <iconify-icon icon="lucide:calendar" class="view-toggle-icon"></iconify-icon>
+          Calendar
+        </mat-button-toggle>
+      </mat-button-toggle-group>
+      <span class="control-divider"></span>
+      <button mat-button type="button" class="performance-btn">
+        <iconify-icon icon="lucide:bar-chart-2" class="view-toggle-icon"></iconify-icon>
+        Performance
+      </button>
+    </div>
+    <div class="control-group">
+      <div class="avatar-stack">
+        @for (url of teamAvatars; track url) {
+          <img [src]="url" class="avatar-stack-img" alt="" />
+        }
+        <span class="avatar-stack-more">+3</span>
+      </div>
+      <button mat-raised-button color="primary" type="button" class="btn-new-campaign">
+        <iconify-icon icon="lucide:plus"></iconify-icon>
+        New Campaign
+      </button>
+    </div>
+  </div>
+
+  <div class="kanban-board">
+    @for (column of columns; track column.id) {
+      <div class="kanban-column">
+        <div class="column-header">
+          <div class="column-title">
+            <span class="column-accent" [style.background]="column.accentColor"></span>
+            {{ column.title }}
+            @if (column.count != null) {
+              <app-status-badge class="count-badge" [ngStyle]="column.countBadgeStyles">{{ column.count }}</app-status-badge>
+            }
+          </div>
+          <button mat-icon-button [matMenuTriggerFor]="columnMenu" type="button" aria-label="Column menu" class="column-menu-btn">
+            <iconify-icon icon="lucide:more-horizontal"></iconify-icon>
+          </button>
+        </div>
+        <div class="column-body">
+          @for (card of column.cards; track card.id) {
+            <div
+              class="kanban-card"
+              [class.card-left-accent]="card.leftBorderAccent"
+              [style.opacity]="card.opacity"
+            >
+              @if (card.statusChip) {
+                <app-status-badge
+                  class="status-chip"
+                  [style.background]="card.statusChip.bg"
+                  [style.color]="card.statusChip.color"
+                >
+                  {{ card.statusChip.text }}
+                </app-status-badge>
+              }
+              <div class="card-header">
+                <div class="card-user">
+                  @if (card.avatarUrl) {
+                    <img [src]="card.avatarUrl" class="card-avatar" [alt]="card.name" />
+                  }
+                  @if (card.placeholderInitials) {
+                    <div class="card-avatar card-avatar-placeholder">{{ card.placeholderInitials }}</div>
+                  }
+                  <div class="card-info">
+                    <h4>{{ card.name }}</h4>
+                    <p>{{ card.role }}</p>
+                  </div>
+                </div>
+                @if (card.strategyIcon) {
+                  <div
+                    class="strategy-icon"
+                    [style.background]="card.strategyIconBg || 'rgba(6, 182, 212, 0.1)'"
+                    [style.color]="card.strategyIconColor || 'var(--secondary)'"
+                  >
+                    <iconify-icon [icon]="card.strategyIcon"></iconify-icon>
+                  </div>
+                }
+              </div>
+              @if (card.replyText) {
+                <div class="reply-preview">{{ card.replyText }}</div>
+              }
+              @if (card.replyAction) {
+                <button mat-stroked-button type="button" class="reply-action">
+                  {{ card.replyAction }}
+                  <mat-icon>expand_more</mat-icon>
+                </button>
+              }
+              @if (card.metaTags.length || card.metaRight || card.sendButton) {
+                <div class="card-meta">
+                  @if (card.metaTags.length) {
+                    @for (m of card.metaTags; track m.text; let i = $index) {
+                      <span
+                        class="meta-tag"
+                        [class.stuck-alert]="m.isStuck"
+                        [style.color]="m.iconColor"
+                      >
+                        @if (m.isStuck) {
+                          <mat-icon class="meta-icon">warning</mat-icon>
+                        }
+                        @if (!m.isStuck && m.icon) {
+                          <iconify-icon [icon]="m.icon"></iconify-icon>
+                        }
+                        @if (!m.isStuck && !m.icon && m.showClock) {
+                          <mat-icon class="meta-icon">schedule</mat-icon>
+                        }
+                        {{ m.text }}
+                      </span>
+                    }
+                  }
+                  @if (card.metaRight) {
+                    <span class="meta-tag meta-right" [style.color]="card.metaRightColor">{{ card.metaRight }}</span>
+                  }
+                  @if (card.sendButton) {
+                    <button mat-raised-button color="primary" type="button" class="btn-send">Send</button>
+                  }
+                </div>
+              }
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</div>
+
+<mat-menu #columnMenu="matMenu">
+  <button mat-menu-item type="button">Edit column</button>
+  <button mat-menu-item type="button">Add card</button>
+</mat-menu>

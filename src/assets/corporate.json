@@ -1,0 +1,122 @@
+[
+  {
+    "corporateId": 1,
+    "activeFlag": 1,
+    "corporateName": "EduFi",
+    "corporateCode": "EDU0987654321",
+    "corporateNtnNumber": "123456789",
+    "corporateImage": "https://businessforbiodiversity.ie/wp-content/uploads/2024/07/Heading-scaled-e1720383620436-1030x623.jpg",
+    "corporateEmailAddress": "support@edufi.tech",
+    "corporateAddress": "39 Empress road, Lahore"
+  },
+  {
+    "corporateId": 3,
+    "activeFlag": 0,
+    "corporateName": "Techlogix Pvt Ltd",
+    "corporateCode": "EDU0912765789",
+    "corporateNtnNumber": "123456789",
+    "corporateImage": "https://businessforbiodiversity.ie/wp-content/uploads/2024/07/Heading-scaled-e1720383620436-1030x623.jpg",
+    "corporateEmailAddress": "support@edufi.tech",
+    "corporateAddress": "39 Empress road, Lahore"
+  },
+  {
+    "corporateId": 3,
+    "activeFlag": 0,
+    "corporateName": "Techlogix Pvt Ltd",
+    "corporateCode": "EDU0912765789",
+    "corporateNtnNumber": null,
+    "corporateImage": "https://businessforbiodiversity.ie/wp-content/uploads/2024/07/Heading-scaled-e1720383620436-1030x623.jpg",
+    "corporateEmailAddress": "support@edufi.tech",
+    "corporateAddress": "39 Empress road, Lahore"
+  },
+  {
+    "corporateId": 1,
+    "activeFlag": 1,
+    "corporateName": "EduFi",
+    "corporateCode": "EDU0987654321",
+    "corporateNtnNumber": "123456789",
+    "corporateImage": "https://businessforbiodiversity.ie/wp-content/uploads/2024/07/Heading-scaled-e1720383620436-1030x623.jpg",
+    "corporateEmailAddress": "support@edufi.tech",
+    "corporateAddress": "39 Empress road, Lahore"
+  },
+  {
+    "corporateId": 3,
+    "activeFlag": 0,
+    "corporateName": "Techlogix Pvt Ltd",
+    "corporateCode": "EDU0912765789",
+    "corporateNtnNumber": "123456789",
+    "corporateImage": "https://businessforbiodiversity.ie/wp-content/uploads/2024/07/Heading-scaled-e1720383620436-1030x623.jpg",
+    "corporateEmailAddress": "support@edufi.tech",
+    "corporateAddress": "39 Empress road, Lahore"
+  },
+  {
+    "corporateId": 3,
+    "activeFlag": 0,
+    "corporateName": "Techlogix Pvt Ltd",
+    "corporateCode": "EDU0912765789",
+    "corporateNtnNumber": "123456789",
+    "corporateImage": "https://businessforbiodiversity.ie/wp-content/uploads/2024/07/Heading-scaled-e1720383620436-1030x623.jpg",
+    "corporateEmailAddress": "support@edufi.tech",
+    "corporateAddress": "39 Empress road, Lahore"
+  },
+  {
+    "corporateId": 1,
+    "activeFlag": 1,
+    "corporateName": "EduFi",
+    "corporateCode": "EDU0987654321",
+    "corporateNtnNumber": "123456789",
+    "corporateImage": "https://businessforbiodiversity.ie/wp-content/uploads/2024/07/Heading-scaled-e1720383620436-1030x623.jpg",
+    "corporateEmailAddress": "support@edufi.tech",
+    "corporateAddress": "39 Empress road, Lahore"
+  },
+  {
+    "corporateId": 3,
+    "activeFlag": 0,
+    "corporateName": "Techlogix Pvt Ltd",
+    "corporateCode": "EDU0912765789",
+    "corporateNtnNumber": "123456789",
+    "corporateImage": "https://businessforbiodiversity.ie/wp-content/uploads/2024/07/Heading-scaled-e1720383620436-1030x623.jpg",
+    "corporateEmailAddress": "support@edufi.tech",
+    "corporateAddress": "39 Empress road, Lahore"
+  },
+  {
+    "corporateId": 3,
+    "activeFlag": 0,
+    "corporateName": "Techlogix Pvt Ltd",
+    "corporateCode": "EDU0912765789",
+    "corporateNtnNumber": "123456789",
+    "corporateImage": "https://businessforbiodiversity.ie/wp-content/uploads/2024/07/Heading-scaled-e1720383620436-1030x623.jpg",
+    "corporateEmailAddress": "support@edufi.tech",
+    "corporateAddress": "39 Empress road, Lahore"
+  },
+  {
+    "corporateId": 1,
+    "activeFlag": 1,
+    "corporateName": "EduFi",
+    "corporateCode": "EDU0987654321",
+    "corporateNtnNumber": "123456789",
+    "corporateImage": "https://businessforbiodiversity.ie/wp-content/uploads/2024/07/Heading-scaled-e1720383620436-1030x623.jpg",
+    "corporateEmailAddress": "support@edufi.tech",
+    "corporateAddress": "39 Empress road, Lahore"
+  },
+  {
+    "corporateId": 3,
+    "activeFlag": 0,
+    "corporateName": "Techlogix Pvt Ltd",
+    "corporateCode": "EDU0912765789",
+    "corporateNtnNumber": "123456789",
+    "corporateImage": "https://businessforbiodiversity.ie/wp-content/uploads/2024/07/Heading-scaled-e1720383620436-1030x623.jpg",
+    "corporateEmailAddress": "support@edufi.tech",
+    "corporateAddress": "39 Empress road, Lahore"
+  },
+  {
+    "corporateId": 3,
+    "activeFlag": 0,
+    "corporateName": "Techlogix Pvt Ltd",
+    "corporateCode": "EDU0912765789",
+    "corporateNtnNumber": "123456789",
+    "corporateImage": "https://businessforbiodiversity.ie/wp-content/uploads/2024/07/Heading-scaled-e1720383620436-1030x623.jpg",
+    "corporateEmailAddress": "support@edufi.tech",
+    "corporateAddress": "39 Empress road, Lahore"
+  }
+]

@@ -1,0 +1,96 @@
+<div class="main-wrapper integration-station-wrapper">
+  <app-page-header
+    [title]="headerTitle"
+    [breadcrumbActive]="breadcrumbActive"
+    [showSearch]="false"
+    [showUserName]="false"
+    [showHelpButton]="true"
+  ></app-page-header>
+
+  <main class="integration-station-content">
+    <div class="integration-page-header">
+      <div class="integration-page-header__text">
+        <h1 class="integration-page-title">{{ pageTitle }}</h1>
+        <p class="integration-page-subtitle">{{ pageSubtitle }}</p>
+      </div>
+      <div class="integration-search-wrap">
+        <iconify-icon class="integration-search-icon" icon="lucide:search"></iconify-icon>
+        <input
+          type="text"
+          class="input integration-search-input"
+          [placeholder]="searchPlaceholder"
+          [(ngModel)]="searchQuery"
+        />
+      </div>
+    </div>
+
+    <div class="integration-tabs">
+      <button
+        type="button"
+        class="integration-tab"
+        [class.active]="activeTabId === tab.id"
+        *ngFor="let tab of tabs; trackBy: trackByTabId"
+        (click)="setActiveTab(tab.id)"
+      >
+        {{ tab.label }}
+      </button>
+    </div>
+
+    <div class="integration-grid">
+      <div
+        class="integration-card card"
+        *ngFor="let integration of filteredIntegrations; trackBy: trackByIntegrationId"
+      >
+        <div class="card-icon-wrapper" [style.color]="integration.iconColor">
+          <iconify-icon
+            *ngIf="!integration.iconPlaceholder"
+            [icon]="integration.icon"
+            class="card-icon"
+          ></iconify-icon>
+          <span *ngIf="integration.iconPlaceholder" class="card-icon-placeholder">{{
+            integration.iconPlaceholder
+          }}</span>
+        </div>
+        <h3 class="integration-card-title">{{ integration.name }}</h3>
+        <div [class]="getBadgeClass(integration)">
+          @if (integration.status === 'connected' && integration.badgeStyle !== 'active') {
+            <span class="integration-badge-dot"></span>
+          }
+          @if (integration.badgeStyle === 'active') {
+            <iconify-icon icon="lucide:check" class="integration-badge-icon"></iconify-icon>
+          }
+          @if (integration.status === 'error') {
+            <iconify-icon icon="lucide:alert-circle" class="integration-badge-icon"></iconify-icon>
+          }
+          {{ getBadgeLabel(integration) }}
+        </div>
+        <p class="integration-card-desc">{{ integration.description }}</p>
+
+        <div class="integration-card-actions">
+          @if (integration.showToggle) {
+            <div class="integration-sync-row">
+              <span class="integration-sync-label">Sync Status</span>
+              <label class="integration-toggle">
+                <input type="checkbox" [checked]="integration.toggleChecked" />
+                <span class="integration-toggle-slider"></span>
+              </label>
+            </div>
+          } @else if (integration.apiMasked) {
+            <div class="integration-api-wrap">
+              <span class="integration-api-label">API:</span>
+              <span class="integration-api-dots">•••••••••••••</span>
+              <iconify-icon icon="lucide:eye-off" class="integration-api-icon"></iconify-icon>
+            </div>
+          } @else {
+            <button type="button" [class]="getActionButtonClass(integration)">
+              {{ integration.actionLabel }}
+            </button>
+            @if (integration.lastSync) {
+              <p class="integration-last-sync">Last sync: {{ integration.lastSync }}</p>
+            }
+          }
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

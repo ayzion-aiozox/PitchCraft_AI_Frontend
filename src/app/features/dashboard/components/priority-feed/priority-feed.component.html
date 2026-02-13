@@ -1,0 +1,25 @@
+<div class="zone-container">
+  <div class="zone-header">
+    <div class="zone-title">
+      <iconify-icon icon="lucide:target" style="color: var(--secondary)"></iconify-icon>
+      Next Best Actions
+    </div>
+  </div>
+  <div class="action-list">
+    <div class="action-card" *ngFor="let action of actions; let i = index">
+      <div class="action-content">
+        <span class="action-title">{{ action.title }}</span>
+        <span class="action-meta">{{ action.meta }}</span>
+        <div>
+          <span class="status-badge" [ngClass]="'badge-' + action.badgeType">{{ action.badgeText }}</span>
+        </div>
+      </div>
+      <div style="display:flex; gap:8px; align-items:center;">
+        <button class="action-btn" *ngIf="!action.expanded">Review</button>
+        <iconify-icon icon="lucide:x" 
+                     style="cursor:pointer; color:var(--muted-foreground)" 
+                     (click)="onDismiss(i)"></iconify-icon>
+      </div>
+    </div>
+  </div>
+</div>

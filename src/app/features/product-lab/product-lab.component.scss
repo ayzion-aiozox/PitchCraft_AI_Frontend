@@ -1,0 +1,81 @@
+// Product Lab layout only. Buttons, forms, cards, grids use global SCSS (styles.scss).
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.product-lab-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+.content-area {
+  padding: 24px 32px;
+  overflow-y: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.tabs-container {
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  gap: 32px;
+  flex-shrink: 0;
+}
+
+.tab-item {
+  padding: 12px 4px;
+  font-weight: 500;
+  color: var(--muted-foreground);
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: var(--font-size-base);
+  background: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  font-family: var(--font-family-body);
+  &:hover {
+    color: var(--foreground);
+  }
+  &.active {
+    color: var(--primary);
+    border-bottom-color: var(--secondary);
+    font-weight: 600;
+  }
+}
+
+.view-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  animation: viewFade 0.3s ease;
+}
+
+@keyframes viewFade {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Responsive: reduce padding on small screens
+@media (max-width: 768px) {
+  .content-area { padding: 16px; }
+  .tabs-container { gap: 16px; }
+}

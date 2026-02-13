@@ -1,0 +1,40 @@
+@use "abstracts/variables"; // we can access variables with 'variable' namespace
+
+.app-text {
+  // defaults
+  color: variables.$default-color;
+  font-size: variables.$default-font;
+
+  &.ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  // colors
+  @each $color-name, $value in variables.$common-colors {
+    &.#{$color-name} {
+      color: $value;
+    }
+  }
+
+  // font-sizes
+  @each $font-name, $value in variables.$common-fonts {
+    &.#{$font-name} {
+      font-size: $value;
+    }
+  }
+
+  // font-weight
+  &.bold {
+    font-weight: bold;
+  }
+
+  &.light {
+    font-weight: lighter;
+  }
+
+  //font style
+  &.italic {
+    font-style: italic;
+  }
+}

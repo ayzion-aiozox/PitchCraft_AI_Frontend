@@ -1,0 +1,45 @@
+<header
+  class="page-header"
+  [class.page-header--mobile]="breakpoint.isMobile()"
+  [class.page-header--breadcrumb]="!!breadcrumbActive"
+>
+  @if (breadcrumbActive) {
+    <div class="page-header__breadcrumb">
+      <span class="page-header__breadcrumb-base">{{ title }}</span>
+      <iconify-icon class="page-header__breadcrumb-chevron" icon="lucide:chevron-right"></iconify-icon>
+      <span class="page-header__breadcrumb-active">{{ breadcrumbActive }}</span>
+    </div>
+  } @else {
+    <h1 class="page-header__title">{{ title }}</h1>
+  }
+  <div class="page-header__actions">
+    @if (showSearch && (!breadcrumbActive || showSearchWithBreadcrumb)) {
+      <div class="page-header__search" *appHideWhen="'mobile'">
+        <iconify-icon class="page-header__search-icon" icon="lucide:search"></iconify-icon>
+        <input
+          type="text"
+          class="page-header__search-input"
+          [placeholder]="searchPlaceholder"
+        />
+      </div>
+    }
+    @if (showHelpButton) {
+      <button type="button" class="page-header__icon-btn" aria-label="Help">
+        <iconify-icon icon="lucide:help-circle"></iconify-icon>
+      </button>
+    }
+    <button type="button" class="page-header__icon-btn" aria-label="Notifications">
+      <iconify-icon icon="lucide:bell"></iconify-icon>
+      <span class="page-header__notification-dot" aria-hidden="true"></span>
+    </button>
+    @if (showUserName) {
+    <div class="page-header__user">
+      <img [src]="avatarUrl" class="page-header__avatar" alt="User" />
+      @if (showUserName) {
+        <span class="page-header__user-name">{{ userName }}</span>
+      }
+      <iconify-icon icon="lucide:chevron-down" class="page-header__chevron"></iconify-icon>
+    </div>
+    }
+  </div>
+</header>

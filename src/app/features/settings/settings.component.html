@@ -1,0 +1,338 @@
+<div class="main-wrapper settings-wrapper">
+  <app-page-header
+    [title]="headerTitle"
+    [breadcrumbActive]="breadcrumbActive"
+    [showSearch]="false"
+    [showUserName]="false"
+    [showHelpButton]="true"
+  ></app-page-header>
+
+  <div class="settings-layout">
+    <nav class="settings-nav">
+      <button
+        type="button"
+        class="settings-tab"
+        [class.active]="activeTabId === tab.id"
+        *ngFor="let tab of tabs; trackBy: trackByTabId"
+        (click)="setActiveTab(tab.id)"
+      >
+        {{ tab.label }}
+      </button>
+    </nav>
+
+    <main class="settings-content">
+      <div class="settings-content-inner">
+        <!-- General -->
+        @if (activeTabId === 'general') {
+          <div class="settings-card card">
+            <h2 class="section-title">General Settings</h2>
+            <div class="settings-grid-2">
+              <div class="form-group">
+                <label class="label">Workspace Name</label>
+                <input type="text" class="input" [(ngModel)]="general.workspaceName" />
+              </div>
+              <div class="form-group">
+                <label class="label">Workspace URL</label>
+                <div class="settings-input-group">
+                  <input type="text" class="input" [ngModel]="general.workspaceUrl" readonly />
+                  <button type="button" class="btn btn-outline settings-btn-icon">
+                    <iconify-icon icon="lucide:copy"></iconify-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="settings-grid-2">
+              <div class="form-group">
+                <label class="label">Timezone</label>
+                <select class="select" [ngModel]="general.timezoneOptions[0]">
+                  <option *ngFor="let opt of general.timezoneOptions" [value]="opt">{{ opt }}</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="label">Language</label>
+                <select class="select" [ngModel]="general.languageOptions[0]">
+                  <option *ngFor="let opt of general.languageOptions" [value]="opt">{{ opt }}</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="label">Brand Colors</label>
+              <div class="settings-colors">
+                <div class="settings-color-item">
+                  <input type="color" class="settings-color-input" [(ngModel)]="general.primaryColor" />
+                  <div>
+                    <div class="settings-color-label">Primary</div>
+                    <div class="settings-color-hex">{{ general.primaryColor }}</div>
+                  </div>
+                </div>
+                <div class="settings-color-item">
+                  <input type="color" class="settings-color-input" [(ngModel)]="general.secondaryColor" />
+                  <div>
+                    <div class="settings-color-label">Secondary</div>
+                    <div class="settings-color-hex">{{ general.secondaryColor }}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="settings-danger-zone">
+              <div>
+                <h4 class="settings-danger-title">Delete Workspace</h4>
+                <p class="settings-danger-desc">Permanently remove this workspace and all data.</p>
+              </div>
+              <button type="button" class="btn btn-danger">Delete Workspace</button>
+            </div>
+          </div>
+        }
+
+        <!-- Team -->
+        @if (activeTabId === 'team') {
+          <div class="settings-card card">
+            <div class="settings-card-header">
+              <h2 class="section-title settings-section-title-clear">Team Management</h2>
+              <button type="button" class="btn btn-primary btn-sm">
+                <iconify-icon icon="lucide:plus"></iconify-icon>
+                Invite Member
+              </button>
+            </div>
+            <div class="settings-seat-usage">
+              <div class="settings-seat-row">
+                <span class="settings-seat-label">Seat Usage</span>
+                <span class="settings-seat-value">{{ seatUsage.used }} of {{ seatUsage.total }} seats used</span>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill" [style.width.%]="(seatUsage.used / seatUsage.total) * 100" style="background-color: var(--secondary)"></div>
+              </div>
+            </div>
+            <div class="table-container">
+              <table class="settings-table">
+                <thead>
+                  <tr>
+                    <th>Member</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th>Last Active</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let member of teamMembers">
+                    <td>
+                      <div class="settings-member-cell">
+                        <img *ngIf="member.avatarUrl" [src]="member.avatarUrl" class="settings-avatar" [alt]="member.name" />
+                        <div *ngIf="member.initials" class="settings-avatar settings-avatar-initials">{{ member.initials }}</div>
+                        <div>
+                          <div class="settings-member-name">{{ member.name }}</div>
+                          <div class="settings-member-email">{{ member.email }}</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td><span [class]="getRoleBadgeClass(member.role)">{{ member.roleLabel }}</span></td>
+                    <td><span class="settings-status" [class]="'settings-status--' + member.status">{{ member.status === 'active' ? 'Active' : 'Invited' }}</span></td>
+                    <td class="settings-muted">{{ member.lastActive }}</td>
+                    <td>
+                      <button type="button" class="btn btn-outline btn-sm settings-btn-icon">
+                        <iconify-icon icon="lucide:more-horizontal"></iconify-icon>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="settings-activity">
+              <h4 class="section-subtitle">Recent Activity</h4>
+              <div class="settings-activity-list">
+                <div class="settings-activity-item" *ngFor="let a of recentActivity">
+                  <span class="settings-activity-dot"></span>
+                  <p class="settings-activity-text">
+                    <strong>{{ a.user }}</strong> {{ a.action }}
+                    <span class="text-primary">{{ a.target }}</span> {{ a.suffix }}
+                    <span class="settings-activity-time">{{ a.time }}</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+
+        <!-- Billing -->
+        @if (activeTabId === 'billing') {
+          <div class="settings-card card">
+            <h2 class="section-title">Billing & Credits</h2>
+            <div class="settings-billing-row">
+              <div class="settings-plan-card">
+                <span class="settings-plan-badge">Current Plan</span>
+                <h3 class="settings-plan-name">{{ billingPlan.name }}</h3>
+                <div class="settings-plan-price">${{ billingPlan.price }}<span class="settings-plan-period">{{ billingPlan.period }}</span></div>
+                <p class="settings-plan-desc">{{ billingPlan.description }}</p>
+                <button type="button" class="btn btn-primary w-full">Manage Subscription</button>
+              </div>
+              <div class="settings-usage-col">
+                <div class="settings-usage-item" *ngFor="let u of usageStats">
+                  <div class="settings-usage-row">
+                    <span class="settings-usage-label">{{ u.label }}</span>
+                    <span class="settings-usage-val">{{ u.used }} / {{ u.total }}</span>
+                  </div>
+                  <div class="progress-track">
+                    <div class="progress-fill" [style.width.%]="u.percent" [style.background-color]="u.color === 'warning' ? 'var(--warning)' : u.color === 'success' ? 'var(--success)' : 'var(--secondary)'"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="settings-grid-2 settings-mb">
+              <div class="settings-subcard">
+                <h4 class="section-subtitle">Need more credits?</h4>
+                <div class="settings-input-group">
+                  <input type="number" class="input" value="100" style="width: 100px" />
+                  <button type="button" class="btn btn-secondary flex-1">Top Up Credits</button>
+                </div>
+              </div>
+              <div class="settings-subcard">
+                <h4 class="section-subtitle">Payment Method</h4>
+                <div class="settings-payment-row">
+                  <div class="settings-payment-info">
+                    <iconify-icon icon="logos:mastercard" class="settings-payment-icon"></iconify-icon>
+                    <span class="settings-payment-mask">•••• 4242</span>
+                  </div>
+                  <button type="button" class="btn btn-outline btn-sm">Update</button>
+                </div>
+              </div>
+            </div>
+            <h4 class="section-subtitle">Recent Invoices</h4>
+            <table class="settings-table settings-invoices-table">
+              <tbody>
+                <tr *ngFor="let inv of invoices">
+                  <td>{{ inv.date }}</td>
+                  <td>{{ inv.description }}</td>
+                  <td>{{ inv.amount }}</td>
+                  <td class="text-right"><a href="#" class="settings-link">Download PDF</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        }
+
+        <!-- Data & Privacy -->
+        @if (activeTabId === 'data') {
+          <div class="settings-card card">
+            <div class="settings-card-header">
+              <h2 class="section-title settings-section-title-clear">Data & Privacy</h2>
+              <span class="settings-badge-gdpr">
+                <iconify-icon icon="lucide:shield-check"></iconify-icon>
+                GDPR Compliant
+              </span>
+            </div>
+            <div class="settings-privacy-list">
+              <div class="settings-privacy-row">
+                <div>
+                  <div class="settings-privacy-title">Process Data Only</div>
+                  <div class="settings-privacy-desc">We will process your data for AI results but won't store it.</div>
+                </div>
+                <label class="settings-switch">
+                  <input type="checkbox" />
+                  <span class="settings-switch-slider"></span>
+                </label>
+              </div>
+              <div class="settings-privacy-row">
+                <div>
+                  <div class="settings-privacy-title">Anonymize Personal Data</div>
+                  <div class="settings-privacy-desc">Automatically mask emails and phone numbers in AI outputs.</div>
+                </div>
+                <label class="settings-switch">
+                  <input type="checkbox" checked />
+                  <span class="settings-switch-slider"></span>
+                </label>
+              </div>
+              <div class="settings-privacy-row settings-privacy-row-block">
+                <label class="label">Data Retention Period</label>
+                <select class="select" style="max-width: 200px">
+                  <option *ngFor="let opt of dataRetentionOptions" [value]="opt">{{ opt }}</option>
+                </select>
+              </div>
+              <div class="settings-privacy-row-block">
+                <label class="label">Blacklist Domains / Emails</label>
+                <p class="settings-privacy-desc">We will never generate outreach for these recipients.</p>
+                <textarea class="textarea" rows="3" placeholder="example.com, ceo@competitor.com"></textarea>
+                <button type="button" class="btn btn-secondary btn-sm settings-mt">Save Blacklist</button>
+              </div>
+              <div class="settings-export">
+                <h4 class="section-subtitle">Data Export</h4>
+                <p class="settings-privacy-desc settings-mb">Download a complete archive of your workspace data.</p>
+                <div class="settings-btn-row">
+                  <button type="button" class="btn btn-outline">
+                    <iconify-icon icon="lucide:file-json"></iconify-icon>
+                    Export JSON
+                  </button>
+                  <button type="button" class="btn btn-outline">
+                    <iconify-icon icon="lucide:file-spreadsheet"></iconify-icon>
+                    Export CSV
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+
+        <!-- API -->
+        @if (activeTabId === 'api') {
+          <div class="settings-card card">
+            <h2 class="section-title">API Configuration</h2>
+            <p class="settings-api-intro">Manage API keys to access PitchCraft programmatically. <a href="#" class="settings-link">Read Documentation</a>.</p>
+            <div class="settings-api-header">
+              <h4 class="section-subtitle">API Keys</h4>
+              <button type="button" class="btn btn-primary btn-sm">Generate New Key</button>
+            </div>
+            <div class="table-container settings-api-table-wrap">
+              <table class="settings-table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Key</th>
+                    <th>Created</th>
+                    <th>Last Used</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let key of apiKeys">
+                    <td class="settings-font-medium">{{ key.name }}</td>
+                    <td class="settings-mono">{{ key.keyPreview }}</td>
+                    <td class="settings-muted">{{ key.created }}</td>
+                    <td class="settings-muted">{{ key.lastUsed }}</td>
+                    <td class="text-right">
+                      <button type="button" class="settings-link settings-link-danger">Revoke</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="settings-webhooks">
+              <h4 class="section-subtitle">Webhooks</h4>
+              <div class="form-group">
+                <label class="label">Endpoint URL</label>
+                <input type="text" class="input" placeholder="https://your-api.com/webhooks/pitchcraft" />
+              </div>
+              <div class="form-group">
+                <label class="label">Secret Token</label>
+                <input type="password" class="input" value="whsec_..." readonly />
+              </div>
+              <div class="form-group">
+                <label class="label">Trigger Events</label>
+                <div class="settings-checkbox-row">
+                  <label class="settings-checkbox-label" *ngFor="let ev of webhookEvents">
+                    <input type="checkbox" [checked]="ev.checked" />
+                    {{ ev.label }}
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </main>
+  </div>
+
+  <footer class="sticky-footer">
+    <button type="button" class="btn btn-ghost settings-muted-btn">Discard</button>
+    <button type="button" class="btn btn-primary">Save Changes</button>
+  </footer>
+</div>

@@ -1,0 +1,17 @@
+<div class="rich-editor">
+  <div class="editor-toolbar">
+    <div 
+      class="tool-btn" 
+      *ngFor="let tool of tools"
+      [attr.data-tool]="tool.name"
+      (click)="formatText(tool.name)">
+      <lucide-icon [img]="tool.icon" [size]="16"></lucide-icon>
+    </div>
+  </div>
+  <textarea 
+    class="editor-textarea" 
+    [(ngModel)]="content"
+    (ngModelChange)="onContentChange()"
+    placeholder="Describe what your product does, its core technology, and primary use cases...">
+  </textarea>
+</div>

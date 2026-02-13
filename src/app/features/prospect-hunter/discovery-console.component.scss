@@ -1,0 +1,83 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden !important; /* single scroll on .main-wrapper only */
+}
+
+/* Single scroll: only .main-wrapper scrolls; sidebar and results do not */
+.main-wrapper {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.content-body {
+  min-height: min-content;
+  overflow: visible;
+}
+
+.content-body__main {
+  min-height: min-content;
+  overflow: visible;
+}
+
+.filter-sidebar {
+  overflow: visible;
+}
+
+.results-area {
+  overflow: visible;
+}
+
+/* Compact form fields in filter sidebar */
+.filter-sidebar {
+  .persona-select-field,
+  .sort-select-field {
+    width: 100%;
+
+    .mat-mdc-form-field-subscript-wrapper {
+      display: none;
+    }
+
+    .mat-mdc-text-field-wrapper {
+      padding: 0 12px;
+    }
+
+    .mat-mdc-form-field-infix {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      min-height: 48px;
+    }
+  }
+}
+
+.match-threshold-slider {
+  width: 100%;
+  margin: 8px 0 16px;
+}
+
+.seniority-checkbox {
+  display: block;
+  margin-bottom: 8px;
+
+  ::ng-deep .mdc-label {
+    font-size: 14px;
+  }
+}
+
+/* Sort select in results header */
+.results-header .sort-select-field {
+  min-width: 180px;
+  margin-bottom: 0;
+
+  .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+  }
+
+  .mat-mdc-form-field-infix {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+}

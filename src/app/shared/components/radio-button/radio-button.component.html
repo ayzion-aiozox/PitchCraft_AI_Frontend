@@ -1,0 +1,13 @@
+<div *ngIf="label">
+  <label class="radio-button-label">{{ label }}</label>
+</div>
+<mat-radio-group
+  [formControl]="formControl"
+  [disabled]="disabled"
+  (change)="onRadioChange($event.value)"
+  aria-label="Select an option"
+>
+  <mat-radio-button *ngFor="let option of options" [value]="option.value">
+    {{ option.label }}
+  </mat-radio-button>
+</mat-radio-group>

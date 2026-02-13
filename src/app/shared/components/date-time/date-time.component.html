@@ -1,0 +1,26 @@
+<div class="date-time-container">
+  <mat-form-field appearance="fill">
+    <mat-label>{{ label }}</mat-label>
+
+    <!-- Datepicker input field with binding -->
+    <input
+      matInput
+      [matDatepicker]="picker"
+      [placeholder]="placeholder"
+      [formControl]="dateControl"
+      [min]="minDate"
+      [max]="maxDate"
+      [required]="required"
+      [disabled]="disabled"
+      (dateChange)="onDateChange($event)"
+    />
+
+    <!-- Datepicker toggle button -->
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+
+    <!-- Material Datepicker component -->
+    <mat-datepicker #picker [startAt]="startAt"></mat-datepicker>
+    <!-- Bind startAt here -->
+  </mat-form-field>
+</div>
+

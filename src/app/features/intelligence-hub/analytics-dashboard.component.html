@@ -1,0 +1,145 @@
+<div class="main-wrapper">
+  <header class="top-header">
+    <div class="breadcrumb">
+      <span>Workspace</span>
+      <iconify-icon icon="lucide:chevron-right" class="breadcrumb-chevron"></iconify-icon>
+      <span class="breadcrumb-active">Intelligence Hub</span>
+    </div>
+    <div class="header-actions">
+      <div class="date-picker">
+        <iconify-icon icon="lucide:calendar" class="date-picker__icon"></iconify-icon>
+        {{ dateRangeLabel }}
+        <iconify-icon icon="lucide:chevron-down" class="date-picker__chevron"></iconify-icon>
+      </div>
+      <button type="button" class="icon-btn-round" aria-label="Notifications"><iconify-icon icon="lucide:bell"></iconify-icon></button>
+      <div class="user-profile"><img [src]="userAvatar" class="avatar" alt="User" /></div>
+    </div>
+  </header>
+  <div class="content-area dashboard-content">
+    <div class="dashboard-grid">
+      <div class="card col-span-2">
+        <div class="card-header">
+          <div class="card-title"><iconify-icon icon="lucide:filter" class="card-title__icon card-title__icon--primary"></iconify-icon> Conversion Funnel</div>
+          <div class="funnel-legend">
+            <span class="funnel-legend__item"><span class="funnel-legend__dot funnel-legend__dot--current"></span> Current</span>
+            <span class="funnel-legend__item"><span class="funnel-legend__dot funnel-legend__dot--previous"></span> Previous</span>
+          </div>
+        </div>
+        <div class="funnel-container">
+          <ng-container *ngFor="let step of funnelSteps; let last = last">
+            <div class="funnel-step" [style.width.%]="step.width" [style.background]="step.gradient">
+              <span>{{ step.label }}</span>
+              <span>{{ step.count | number }}</span>
+              <span class="funnel-step__pct">{{ step.pct }}%</span>
+            </div>
+            <div class="funnel-dropoff" *ngIf="!last"><iconify-icon icon="lucide:arrow-down"></iconify-icon> {{ step.dropoff }}</div>
+          </ng-container>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title"><iconify-icon icon="lucide:zap" class="card-title__icon card-title__icon--secondary"></iconify-icon> Top Personas</div>
+        </div>
+        <div class="perf-list">
+          <div class="perf-row" *ngFor="let persona of topPersonas; let i = index">
+            <div class="perf-row__left">
+              <span class="rank-circle" [class.rank-circle--first]="i === 0">{{ i + 1 }}</span>
+              <img [src]="persona.avatar" class="perf-row__avatar" [alt]="persona.name" />
+              <div class="perf-row__info">
+                <span class="perf-row__name">{{ persona.name }}</span>
+                <span class="perf-row__meta">{{ persona.segment }}</span>
+              </div>
+            </div>
+            <div class="perf-row__right">
+              <span class="perf-row__value" [class]="'perf-row__value--' + persona.valueClass">{{ persona.responseRate }}%</span>
+              <span class="perf-row__label">Response</span>
+            </div>
+          </div>
+        </div>
+        <div class="roi-card">
+          <div class="roi-card__icon"><iconify-icon icon="lucide:clock"></iconify-icon></div>
+          <div class="roi-card__content">
+            <div class="roi-card__label">Time Saved This Month</div>
+            <div class="roi-card__value">{{ timeSavedHours }} Hours</div>
+            <div class="roi-card__sub">vs. Manual Research</div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title"><iconify-icon icon="lucide:trending-up" class="card-title__icon card-title__icon--tertiary"></iconify-icon> Trending Topics</div>
+        </div>
+        <p class="trending-intro">What your leads are discussing this week:</p>
+        <div class="tag-cloud">
+          <span class="cloud-tag" [class.cloud-tag--hot]="tag.level === 'hot'" [class.cloud-tag--warm]="tag.level === 'warm'" *ngFor="let tag of trendingTags">{{ tag.label }}</span>
+        </div>
+        <div class="trending-footer">
+          <span class="trending-footer__dot"></span>
+          <span class="trending-footer__text"><strong>{{ trendingHighlightCount }} leads</strong> mentioned <span class="trending-footer__highlight">{{ trendingHighlightTopic }}</span> this week.</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title"><iconify-icon icon="lucide:swords" class="card-title__icon card-title__icon--warning"></iconify-icon> Share of Voice</div>
+        </div>
+        <div class="bar-list">
+          <div class="bar-chart-row" *ngFor="let item of shareOfVoice">
+            <span class="bar-label">{{ item.label }}</span>
+            <div class="bar-track"><div class="bar-fill" [style.width.%]="item.pct" [style.background]="item.color"></div></div>
+            <span class="bar-value">{{ item.pct }}%</span>
+          </div>
+        </div>
+        <div class="alert-box alert-box--warning">
+          <div class="alert-box__title">Competitive Alert</div>
+          <div class="alert-box__text">{{ competitiveAlertText }}</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title"><iconify-icon icon="lucide:line-chart" class="card-title__icon card-title__icon--success"></iconify-icon> Lead Quality</div>
+          <span class="trend-badge trend-badge--up"><iconify-icon icon="lucide:arrow-up"></iconify-icon> {{ leadQualityTrend }}%</span>
+        </div>
+        <div class="line-chart-mock">
+          <div class="chart-point" *ngFor="let v of leadQualityData" [style.height.%]="v"></div>
+        </div>
+        <div class="chart-days"><span *ngFor="let d of chartDays">{{ d }}</span></div>
+        <div class="chart-legend">
+          <span class="chart-legend__item"><span class="chart-legend__dot chart-legend__dot--high"></span> High Tier</span>
+          <span class="chart-legend__item"><span class="chart-legend__dot chart-legend__dot--low"></span> Low Tier</span>
+        </div>
+      </div>
+      <div class="card col-span-3">
+        <div class="card-header">
+          <div class="card-title">
+            <div class="report-badge"><iconify-icon icon="lucide:sparkles"></iconify-icon></div>
+            Weekly AI Market Opportunity Report
+          </div>
+          <span class="report-generated">Generated: {{ reportGeneratedDate }}</span>
+        </div>
+        <div class="report-grid">
+          <section class="report-section">
+            <h3 class="report-section__title">Executive Summary</h3>
+            <p class="report-text">{{ reportSummary }}</p>
+          </section>
+          <section class="report-section">
+            <h3 class="report-section__title">Top Opportunities</h3>
+            <div class="report-opportunities">
+              <div class="report-opp" *ngFor="let opp of reportOpportunities">
+                <div class="report-opp__icon" [class]="'report-opp__icon--' + opp.type"><iconify-icon [icon]="opp.icon"></iconify-icon></div>
+                <p class="report-opp__text"><strong>{{ opp.title }}:</strong> {{ opp.text }}</p>
+              </div>
+            </div>
+          </section>
+          <section class="report-section">
+            <h3 class="report-section__title">Recommended Actions</h3>
+            <ul class="report-actions-list"><li *ngFor="let action of reportActions">{{ action }}</li></ul>
+          </section>
+        </div>
+        <div class="report-actions">
+          <button type="button" class="btn btn-primary"><iconify-icon icon="lucide:mail"></iconify-icon> Email Report to Team</button>
+          <button type="button" class="btn btn-outline"><iconify-icon icon="lucide:download"></iconify-icon> Export PDF</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

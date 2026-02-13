@@ -1,0 +1,6 @@
+{
+    "apiUrl": "https://192.168.16.229/stg/corporate-portal/WebApi",
+    "authUrl": "https://192.168.16.229/stg/auth",
+    "adminPortalUrl":
+      "https://192.168.16.229/stg/webapp/#/public/login"
+}

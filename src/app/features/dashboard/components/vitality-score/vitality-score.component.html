@@ -1,0 +1,15 @@
+<div class="card gauge-wrapper">
+  <div class="zone-title" style="margin-bottom: 24px">Startup Vitality Score</div>
+  
+  <div class="gauge-arc">
+    <div class="gauge-needle" [style.transform]="getTransform()">
+      <span class="gauge-needle-body"></span>
+      <span class="gauge-needle-shine"></span>
+      <div class="gauge-needle-cap"></div>
+    </div>
+    <div class="gauge-value">{{ score }}</div>
+  </div>
+  
+  <span class="gauge-label">Current Score</span>
+  <span class="gauge-status">{{ getStatus() }}</span>
+</div>

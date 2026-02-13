@@ -1,0 +1,46 @@
+<div class="main-wrapper">
+  <app-page-header
+    title="Command Center"
+    searchPlaceholder="Search leads, products, or strategies..."
+  ></app-page-header>
+  <main
+    class="content-area"
+    [class.content-area--mobile]="breakpoint.isMobile()"
+    [class.content-area--tablet]="breakpoint.isTablet()"
+    [class.content-area--desktop]="breakpoint.isDesktop()"
+  >
+    <!-- Zone 1: KPIs -->
+    <section class="kpi-grid">
+      <app-kpi-grid [kpis]="kpis"></app-kpi-grid>
+    </section>
+
+    <!-- Zone 2: AI Assistant Widget -->
+    <section class="ai-section">
+      <app-ai-assistant-widget 
+        [messages]="messages"
+        [isTyping]="isTyping"
+        [quickActions]="quickActions"
+        (sendMessage)="onSendMessage($event)"
+        (quickAction)="onQuickAction($event)">
+      </app-ai-assistant-widget>
+    </section>
+
+    <!-- Zone 3: Priority Feed -->
+    <section class="priority-section">
+      <app-priority-feed 
+        [actions]="actions"
+        (dismiss)="onDismissAction($event)">
+      </app-priority-feed>
+    </section>
+
+    <!-- Zone 4: Pipeline Funnel -->
+    <section class="funnel-section">
+      <app-pipeline-funnel [funnelStages]="funnelStages"></app-pipeline-funnel>
+    </section>
+
+    <!-- Zone 5: Vitality Score -->
+    <section class="vitality-section">
+      <app-vitality-score [score]="vitalityScore"></app-vitality-score>
+    </section>
+  </main>
+</div>
