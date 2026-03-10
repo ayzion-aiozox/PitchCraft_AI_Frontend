@@ -1,0 +1,41 @@
+<div class="campaign-view-bar">
+  <div class="campaign-view-bar__left">
+    <ng-content select="[campaignViewBarStart]"></ng-content>
+    @if (showCampaignSelector && campaigns.length) {
+      <mat-form-field appearance="outline" subscriptSizing="dynamic" class="campaign-view-bar__select">
+        <mat-label>{{ campaignLabel }}</mat-label>
+        <mat-select
+          [ngModel]="selectedCampaignId"
+          (ngModelChange)="onCampaignChange($event)"
+        >
+          @for (c of campaigns; track c.id) {
+            <mat-option [value]="c.id">{{ c.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    }
+    <div class="campaign-view-bar__tabs">
+      @for (tab of viewTabOptions; track tab.value) {
+        <button
+          type="button"
+          class="campaign-view-bar__tab"
+          [class.active]="viewMode === tab.value"
+          (click)="setViewMode(tab.value)"
+        >
+          <iconify-icon [icon]="tab.icon" class="campaign-view-bar__tab-icon"></iconify-icon>
+          {{ tab.label }}
+        </button>
+      }
+    </div>
+    @if (showPerformance) {
+      <span class="campaign-view-bar__divider"></span>
+      <button type="button" class="campaign-view-bar__performance" (click)="onPerformanceClick()">
+        <iconify-icon icon="lucide:bar-chart-2" class="campaign-view-bar__performance-icon"></iconify-icon>
+        Performance
+      </button>
+    }
+  </div>
+  <div class="campaign-view-bar__right">
+    <ng-content></ng-content>
+  </div>
+</div>

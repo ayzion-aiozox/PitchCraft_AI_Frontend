@@ -1,6 +1,6 @@
-<div class="app-shell" [class.app-shell--auth]="(isAuthRoute$ | async) ?? false">
+<div class="app-shell" [class.app-shell--auth]="(isAuthRoute$ | async) ?? false" [class.app-shell--sidebar-collapsed]="sidebarCollapsed">
   @if (!((isAuthRoute$ | async) ?? false)) {
-    <app-sidebar></app-sidebar>
+    <app-sidebar (collapsedChange)="sidebarCollapsed = $event"></app-sidebar>
   }
   <div class="main-content-wrapper">
     <router-outlet></router-outlet>

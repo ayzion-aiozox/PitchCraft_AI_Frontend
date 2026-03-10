@@ -1,12 +1,12 @@
-<aside class="sidebar">
-  <!-- Logo Header -->
+<aside class="sidebar" [class.sidebar--collapsed]="collapsed">
+  <!-- Logo Header + Toggle -->
   <div class="sidebar__header">
     <div class="logo">
-      <div class="logo__icon">
-        <div class="logo__gradient"></div>
-      </div>
-      <span class="logo__text">PitchCraft AI</span>
+      <span class="logo__text"><span class="logo__pitch">Pitch</span><span class="logo__craft">Craft</span>&nbsp;<span class="logo__ai">AI</span></span>
     </div>
+    <button type="button" class="sidebar__toggle" (click)="toggleSidebar()" [attr.title]="collapsed ? 'Expand sidebar' : 'Collapse sidebar'">
+      <i-lucide [name]="collapsed ? getIcon('PanelLeftOpen') : getIcon('PanelLeftClose')" [size]="20" class="sidebar__toggle-icon"></i-lucide>
+    </button>
   </div>
 
   <!-- Main Navigation -->

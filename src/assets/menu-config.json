@@ -4,7 +4,7 @@
   { "id": "personas", "label": "Persona Forge", "route": "/persona-forge", "icon": "Users", "position": "main" },
   { "id": "prospects", "label": "Prospect Hunter", "route": "/prospect-hunter", "icon": "Target", "position": "main" },
   { "id": "strategies", "label": "Strategy Studio", "route": "/strategies", "icon": "Monitor", "position": "main" },
-  { "id": "campaigns", "label": "Campaign Engine", "route": "/campaigns", "icon": "Rocket", "position": "main" },
+  { "id": "campaigns", "label": "Campaign Engine", "route": "/campaign-engine", "icon": "Rocket", "position": "main" },
   { "id": "analytics", "label": "Intelligence Hub", "route": "/analytics", "icon": "BarChart3", "position": "main" },
   { "id": "integrations", "label": "Integration Station", "route": "/integrations", "icon": "Puzzle", "position": "main" },
   { "id": "settings", "label": "Workspace Settings", "route": "/settings", "icon": "Settings", "position": "bottom" }

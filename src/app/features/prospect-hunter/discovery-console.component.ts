@@ -4,6 +4,8 @@ import { NgClass } from '@angular/common';
 import { MatSelectChange } from '@angular/material/select';
 import { MATERIAL } from '../../shared/modules/shared-imports';
 import { PageHeaderComponent } from '../../shared/components/layout/page-header/page-header.component';
+import { CampaignViewBarComponent } from '../../shared/components/layout/campaign-view-bar/campaign-view-bar.component';
+import type { ViewTabOption } from '../../shared/components/layout/campaign-view-bar/campaign-view-bar.component';
 
 interface Lead {
   id: string;
@@ -46,7 +48,7 @@ interface SeniorityLevel {
 @Component({
   selector: 'app-discovery-console',
   standalone: true,
-  imports: [FormsModule, NgClass, MATERIAL, PageHeaderComponent],
+  imports: [FormsModule, NgClass, MATERIAL, PageHeaderComponent, CampaignViewBarComponent],
   templateUrl: './discovery-console.component.html',
   styleUrls: ['./discovery-console.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -101,7 +103,17 @@ export class DiscoveryConsoleComponent {
   }
 
   viewMode: 'grid' | 'list' = 'grid';
+  phViewTabOptions: ViewTabOption[] = [
+    { value: 'grid', label: 'Grid', icon: 'lucide:layout-grid' },
+    { value: 'list', label: 'List', icon: 'lucide:list' },
+  ];
   selectedLeads = new Set<string>(['lead-1']);
+
+  setViewMode(mode: string): void {
+    if (mode === 'grid' || mode === 'list') {
+      this.viewMode = mode;
+    }
+  }
 
   leads: Lead[] = [
     {

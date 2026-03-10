@@ -38,9 +38,9 @@
           </mat-select>
         </mat-form-field>
 
-        <div class="filter-label" style="display: flex; justify-content: space-between; align-items: center">
+        <div class="filter-label filter-label--row">
           <span>Match Threshold</span>
-          <span style="color: var(--secondary)">{{ matchThresholdLabel }}</span>
+          <span class="filter-label-value">{{ matchThresholdLabel }}</span>
         </div>
         <mat-slider min="0" max="100" step="5" discrete color="primary" class="match-threshold-slider">
           <input matSliderThumb [value]="matchThreshold" (valueChange)="matchThreshold = $event" />
@@ -50,7 +50,7 @@
       <div class="filter-section">
         <div class="filter-title">
           Sources
-          <span style="font-size: 10px; color: var(--secondary); cursor: pointer" (click)="resetSources()">Reset</span>
+          <span class="filter-title-reset" (click)="resetSources()">Reset</span>
         </div>
         @for (source of sources; track source.id) {
           <div class="source-toggle-row">
@@ -72,8 +72,8 @@
         }
       </div>
 
-      <div class="filter-section" style="border-bottom: none">
-        <button type="button" class="btn btn-outline" style="width: 100%" (click)="saveSearchCriteria()">
+      <div class="filter-section filter-section--last">
+        <button type="button" class="btn btn-outline filter-save-btn" (click)="saveSearchCriteria()">
           Save Search Criteria
         </button>
       </div>
@@ -83,24 +83,24 @@
     <div class="results-area">
       <div class="results-header">
         <div class="results-count">Found {{ resultsCount }} leads</div>
-        <div class="action-bar">
-          <mat-form-field appearance="outline" subscriptSizing="dynamic" class="sort-select-field">
-            <mat-select [value]="sortBy" (selectionChange)="onSortChange($event)">
-              <mat-select-trigger>Sort by: {{ sortByLabel }}</mat-select-trigger>
-              @for (opt of sortOptions; track opt.value) {
-                <mat-option [value]="opt.value">{{ opt.label }}</mat-option>
-              }
-            </mat-select>
-          </mat-form-field>
-          <div class="view-toggles">
-            <div class="view-btn" [class.active]="viewMode === 'grid'" (click)="viewMode = 'grid'">
-              <iconify-icon icon="lucide:layout-grid" style="font-size: 18px"></iconify-icon>
-            </div>
-            <div class="view-btn" [class.active]="viewMode === 'list'" (click)="viewMode = 'list'">
-              <iconify-icon icon="lucide:list" style="font-size: 18px"></iconify-icon>
-            </div>
+        <app-campaign-view-bar
+          [showCampaignSelector]="false"
+          [showPerformance]="false"
+          [viewMode]="viewMode"
+          (viewModeChange)="setViewMode($event)"
+          [viewTabOptions]="phViewTabOptions"
+        >
+          <div campaignViewBarStart>
+            <mat-form-field appearance="outline" subscriptSizing="dynamic" class="ph-sort-field">
+              <mat-select [value]="sortBy" (selectionChange)="onSortChange($event)">
+                <mat-select-trigger>Sort by: {{ sortByLabel }}</mat-select-trigger>
+                @for (opt of sortOptions; track opt.value) {
+                  <mat-option [value]="opt.value">{{ opt.label }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
           </div>
-        </div>
+        </app-campaign-view-bar>
       </div>
 
       <div class="cards-grid">

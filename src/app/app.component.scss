@@ -24,6 +24,11 @@
 /* With sidebar (dashboard, etc.) */
 .app-shell:not(.app-shell--auth) .main-content-wrapper {
   margin-left: 256px;
+  transition: margin-left 0.25s ease;
+}
+
+.app-shell.app-shell--sidebar-collapsed:not(.app-shell--auth) .main-content-wrapper {
+  margin-left: 72px;
 }
 
 /* Auth routes: full width, no sidebar */

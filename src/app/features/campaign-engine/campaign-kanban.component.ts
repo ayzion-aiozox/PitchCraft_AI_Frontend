@@ -1,12 +1,9 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { PageHeaderComponent } from '../../shared/components/layout/page-header/page-header.component';
+import { CampaignViewBarComponent } from '../../shared/components/layout/campaign-view-bar/campaign-view-bar.component';
 import { StatusBadgeComponent } from '../../shared/components/ui/status-badge/status-badge.component';
 import { CampaignService } from '../../shared/services/campaign.service';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
@@ -17,12 +14,9 @@ import type { KanbanColumn } from '../../shared/models/kanban.model';
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule,
     PageHeaderComponent,
+    CampaignViewBarComponent,
     StatusBadgeComponent,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatButtonToggleModule,
     MatButtonModule,
     MatMenuModule,
     MatIconModule,
@@ -46,5 +40,11 @@ export class CampaignKanbanComponent {
 
   get selectedCampaignName(): string {
     return this.campaigns.find((c) => c.id === this.selectedCampaignId)?.name ?? '';
+  }
+
+  setViewMode(mode: string): void {
+    if (mode === 'board' || mode === 'list' || mode === 'calendar') {
+      this.viewMode = mode;
+    }
   }
 }

@@ -1,7 +1,7 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
-import { LucideAngularModule, LayoutDashboard, FlaskConical, Users, Target, Monitor, Rocket, BarChart3, Puzzle, Settings, LogOut } from 'lucide-angular';
+import { LucideAngularModule, LayoutDashboard, FlaskConical, Users, Target, Monitor, Rocket, BarChart3, Puzzle, Settings, LogOut, PanelLeftClose, PanelLeftOpen } from 'lucide-angular';
 import { NavigationService } from '../../../services/navigation.service';
 import { AuthService } from '../../../../core/services/auth.service';
 import { MenuItem } from '../../../models/menu-item.model';
@@ -22,6 +22,9 @@ export class SidebarComponent implements OnInit {
   menuItems$: Observable<MenuItem[]>;
   bottomItems$: Observable<MenuItem[]>;
 
+  collapsed = false;
+  @Output() collapsedChange = new EventEmitter<boolean>();
+
   // Icons must be explicitly defined for lucide-angular
   readonly icons = {
     LayoutDashboard,
@@ -33,7 +36,9 @@ export class SidebarComponent implements OnInit {
     BarChart3,
     Puzzle,
     Settings,
-    LogOut
+    LogOut,
+    PanelLeftClose,
+    PanelLeftOpen
   };
 
   constructor() {
@@ -44,7 +49,12 @@ export class SidebarComponent implements OnInit {
   ngOnInit(): void {}
 
   isActive(route: string): boolean {
-    return this.router.url.includes(route);
+    const url = this.router.url;
+    if (url.includes(route)) return true;
+    // Routes that redirect: highlight when we're on the actual path
+    if ((route === '/campaigns' || route === '/campaign-engine') && url.includes('/campaign-engine')) return true;
+    if ((route === '/analytics' || route === '/intelligence-hub') && url.includes('/intelligence-hub')) return true;
+    return false;
   }
 
   getIcon(name: string) {
@@ -53,5 +63,10 @@ export class SidebarComponent implements OnInit {
 
   logout(): void {
     this.auth.logout();
+  }
+
+  toggleSidebar(): void {
+    this.collapsed = !this.collapsed;
+    this.collapsedChange.emit(this.collapsed);
   }
 }

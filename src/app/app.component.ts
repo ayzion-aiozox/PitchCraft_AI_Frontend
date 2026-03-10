@@ -14,6 +14,8 @@ import { SidebarComponent } from './shared/components/layout/sidebar/sidebar.com
 export class AppComponent {
   private readonly router = inject(Router);
 
+  sidebarCollapsed = false;
+
   /** True when current URL is under /auth so we show auth layout (no sidebar). */
   isAuthRoute$ = this.router.events.pipe(
     filter((e): e is NavigationEnd => e instanceof NavigationEnd),

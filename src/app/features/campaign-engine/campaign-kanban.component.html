@@ -7,36 +7,15 @@
     [showUserName]="false"
   ></app-page-header>
 
-  <div class="control-bar">
-    <div class="control-group">
-      <mat-form-field appearance="fill" subscriptSizing="dynamic" class="campaign-selector-field">
-        <mat-select [(ngModel)]="selectedCampaignId">
-          @for (c of campaigns; track c.id) {
-            <mat-option [value]="c.id">{{ c.name }}</mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
-      <mat-button-toggle-group [(ngModel)]="viewMode" class="view-toggles" name="viewMode">
-        <mat-button-toggle value="board" class="view-toggle">
-          <iconify-icon icon="lucide:kanban" class="view-toggle-icon"></iconify-icon>
-          Board
-        </mat-button-toggle>
-        <mat-button-toggle value="list" class="view-toggle">
-          <iconify-icon icon="lucide:list" class="view-toggle-icon"></iconify-icon>
-          List
-        </mat-button-toggle>
-        <mat-button-toggle value="calendar" class="view-toggle">
-          <iconify-icon icon="lucide:calendar" class="view-toggle-icon"></iconify-icon>
-          Calendar
-        </mat-button-toggle>
-      </mat-button-toggle-group>
-      <span class="control-divider"></span>
-      <button mat-button type="button" class="performance-btn">
-        <iconify-icon icon="lucide:bar-chart-2" class="view-toggle-icon"></iconify-icon>
-        Performance
-      </button>
-    </div>
-    <div class="control-group">
+  <app-campaign-view-bar
+    [campaigns]="campaigns"
+    [(selectedCampaignId)]="selectedCampaignId"
+    [viewMode]="viewMode"
+    (viewModeChange)="setViewMode($event)"
+    [showCampaignSelector]="true"
+    [showPerformance]="true"
+  >
+    <div class="control-bar-right">
       <div class="avatar-stack">
         @for (url of teamAvatars; track url) {
           <img [src]="url" class="avatar-stack-img" alt="" />
@@ -48,7 +27,7 @@
         New Campaign
       </button>
     </div>
-  </div>
+  </app-campaign-view-bar>
 
   <div class="kanban-board">
     @for (column of columns; track column.id) {

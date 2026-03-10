@@ -1,0 +1,183 @@
+/**
+ * Shared: Campaign selector + view tabs bar.
+ * Reusable in Campaign Engine and other screens. Uses CSS variables only.
+ */
+:host {
+  display: block;
+}
+
+.campaign-view-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 14px 24px;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+}
+
+.campaign-view-bar__left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.campaign-view-bar__right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Campaign selector — outline, rounded, soft border */
+.campaign-view-bar__select {
+  min-width: 220px;
+  max-width: 280px;
+
+  .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+  }
+
+  .mat-mdc-text-field-wrapper {
+    padding: 0 14px;
+    border-radius: var(--radius-lg);
+    background: var(--background);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .mat-mdc-form-field-infix {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    min-height: 44px;
+  }
+
+  ::ng-deep .mat-mdc-text-field-wrapper {
+    border-radius: var(--radius-lg);
+  }
+
+  ::ng-deep .mdc-notched-outline .mdc-notched-outline__leading,
+  ::ng-deep .mdc-notched-outline .mdc-notched-outline__notch,
+  ::ng-deep .mdc-notched-outline .mdc-notched-outline__trailing {
+    border-radius: var(--radius-lg);
+    border-color: var(--border);
+    transition: border-color 0.2s;
+  }
+
+  ::ng-deep .mat-mdc-form-field-focus-overlay {
+    border-radius: var(--radius-lg);
+  }
+
+  &.mat-focused ::ng-deep .mdc-notched-outline .mdc-notched-outline__leading,
+  &.mat-focused ::ng-deep .mdc-notched-outline .mdc-notched-outline__notch,
+  &.mat-focused ::ng-deep .mdc-notched-outline .mdc-notched-outline__trailing {
+    border-color: var(--secondary);
+    border-width: 1.5px;
+  }
+
+  ::ng-deep .mat-mdc-select-value {
+    font-weight: 600;
+    font-size: var(--font-size-base);
+    color: var(--foreground);
+  }
+
+  ::ng-deep .mat-mdc-select-arrow {
+    color: var(--muted-foreground);
+  }
+}
+
+/* View tabs — pill container + active pill */
+.campaign-view-bar__tabs {
+  display: flex;
+  background: var(--muted);
+  padding: 3px;
+  border-radius: var(--radius-md);
+  gap: 2px;
+}
+
+.campaign-view-bar__tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--muted-foreground);
+  background: transparent;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.2s, color 0.2s;
+}
+
+.campaign-view-bar__tab:hover {
+  color: var(--foreground);
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.campaign-view-bar__tab.active {
+  background: var(--card);
+  color: var(--primary);
+  font-weight: 600;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.campaign-view-bar__tab-icon {
+  font-size: 16px;
+  color: inherit;
+}
+
+.campaign-view-bar__divider {
+  width: 1px;
+  height: 24px;
+  background: var(--border);
+  margin: 0 4px;
+  flex-shrink: 0;
+}
+
+/* Performance button */
+.campaign-view-bar__performance {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--muted-foreground);
+  background: transparent;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.2s, color 0.2s;
+}
+
+.campaign-view-bar__performance:hover {
+  background: var(--muted);
+  color: var(--foreground);
+}
+
+.campaign-view-bar__performance-icon {
+  font-size: 16px;
+  color: inherit;
+}
+
+@media (max-width: 768px) {
+  .campaign-view-bar {
+    padding: 12px 16px;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .campaign-view-bar__left {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .campaign-view-bar__select {
+    min-width: 100%;
+    max-width: none;
+  }
+}
