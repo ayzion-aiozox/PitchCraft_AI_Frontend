@@ -1,0 +1,230 @@
+<div class="auth-screen">
+  <div class="auth-orb auth-orb-1"></div>
+  <div class="auth-orb auth-orb-2"></div>
+  <div class="auth-orb auth-orb-3"></div>
+
+  <div class="auth-glass">
+    <!-- Brand side -->
+    <div class="auth-brand">
+      <div class="auth-logo">
+        <div class="auth-logo-icon">
+          <iconify-icon icon="lucide:sparkles"></iconify-icon>
+        </div>
+        PitchCraft AI
+      </div>
+
+      <div class="auth-brand-messaging">
+        <h1 class="auth-brand-title">The Neural Bridge to Market.</h1>
+        <div class="auth-feature-list">
+          <div class="auth-feature-item">
+            <div class="auth-feature-icon">
+              <iconify-icon icon="lucide:brain-circuit" style="font-size: 20px"></iconify-icon>
+            </div>
+            <div class="auth-feature-text">
+              <strong>Deep Persona Generation</strong>
+              Extract psychological profiles from specs.
+            </div>
+          </div>
+          <div class="auth-feature-item">
+            <div class="auth-feature-icon">
+              <iconify-icon icon="lucide:radar" style="font-size: 20px"></iconify-icon>
+            </div>
+            <div class="auth-feature-text">
+              <strong>Semantic Lead Discovery</strong>
+              Vector-match prospects with 94% accuracy.
+            </div>
+          </div>
+          <div class="auth-feature-item">
+            <div class="auth-feature-icon">
+              <iconify-icon icon="lucide:bot" style="font-size: 20px"></iconify-icon>
+            </div>
+            <div class="auth-feature-text">
+              <strong>Automated Strategy</strong>
+              Craft hyper-personalized outreach at scale.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="auth-testimonial">
+        <p class="auth-testimonial-quote">
+          PitchCraft didn't just give me leads—it gave me the exact words to say to a CTO that made him book a demo in 10 minutes. It felt like cheating.
+        </p>
+        <div class="auth-testimonial-author">
+          <img
+            src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80"
+            alt="David Chen"
+            width="40"
+            height="40"
+            style="border-radius: 50%; object-fit: cover; border: 2px solid rgba(30,58,138,0.15);"
+          />
+          <div>
+            <div style="font-size: 14px; font-weight: 700; color: var(--auth-text)">David Chen</div>
+            <div style="font-size: 13px; font-weight: 500; color: var(--auth-text-muted)">Founder, TechFlow SaaS</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form side -->
+    <div class="auth-form-side">
+      <div class="auth-header">
+        <h2 class="auth-form-title">{{ loginTitle }}</h2>
+        <p class="auth-form-subtitle">{{ loginSubtitle }}</p>
+      </div>
+
+      <div class="auth-tabs">
+        <button type="button" class="auth-tab-btn" [class.auth-tab-active]="activeTab === 'login'" (click)="setTab('login')">
+          Sign In
+        </button>
+        <button type="button" class="auth-tab-btn" [class.auth-tab-active]="activeTab === 'signup'" (click)="setTab('signup')">
+          Create Account
+        </button>
+      </div>
+
+      <!-- Login form -->
+      <div id="login-pane" class="auth-pane" [class.auth-pane-active]="activeTab === 'login'">
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmitLogin()" autocomplete="off">
+          @if (errorMessage && activeTab === 'login') {
+            <div class="auth-error" role="alert">{{ errorMessage }}</div>
+          }
+          <div class="auth-form-group">
+            <label class="auth-label" for="login-email">Work Email</label>
+            <div class="auth-input-wrap">
+              <iconify-icon icon="lucide:mail" class="auth-input-icon"></iconify-icon>
+              <input
+                id="login-email"
+                type="email"
+                class="auth-input"
+                formControlName="email"
+                name="pitchcraft-email"
+                placeholder="founder@startup.com"
+                autocomplete="off"
+                [attr.readonly]="loginEmailReadonly || null"
+                (focus)="onLoginEmailFocus()"
+              />
+            </div>
+            @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
+              <span class="auth-field-error">Enter a valid email address.</span>
+            }
+          </div>
+          <div class="auth-form-group">
+            <label class="auth-label" for="login-password">Password</label>
+            <div class="auth-input-wrap auth-input-wrap--password">
+              <iconify-icon icon="lucide:lock-keyhole" class="auth-input-icon"></iconify-icon>
+              <input
+                id="login-password"
+                [type]="showLoginPassword ? 'text' : 'password'"
+                class="auth-input"
+                formControlName="password"
+                name="pitchcraft-password"
+                placeholder="••••••••"
+                autocomplete="off"
+                [attr.readonly]="loginPasswordReadonly || null"
+                (focus)="onLoginPasswordFocus()"
+              />
+              <button type="button" class="auth-password-toggle" (click)="toggleLoginPasswordVisibility()" [attr.aria-label]="showLoginPassword ? 'Hide password' : 'Show password'" title="{{ showLoginPassword ? 'Hide password' : 'Show password' }}">
+                <iconify-icon [icon]="showLoginPassword ? 'lucide:eye-off' : 'lucide:eye'"></iconify-icon>
+              </button>
+            </div>
+            @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
+              <span class="auth-field-error">Password must be at least 6 characters.</span>
+            }
+          </div>
+          <div class="auth-form-actions">
+            <label class="auth-checkbox-wrap">
+              <input type="checkbox" formControlName="rememberDevice" />
+              <div class="auth-checkbox">
+                <iconify-icon icon="lucide:check"></iconify-icon>
+              </div>
+              <span class="auth-checkbox-label">Remember device</span>
+            </label>
+            <a href="#" class="auth-link" (click)="$event.preventDefault()">Reset password</a>
+          </div>
+          <button type="submit" class="auth-btn auth-btn-primary" [disabled]="loading">
+            {{ loading ? 'Signing in...' : 'Enter Command Center' }}
+            <iconify-icon icon="lucide:arrow-right" style="margin-left: 4px"></iconify-icon>
+          </button>
+        </form>
+      </div>
+
+      <!-- Signup form -->
+      <div id="signup-pane" class="auth-pane" [class.auth-pane-active]="activeTab === 'signup'">
+        <form [formGroup]="signupForm" (ngSubmit)="onSubmitSignup()">
+          @if (errorMessage && activeTab === 'signup') {
+            <div class="auth-error" role="alert">{{ errorMessage }}</div>
+          }
+          <div class="auth-form-grid">
+            <div class="auth-form-group">
+              <label class="auth-label" for="signup-first">First Name</label>
+              <div class="auth-input-wrap">
+                <iconify-icon icon="lucide:user" class="auth-input-icon"></iconify-icon>
+                <input id="signup-first" type="text" class="auth-input" formControlName="firstName" placeholder="Sarah" autocomplete="given-name" />
+              </div>
+              @if (signupForm.get('firstName')?.invalid && signupForm.get('firstName')?.touched) {
+                <span class="auth-field-error">Required.</span>
+              }
+            </div>
+            <div class="auth-form-group">
+              <label class="auth-label" for="signup-last">Last Name</label>
+              <div class="auth-input-wrap">
+                <iconify-icon icon="lucide:user" class="auth-input-icon"></iconify-icon>
+                <input id="signup-last" type="text" class="auth-input" formControlName="lastName" placeholder="Jenkins" autocomplete="family-name" />
+              </div>
+              @if (signupForm.get('lastName')?.invalid && signupForm.get('lastName')?.touched) {
+                <span class="auth-field-error">Required.</span>
+              }
+            </div>
+          </div>
+          <div class="auth-form-group">
+            <label class="auth-label" for="signup-email">Work Email</label>
+            <div class="auth-input-wrap">
+              <iconify-icon icon="lucide:mail" class="auth-input-icon"></iconify-icon>
+              <input id="signup-email" type="email" class="auth-input" formControlName="email" placeholder="name@company.com" autocomplete="email" />
+            </div>
+            @if (signupForm.get('email')?.invalid && signupForm.get('email')?.touched) {
+              <span class="auth-field-error">Enter a valid email address.</span>
+            }
+          </div>
+          <div class="auth-form-grid">
+            <div class="auth-form-group">
+              <label class="auth-label" for="signup-workspace">Workspace <span style="font-weight:400;color:var(--auth-text-muted)">(optional)</span></label>
+              <div class="auth-input-wrap">
+                <iconify-icon icon="lucide:building-2" class="auth-input-icon"></iconify-icon>
+                <input id="signup-workspace" type="text" class="auth-input" formControlName="workspaceName" placeholder="e.g. Acme Corp" autocomplete="organization" />
+              </div>
+            </div>
+            <div class="auth-form-group">
+              <label class="auth-label" for="signup-invite">Invite code <span style="font-weight:400;color:var(--auth-text-muted)">(optional)</span></label>
+              <div class="auth-input-wrap">
+                <iconify-icon icon="lucide:key-round" class="auth-input-icon"></iconify-icon>
+                <input id="signup-invite" type="text" class="auth-input" formControlName="inviteCode" placeholder="Paste code" autocomplete="off" />
+              </div>
+            </div>
+          </div>
+          <div class="auth-form-group">
+            <label class="auth-label" for="signup-password">Password</label>
+            <div class="auth-input-wrap auth-input-wrap--password">
+              <iconify-icon icon="lucide:lock-keyhole" class="auth-input-icon"></iconify-icon>
+              <input id="signup-password" [type]="showSignupPassword ? 'text' : 'password'" class="auth-input" formControlName="password" placeholder="Create a strong password" autocomplete="new-password" />
+              <button type="button" class="auth-password-toggle" (click)="toggleSignupPasswordVisibility()" [attr.aria-label]="showSignupPassword ? 'Hide password' : 'Show password'" title="{{ showSignupPassword ? 'Hide password' : 'Show password' }}">
+                <iconify-icon [icon]="showSignupPassword ? 'lucide:eye-off' : 'lucide:eye'"></iconify-icon>
+              </button>
+            </div>
+            @if (signupForm.get('password')?.invalid && signupForm.get('password')?.touched) {
+              <span class="auth-field-error">Password must be at least 6 characters.</span>
+            }
+          </div>
+          <button type="submit" class="auth-btn auth-btn-primary" [disabled]="loading">
+            {{ loading ? 'Creating account...' : 'Activate Growth Engine' }}
+            <iconify-icon icon="lucide:sparkles" style="margin-left: 4px; font-size: 18px"></iconify-icon>
+          </button>
+          <p class="auth-legal">
+            By joining, you agree to our <a href="#" class="auth-link" (click)="$event.preventDefault()">Terms</a> & <a href="#" class="auth-link" (click)="$event.preventDefault()">Privacy Policy</a>.
+          </p>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>

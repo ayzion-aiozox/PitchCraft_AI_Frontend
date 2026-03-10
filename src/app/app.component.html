@@ -1,5 +1,7 @@
-<div class="app-layout">
-  <app-sidebar></app-sidebar>
+<div class="app-shell" [class.app-shell--auth]="(isAuthRoute$ | async) ?? false">
+  @if (!((isAuthRoute$ | async) ?? false)) {
+    <app-sidebar></app-sidebar>
+  }
   <div class="main-content-wrapper">
     <router-outlet></router-outlet>
   </div>

@@ -1,8 +1,9 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
-import { LucideAngularModule, LayoutDashboard, FlaskConical, Users, Target, Monitor, Rocket, BarChart3, Puzzle, Settings } from 'lucide-angular';
+import { LucideAngularModule, LayoutDashboard, FlaskConical, Users, Target, Monitor, Rocket, BarChart3, Puzzle, Settings, LogOut } from 'lucide-angular';
 import { NavigationService } from '../../../services/navigation.service';
+import { AuthService } from '../../../../core/services/auth.service';
 import { MenuItem } from '../../../models/menu-item.model';
 import { Observable } from 'rxjs';
 
@@ -16,6 +17,7 @@ import { Observable } from 'rxjs';
 export class SidebarComponent implements OnInit {
   private navigationService = inject(NavigationService);
   private router = inject(Router);
+  private auth = inject(AuthService);
 
   menuItems$: Observable<MenuItem[]>;
   bottomItems$: Observable<MenuItem[]>;
@@ -30,7 +32,8 @@ export class SidebarComponent implements OnInit {
     Rocket,
     BarChart3,
     Puzzle,
-    Settings
+    Settings,
+    LogOut
   };
 
   constructor() {
@@ -46,5 +49,9 @@ export class SidebarComponent implements OnInit {
 
   getIcon(name: string) {
     return this.icons[name as keyof typeof this.icons];
+  }
+
+  logout(): void {
+    this.auth.logout();
   }
 }

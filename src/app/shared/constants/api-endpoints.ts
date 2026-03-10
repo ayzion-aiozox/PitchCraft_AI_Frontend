@@ -6,8 +6,9 @@
  * Services should use: baseUrl + ApiEndpoints.<area>.<action>
  */
 export const ApiEndpoints = {
-  /** Auth: login, token, refresh */
+  /** Auth: register, login, token, refresh */
   auth: {
+    register: 'api/auth/register',
     login: 'api/auth/login',
     token: 'api/v1/Public/GetAuthToken',
   },
@@ -20,6 +21,19 @@ export const ApiEndpoints = {
   /** Lookup: reference data */
   lookup: {
     byType: 'Lookup/LookupByType/{lookupType}',
+  },
+  /** Product Lab: products, search, stats, value-matrix, documents, templates */
+  products: {
+    base: 'api/products',
+    byId: (id: string) => `api/products/${id}`,
+    status: (id: string) => `api/products/${id}/status`,
+    duplicate: (id: string) => `api/products/${id}/duplicate`,
+    search: 'api/products/search',
+    stats: 'api/products/stats',
+    valueMatrix: (id: string) => `api/products/${id}/value-matrix`,
+    documents: (id: string) => `api/products/${id}/documents`,
+    documentById: (documentId: string) => `api/products/documents/${documentId}`,
+    templates: 'api/products/templates',
   },
 } as const;
 

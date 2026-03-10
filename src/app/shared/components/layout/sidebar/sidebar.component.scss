@@ -33,24 +33,6 @@
     flex: 1;
     overflow-y: auto;
     padding: 16px 12px;
-    
-    /* Custom scrollbar */
-    &::-webkit-scrollbar {
-      width: 6px;
-    }
-    
-    &::-webkit-scrollbar-track {
-      background: transparent;
-    }
-    
-    &::-webkit-scrollbar-thumb {
-      background: var(--sidebar-border);
-      border-radius: 3px;
-    }
-    
-    &::-webkit-scrollbar-thumb:hover {
-      background: var(--text-muted);
-    }
   }
 
   &__footer {
@@ -175,6 +157,23 @@
     border-left: 3px solid #06b6d4; /* Border Left: 3px solid #06b6d4 */
     color: #1e3a8a; /* Color: #1e3a8a */
     font-weight: 600;
+  }
+
+  // Logout button: full width, no link styling
+  &--logout {
+    width: 100%;
+    border: none;
+    background: none;
+    text-align: left;
+    font-family: inherit;
+    margin-top: 8px;
+    padding-top: 12px;
+    border-top: 1px solid var(--sidebar-border);
+
+    &:hover {
+      color: #dc2626;
+      background-color: #fef2f2;
+    }
   }
 }
 

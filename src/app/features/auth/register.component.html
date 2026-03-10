@@ -1,0 +1,77 @@
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="auth-card-header">
+      <h1 class="auth-title">Create your account</h1>
+      <p class="auth-subtitle">Get started with PitchCraft. With an invite code you'll join a workspace; otherwise we'll create one for you.</p>
+    </div>
+
+    <form class="auth-form" (ngSubmit)="onSubmit()" [formGroup]="form">
+      @if (errorMessage) {
+        <div class="auth-error" role="alert">{{ errorMessage }}</div>
+      }
+
+      <div class="auth-field">
+        <label class="auth-label" for="reg-name">Name</label>
+        <input
+          id="reg-name"
+          type="text"
+          class="auth-input"
+          formControlName="name"
+          placeholder="Your name"
+          autocomplete="name"
+        />
+      </div>
+
+      <div class="auth-field">
+        <label class="auth-label" for="reg-email">Email</label>
+        <input
+          id="reg-email"
+          type="email"
+          class="auth-input"
+          formControlName="email"
+          placeholder="you@company.com"
+          autocomplete="email"
+        />
+        @if (form.get('email')?.invalid && form.get('email')?.touched) {
+          <span class="auth-field-error">Enter a valid email address.</span>
+        }
+      </div>
+
+      <div class="auth-field">
+        <label class="auth-label" for="reg-password">Password</label>
+        <input
+          id="reg-password"
+          type="password"
+          class="auth-input"
+          formControlName="password"
+          placeholder="••••••••"
+          autocomplete="new-password"
+        />
+        @if (form.get('password')?.invalid && form.get('password')?.touched) {
+          <span class="auth-field-error">Password must be at least 6 characters.</span>
+        }
+      </div>
+
+      <div class="auth-field">
+        <label class="auth-label" for="reg-invite">Invite code <span class="auth-optional">(optional)</span></label>
+        <input
+          id="reg-invite"
+          type="text"
+          class="auth-input"
+          formControlName="inviteCode"
+          placeholder="Paste invite code to join a workspace"
+          autocomplete="off"
+        />
+      </div>
+
+      <button type="submit" class="auth-submit" [disabled]="loading">
+        {{ loading ? 'Creating account...' : 'Sign up' }}
+      </button>
+    </form>
+
+    <p class="auth-footer">
+      Already have an account?
+      <a routerLink="/auth/login" class="auth-link">Sign in</a>
+    </p>
+  </div>
+</div>

@@ -32,17 +32,24 @@
         <h1>Product Intelligence Portfolio</h1>
         <p>Manage AI-powered product positioning and strategic analysis models.</p>
       </div>
-      <app-btn-primary (click)="setActiveTab('wizard')">
+      <app-btn-primary (click)="openNewProduct()">
         <iconify-icon icon="lucide:plus"></iconify-icon>
         New Product
       </app-btn-primary>
     </div>
 
+    @if (errorMessage && activeTab === 'portfolio') {
+      <div class="pl-error" role="alert">{{ errorMessage }}</div>
+    }
+    @if (loading && activeTab === 'portfolio') {
+      <div class="pl-loading">Loading products...</div>
+    }
+
     <div class="pl-portfolio-grid">
       @for (product of portfolioProducts; track product.id) {
         <div
           class="pl-card"
-          (click)="setActiveTab('wizard')"
+          (click)="editProduct(product)"
         >
           <div class="pl-card-top">
             <div class="pl-card-top-inner">
@@ -59,8 +66,9 @@
                   [class.active]="product.badge === 'active'"
                   [class.processing]="product.badge === 'processing'"
                   [class.draft]="product.badge === 'draft'"
+                  [class.archived]="product.badge === 'archived'"
                 >
-                  {{ product.badge === 'active' ? 'Active' : product.badge === 'processing' ? 'Processing' : 'Draft' }}
+                  {{ product.badge === 'active' ? 'Active' : product.badge === 'processing' ? 'Processing' : product.badge === 'archived' ? 'Archived' : 'Draft' }}
                 </span>
               </div>
             </div>
@@ -101,8 +109,9 @@
           <div class="pl-card-footer">
             <span>{{ product.editedAgo }}</span>
             <div class="pl-hover-actions">
-              <button type="button" class="pl-action-btn">Edit</button>
-              <button type="button" class="pl-action-btn">Duplicate</button>
+              <button type="button" class="pl-action-btn" (click)="editProduct(product); $event.stopPropagation()">Edit</button>
+              <button type="button" class="pl-action-btn" (click)="duplicateProduct(product); $event.stopPropagation()">Duplicate</button>
+              <button type="button" class="pl-action-btn pl-action-btn--delete" (click)="openDeleteConfirm(product); $event.stopPropagation()">Delete</button>
             </div>
           </div>
         </div>
@@ -110,7 +119,7 @@
 
       <div
         class="pl-card pl-quick-add"
-        (click)="setActiveTab('wizard')"
+        (click)="openNewProduct()"
       >
         <div class="pl-quick-add-icon">
           <iconify-icon icon="lucide:zap"></iconify-icon>
@@ -149,6 +158,18 @@
           <div class="pl-wizard-completion-value">{{ completionPercent }}%</div>
         </div>
       </div>
+
+      @if (errorMessage && activeTab === 'wizard') {
+        <div class="pl-error" role="alert">{{ errorMessage }}</div>
+      }
+      @if (loading && activeTab === 'wizard') {
+        <div class="pl-wizard-loading-strip" role="status" aria-live="polite">
+          <div class="pl-wizard-loading-bar">
+            <div class="pl-wizard-loading-bar-fill"></div>
+          </div>
+          <span class="pl-wizard-loading-text">{{ editingProductId ? 'Saving...' : 'Creating...' }}</span>
+        </div>
+      }
 
       <!-- Step 1: Basics -->
       <div
@@ -265,10 +286,25 @@
                 ></textarea>
               </div>
             </div>
-            <div class="pl-upload-zone">
+            <div class="pl-upload-zone" (click)="fileInput.click()" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)" [class.drag-over]="isDragOver">
+              <input #fileInput type="file" accept=".pdf,.pptx,.docx" multiple hidden (change)="onFileSelected($event)" />
               <iconify-icon icon="lucide:cloud-upload"></iconify-icon>
               <div style="font-weight: 600; margin-top: 12px">Upload Product Docs</div>
-              <div style="font-size: 12px; color: var(--muted-foreground)">PDF, PPTX, DOCX or URL</div>
+              <div style="font-size: 12px; color: var(--muted-foreground)">Click to select or drag & drop — PDF, PPTX, DOCX</div>
+              @if (uploadedFiles.length) {
+                <div class="pl-uploaded-files">
+                  @for (f of uploadedFiles; track f.name) {
+                    <div class="pl-uploaded-file">
+                      <iconify-icon icon="lucide:file-text" style="font-size: 16px; color: var(--secondary)"></iconify-icon>
+                      <span class="pl-uploaded-file-name">{{ f.name }}</span>
+                      <span class="pl-uploaded-file-size">{{ formatFileSize(f.size) }}</span>
+                      <button type="button" class="pl-uploaded-file-remove" (click)="removeFile(f); $event.stopPropagation()">
+                        <iconify-icon icon="lucide:x" style="font-size: 14px"></iconify-icon>
+                      </button>
+                    </div>
+                  }
+                </div>
+              }
             </div>
           </div>
           <div class="pl-intel-pane">
@@ -355,7 +391,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  @for (row of valueRows; track row.feature) {
+                  @for (row of valueRows; track $index) {
                     <tr>
                       <td>{{ row.feature }}</td>
                       <td>{{ row.benefit }}</td>
@@ -394,11 +430,18 @@
       </div>
 
       <div class="pl-wizard-footer">
-        <app-btn-secondary (click)="saveDraft()">Save Draft</app-btn-secondary>
-        <app-btn-primary (click)="nextStep()">
-          {{ currentStep < totalWizardSteps ? 'Continue' : 'Finish' }}
-          <iconify-icon icon="lucide:arrow-right"></iconify-icon>
-        </app-btn-primary>
+        <button type="button" class="btn btn-secondary" (click)="saveDraft()" [disabled]="loading">
+          {{ loading ? 'Saving...' : 'Save Draft' }}
+        </button>
+        <button type="button" class="btn btn-primary pl-wizard-btn-primary" (click)="nextStep()" [disabled]="loading">
+          @if (loading) {
+            <iconify-icon icon="lucide:loader-2" class="pl-wizard-spinner"></iconify-icon>
+            {{ editingProductId ? 'Saving...' : 'Creating...' }}
+          } @else {
+            {{ currentStep < totalWizardSteps ? 'Continue' : 'Finish' }}
+            <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+          }
+        </button>
       </div>
     </div>
   </div>
@@ -431,4 +474,25 @@
       }
     </div>
   </div>
+
+  <!-- Delete confirmation modal -->
+  @if (productToDelete) {
+    <div class="pl-modal-backdrop" (click)="closeDeleteConfirm()" role="presentation">
+      <div class="pl-modal" (click)="$event.stopPropagation()" role="dialog" aria-modal="true" aria-labelledby="pl-delete-modal-title">
+        <div class="pl-modal-header">
+          <div class="pl-modal-icon pl-modal-icon--danger">
+            <iconify-icon icon="lucide:trash-2"></iconify-icon>
+          </div>
+          <h2 id="pl-delete-modal-title" class="pl-modal-title">Delete product?</h2>
+          <p class="pl-modal-message">Are you sure you want to delete <strong>{{ productToDelete.title }}</strong>? This action cannot be undone.</p>
+        </div>
+        <div class="pl-modal-actions">
+          <app-btn-secondary (click)="closeDeleteConfirm()">Cancel</app-btn-secondary>
+          <button type="button" class="pl-modal-btn-delete" (click)="confirmDelete()" [disabled]="loading">
+            {{ loading ? 'Deleting...' : 'Delete' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  }
 </div>

@@ -20,40 +20,23 @@
   position: relative;
 }
 
-/* Header */
+/* Header – matches page-header: solid bar, clear separation from content */
 .top-header {
-  height: 64px; /* Height: 64px */
-  background: linear-gradient(135deg, 
-    rgba(255, 255, 255, 0.15) 0%, 
-    rgba(255, 255, 255, 0.1) 100%); /* Gradient for depth */
-  border: 1px solid rgba(255, 255, 255, 0.2); /* Light border for glass frame */
+  height: 64px;
+  background: #ffffff;
+  border-bottom: 1px solid var(--border, #e2e8f0);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 32px; /* Padding: 0 32px */
+  padding: 0 32px;
   position: sticky;
   top: 0;
   z-index: 40;
   flex-shrink: 0;
-  
-  /* Enhanced Glassmorphism effect */
-  backdrop-filter: blur(20px) saturate(180%); /* Stronger blur with color saturation */
-  -webkit-backdrop-filter: blur(20px) saturate(180%); /* Safari support */
-  box-shadow: 
-    0 8px 32px rgba(31, 38, 135, 0.15), /* Soft outer glow */
-    inset 0 2px 0 rgba(255, 255, 255, 0.2); /* Inner highlight */
-  
-  /* Enhanced hover effect */
-  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-  
+  transition: background 0.2s;
+
   &:hover {
-    background: linear-gradient(135deg, 
-      rgba(255, 255, 255, 0.25) 0%, 
-      rgba(255, 255, 255, 0.2) 100%);
-    box-shadow: 
-      0 12px 40px rgba(31, 38, 135, 0.25),
-      inset 0 2px 0 rgba(255, 255, 255, 0.3);
-    transform: translateY(-2px); /* Subtle lift effect */
+    background: #fafafa;
   }
 }
 
