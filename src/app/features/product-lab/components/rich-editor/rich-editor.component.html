@@ -1,17 +1,31 @@
 <div class="rich-editor">
   <div class="editor-toolbar">
-    <div 
-      class="tool-btn" 
-      *ngFor="let tool of tools"
-      [attr.data-tool]="tool.name"
-      (click)="formatText(tool.name)">
-      <lucide-icon [img]="tool.icon" [size]="16"></lucide-icon>
-    </div>
+    @for (item of toolbarItems; track $index) {
+      @if (item === 'sep') {
+        <div class="toolbar-sep" aria-hidden="true"></div>
+      } @else {
+        <button
+          type="button"
+          class="tool-btn"
+          [class.active]="isActive(item)"
+          [attr.title]="itemTitle(item)"
+          [attr.aria-label]="itemTitle(item)"
+          (mousedown)="onToolbarMouseDown($event)"
+          (click)="applyFormat(item)"
+        >
+          <lucide-icon [img]="item.icon" [size]="16"></lucide-icon>
+        </button>
+      }
+    }
   </div>
-  <textarea 
-    class="editor-textarea" 
-    [(ngModel)]="content"
-    (ngModelChange)="onContentChange()"
-    placeholder="Describe what your product does, its core technology, and primary use cases...">
-  </textarea>
+  <div
+    #editor
+    class="editor-surface"
+    [class.is-empty]="isEmpty"
+    [attr.data-placeholder]="placeholder"
+    contenteditable="true"
+    spellcheck="true"
+    (input)="onEditorInput()"
+    (blur)="onEditorInput()"
+  ></div>
 </div>

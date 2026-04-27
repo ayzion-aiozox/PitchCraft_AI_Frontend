@@ -398,6 +398,325 @@
   min-height: 32px;
 }
 
+/* ----- Performance view ----- */
+.campaign-performance-view {
+  flex: 1;
+  overflow: auto;
+  padding: 24px;
+  background: var(--background);
+  min-height: 0;
+}
+
+.performance-header {
+  margin-bottom: 24px;
+}
+
+.performance-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 4px;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.performance-title iconify-icon {
+  font-size: 24px;
+  color: var(--primary);
+}
+
+.performance-subtitle {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--muted-foreground);
+}
+
+.performance-kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.performance-kpi-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 18px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+.performance-kpi-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  border-color: rgba(59, 130, 246, 0.2);
+}
+
+.performance-kpi-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-lg);
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.performance-kpi-icon iconify-icon {
+  font-size: 22px;
+}
+
+.performance-kpi-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.performance-kpi-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--foreground);
+  line-height: 1.2;
+}
+
+.performance-kpi-label {
+  font-size: var(--font-size-sm);
+  color: var(--muted-foreground);
+  font-weight: 500;
+}
+
+.performance-kpi-trend {
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.performance-kpi-trend.positive {
+  color: var(--success);
+}
+
+.performance-kpi-trend.negative {
+  color: var(--destructive);
+}
+
+.performance-chart-section {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 20px 24px;
+}
+
+.performance-section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 20px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.performance-section-title iconify-icon {
+  font-size: 20px;
+  color: var(--primary);
+}
+
+.performance-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.performance-bar-row {
+  display: grid;
+  grid-template-columns: 100px 1fr 44px;
+  align-items: center;
+  gap: 16px;
+  font-size: var(--font-size-sm);
+}
+
+.performance-bar-label {
+  color: var(--foreground);
+  font-weight: 500;
+}
+
+.performance-bar-track {
+  height: 10px;
+  background: var(--muted);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.performance-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), #3b82f6);
+  border-radius: 5px;
+  transition: width 0.3s ease;
+}
+
+.performance-bar-value {
+  text-align: right;
+  color: var(--muted-foreground);
+  font-weight: 600;
+}
+
+/* ----- List view ----- */
+.campaign-list-view {
+  flex: 1;
+  overflow: auto;
+  padding: 20px 24px;
+  background: var(--background);
+  min-height: 0;
+}
+
+.campaign-list-toolbar {
+  margin-bottom: 16px;
+}
+
+.campaign-list-count {
+  font-size: var(--font-size-sm);
+  color: var(--muted-foreground);
+}
+
+.campaign-list-table {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+}
+
+.campaign-list-header {
+  display: grid;
+  grid-template-columns: 100px 1fr 140px 140px;
+  gap: 16px;
+  padding: 12px 20px;
+  background: var(--muted);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--muted-foreground);
+}
+
+.campaign-list-row {
+  display: grid;
+  grid-template-columns: 100px 1fr 140px 140px;
+  gap: 16px;
+  padding: 14px 20px;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  font-size: var(--font-size-sm);
+  transition: background 0.2s;
+}
+
+.campaign-list-row:last-child {
+  border-bottom: none;
+}
+
+.campaign-list-row:hover {
+  background: var(--muted);
+}
+
+.col-status app-status-badge {
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.col-contact {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.list-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.list-avatar-placeholder {
+  background: var(--muted);
+  color: var(--muted-foreground);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.list-contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.list-contact-info strong {
+  font-weight: 600;
+  color: var(--foreground);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.list-role {
+  font-size: var(--font-size-xs);
+  color: var(--muted-foreground);
+}
+
+.text-muted {
+  color: var(--muted-foreground);
+}
+
+/* ----- Calendar view (Angular Material mat-calendar) ----- */
+.campaign-calendar-view {
+  flex: 1;
+  overflow: auto;
+  padding: 20px 24px;
+  background: var(--background);
+  min-height: 0;
+}
+
+.campaign-calendar-header {
+  margin-bottom: 20px;
+}
+
+.campaign-calendar-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.campaign-calendar-title iconify-icon {
+  font-size: 24px;
+  color: var(--primary);
+}
+
+.campaign-calendar-mat {
+  max-width: 320px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+}
+
+.campaign-calendar-mat mat-calendar {
+  width: 100%;
+}
+
 /* ----- Responsive ----- */
 @media (max-width: 768px) {
   .kanban-board {
@@ -407,5 +726,23 @@
 
   .kanban-column {
     width: 280px;
+  }
+
+  .campaign-list-header,
+  .campaign-list-row {
+    grid-template-columns: 80px 1fr 100px;
+  }
+
+  .col-meta {
+    display: none;
+  }
+
+  .performance-kpis {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .performance-bar-row {
+    grid-template-columns: 80px 1fr 40px;
+    gap: 12px;
   }
 }

@@ -22,6 +22,8 @@ export interface AuthUser {
   email: string;
   displayName: string;
   currentWorkspaceId?: string;
+  /** Workspace’s Qdrant collection id (embed `collection_id`) */
+  qdrantCollectionId?: string;
   createdAt?: string;
 }
 

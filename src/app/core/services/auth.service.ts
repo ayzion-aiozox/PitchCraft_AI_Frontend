@@ -61,14 +61,19 @@ export class AuthService {
     );
   }
 
-  logout(): void {
+  logout(options?: { sessionExpired?: boolean }): void {
     localStorage.removeItem(LocalStorageConstant.Token);
     localStorage.removeItem(LocalStorageConstant.RefreshToken);
     localStorage.removeItem(LocalStorageConstant.ExpiresAt);
     localStorage.removeItem(LocalStorageConstant.UserId);
     localStorage.removeItem(LocalStorageConstant.User);
     localStorage.removeItem(LocalStorageConstant.WorkspaceId);
-    this.router.navigate(['/auth/login']);
+    localStorage.removeItem(LocalStorageConstant.QdrantCollectionId);
+    if (options?.sessionExpired) {
+      this.router.navigate(['/auth/login'], { queryParams: { session: 'expired' } });
+    } else {
+      this.router.navigate(['/auth/login']);
+    }
   }
 
   isLoggedIn(): boolean {
@@ -89,6 +94,11 @@ export class AuthService {
 
   getWorkspaceId(): string | null {
     return localStorage.getItem(LocalStorageConstant.WorkspaceId);
+  }
+
+  /** Qdrant collection id from last login (for embed); null if not set. */
+  getQdrantCollectionId(): string | null {
+    return localStorage.getItem(LocalStorageConstant.QdrantCollectionId);
   }
 
   getUser(): AuthUser | null {
@@ -118,6 +128,14 @@ export class AuthService {
       }
       if (data.user.currentWorkspaceId) {
         localStorage.setItem(LocalStorageConstant.WorkspaceId, data.user.currentWorkspaceId);
+      }
+      const u = data.user as AuthUser & Record<string, unknown>;
+      const qidRaw = u.qdrantCollectionId ?? u['QdrantCollectionId'];
+      const qid = typeof qidRaw === 'string' ? qidRaw.trim() : '';
+      if (qid) {
+        localStorage.setItem(LocalStorageConstant.QdrantCollectionId, qid);
+      } else {
+        localStorage.removeItem(LocalStorageConstant.QdrantCollectionId);
       }
     }
   }

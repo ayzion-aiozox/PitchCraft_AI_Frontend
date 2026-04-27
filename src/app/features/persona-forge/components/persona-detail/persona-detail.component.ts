@@ -36,10 +36,10 @@ export class PersonaDetailComponent {
   };
 
   detailTabs = [
-    { id: 'psychographics', label: 'Psychographics' },
-    { id: 'behavioral', label: 'Behavioral' },
-    { id: 'quotes', label: 'Quotes' },
-    { id: 'settings', label: 'Settings' },
+    { id: 'psychographics', label: 'Psychographics', icon: 'lucide:brain' },
+    { id: 'behavioral', label: 'Behavioral', icon: 'lucide:activity' },
+    { id: 'quotes', label: 'Quotes', icon: 'lucide:quote' },
+    { id: 'settings', label: 'Settings', icon: 'lucide:settings' },
   ];
   activeDetailTab = 'psychographics';
 
@@ -64,5 +64,32 @@ export class PersonaDetailComponent {
     { name: 'Slack', icon: 'lucide:message-square' },
     { name: 'Jira', icon: 'lucide:check-square' },
     { name: 'GitHub', icon: 'lucide:git-branch' },
+  ];
+
+  behavioralPatterns = [
+    { title: 'Decision pace', desc: 'Prefers data before committing; typically 1–2 week cycle.', icon: 'lucide:trending-up' },
+    { title: 'Communication', desc: 'Async-first; values clear written summaries over long meetings.', icon: 'lucide:message-circle' },
+    { title: 'Research style', desc: 'Reads case studies and G2 reviews before demos.', icon: 'lucide:book-open' },
+  ];
+
+  extraQuotes = [
+    "We're not looking for more features—we need fewer outages.",
+    "If it doesn't integrate with our stack in a week, we pass.",
+  ];
+
+  settingsGroups = [
+    {
+      label: 'Visibility',
+      items: [
+        { label: 'Show in team library', description: 'Allow others to view this persona', value: true },
+        { label: 'Include in strategy reports', description: 'Add to generated strategy docs', value: true },
+      ],
+    },
+    {
+      label: 'Notifications',
+      items: [
+        { label: 'Updates to this persona', description: 'When psychographics or quotes change', value: false },
+      ],
+    },
   ];
 }

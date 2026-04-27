@@ -89,6 +89,7 @@
           [viewMode]="viewMode"
           (viewModeChange)="setViewMode($event)"
           [viewTabOptions]="phViewTabOptions"
+          variant="pill"
         >
           <div campaignViewBarStart>
             <mat-form-field appearance="outline" subscriptSizing="dynamic" class="ph-sort-field">
@@ -103,83 +104,140 @@
         </app-campaign-view-bar>
       </div>
 
-      <div class="cards-grid">
-        @for (lead of leads; track lead.id) {
-          <div class="lead-card" [class.selected]="selectedLeads.has(lead.id)" (click)="toggleLead(lead.id)">
-            <div class="card-header">
-              <div class="profile-info">
-                <img [src]="lead.avatar" class="profile-img" [alt]="lead.name" />
-                <div class="profile-text">
-                  <h3>{{ lead.name }}</h3>
-                  <p>{{ lead.role }}</p>
+      <!-- Grid view: card layout -->
+      @if (viewMode === 'grid') {
+        <div class="cards-grid">
+          @for (lead of leads; track lead.id) {
+            <div class="lead-card" [class.selected]="selectedLeads.has(lead.id)" (click)="toggleLead(lead.id)">
+              <div class="card-header">
+                <div class="profile-info">
+                  <img [src]="lead.avatar" class="profile-img" [alt]="lead.name" />
+                  <div class="profile-text">
+                    <h3>{{ lead.name }}</h3>
+                    <p>{{ lead.role }}</p>
+                  </div>
+                </div>
+                <div class="match-badge">
+                  <svg class="match-svg" viewBox="0 0 36 36">
+                    <path
+                      class="match-circle-bg"
+                      d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                    ></path>
+                    <path
+                      class="match-circle-fill"
+                      [attr.stroke-dasharray]="lead.matchScore + ', 100'"
+                      d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                    ></path>
+                  </svg>
+                  <div class="match-val">{{ lead.matchScore }}</div>
                 </div>
               </div>
-              <div class="match-badge">
-                <svg class="match-svg" viewBox="0 0 36 36">
-                  <path
-                    class="match-circle-bg"
-                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                  ></path>
-                  <path
-                    class="match-circle-fill"
-                    [attr.stroke-dasharray]="lead.matchScore + ', 100'"
-                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                  ></path>
-                </svg>
-                <div class="match-val">{{ lead.matchScore }}</div>
+
+              <div class="company-row">
+                <div class="company-logo" [style.background-color]="lead.companyColor"></div>
+                {{ lead.company }} • {{ lead.stage }} • {{ lead.location }}
               </div>
-            </div>
 
-            <div class="company-row">
-              <div class="company-logo" [style.background-color]="lead.companyColor"></div>
-              {{ lead.company }} • {{ lead.stage }} • {{ lead.location }}
-            </div>
-
-            <div class="ai-reason">
-              <iconify-icon icon="lucide:sparkles" style="flex-shrink: 0; margin-top: 2px"></iconify-icon>
-              {{ lead.aiReason }}
-            </div>
-
-            <div class="tags-scroll">
-              @for (tag of lead.tags; track tag) {
-                <span class="tag">{{ tag }}</span>
-              }
-            </div>
-
-            <div class="prob-section">
-              <div class="prob-label">
-                <span>Engagement Probability</span>
-                <span [style.color]="lead.probabilityColor" style="font-weight: 600">{{ lead.probabilityLabel }}</span>
+              <div class="ai-reason">
+                <iconify-icon icon="lucide:sparkles" style="flex-shrink: 0; margin-top: 2px"></iconify-icon>
+                {{ lead.aiReason }}
               </div>
-              <div class="prob-bar">
-                <div class="prob-fill" [style.width.%]="lead.probabilityPercent" [style.background]="lead.probabilityColor"></div>
-              </div>
-            </div>
 
-            <div class="card-footer">
-              <div class="card-actions">
-                <div
-                  class="checkbox-box"
-                  [class.checked]="selectedLeads.has(lead.id)"
-                  (click)="$event.stopPropagation(); toggleLead(lead.id)"
-                >
-                  @if (selectedLeads.has(lead.id)) {
-                    <iconify-icon icon="lucide:check" style="font-size: 12px"></iconify-icon>
-                  }
+              <div class="tags-scroll">
+                @for (tag of lead.tags; track tag) {
+                  <span class="tag">{{ tag }}</span>
+                }
+              </div>
+
+              <div class="prob-section">
+                <div class="prob-label">
+                  <span>Engagement Probability</span>
+                  <span [style.color]="lead.probabilityColor" style="font-weight: 600">{{ lead.probabilityLabel }}</span>
                 </div>
-                <iconify-icon
-                  [icon]="lead.starred ? 'lucide:star' : 'lucide:star'"
-                  [style.color]="lead.starred ? 'var(--warning)' : 'var(--muted-foreground)'"
-                  [style.fill]="lead.starred ? 'var(--warning)' : 'transparent'"
-                  style="cursor: pointer"
-                  (click)="$event.stopPropagation(); toggleStar(lead.id)"
-                ></iconify-icon>
+                <div class="prob-bar">
+                  <div class="prob-fill" [style.width.%]="lead.probabilityPercent" [style.background]="lead.probabilityColor"></div>
+                </div>
               </div>
-              <a class="view-link" (click)="$event.stopPropagation(); viewProfile(lead.id)">View Profile →</a>
+
+              <div class="card-footer">
+                <div class="card-actions">
+                  <div
+                    class="checkbox-box"
+                    [class.checked]="selectedLeads.has(lead.id)"
+                    (click)="$event.stopPropagation(); toggleLead(lead.id)"
+                  >
+                    @if (selectedLeads.has(lead.id)) {
+                      <iconify-icon icon="lucide:check" style="font-size: 12px"></iconify-icon>
+                    }
+                  </div>
+                  <iconify-icon
+                    [icon]="lead.starred ? 'lucide:star' : 'lucide:star'"
+                    [style.color]="lead.starred ? 'var(--warning)' : 'var(--muted-foreground)'"
+                    [style.fill]="lead.starred ? 'var(--warning)' : 'transparent'"
+                    style="cursor: pointer"
+                    (click)="$event.stopPropagation(); toggleStar(lead.id)"
+                  ></iconify-icon>
+                </div>
+                <a class="view-link" (click)="$event.stopPropagation(); viewProfile(lead.id)">View Profile →</a>
+              </div>
             </div>
+          }
+        </div>
+      }
+
+      <!-- List view: table-style rows -->
+      @if (viewMode === 'list') {
+        <div class="leads-list-view">
+          <div class="leads-list-table">
+            <div class="leads-list-header">
+              <span class="ph-col-select"></span>
+              <span class="ph-col-contact">Contact</span>
+              <span class="ph-col-company">Company</span>
+              <span class="ph-col-match">Match</span>
+              <span class="ph-col-prob">Probability</span>
+              <span class="ph-col-action"></span>
+            </div>
+            @for (lead of leads; track lead.id) {
+              <div
+                class="leads-list-row"
+                [class.selected]="selectedLeads.has(lead.id)"
+                (click)="toggleLead(lead.id)"
+              >
+                <span class="ph-col-select" (click)="$event.stopPropagation(); toggleLead(lead.id)">
+                  <div
+                    class="ph-checkbox"
+                    [class.checked]="selectedLeads.has(lead.id)"
+                  >
+                    @if (selectedLeads.has(lead.id)) {
+                      <iconify-icon icon="lucide:check" style="font-size: 12px"></iconify-icon>
+                    }
+                  </div>
+                </span>
+                <span class="ph-col-contact">
+                  <img [src]="lead.avatar" class="ph-list-avatar" [alt]="lead.name" />
+                  <div class="ph-list-contact">
+                    <strong>{{ lead.name }}</strong>
+                    <span class="ph-list-role">{{ lead.role }}</span>
+                  </div>
+                </span>
+                <span class="ph-col-company">
+                  <span class="ph-company-dot" [style.background-color]="lead.companyColor"></span>
+                  {{ lead.company }} · {{ lead.stage }} · {{ lead.location }}
+                </span>
+                <span class="ph-col-match">
+                  <span class="ph-match-pill">{{ lead.matchScore }}%</span>
+                </span>
+                <span class="ph-col-prob">
+                  <span class="ph-prob-label" [style.color]="lead.probabilityColor">{{ lead.probabilityLabel }}</span>
+                </span>
+                <span class="ph-col-action">
+                  <a class="ph-view-link" (click)="$event.stopPropagation(); viewProfile(lead.id)">View →</a>
+                </span>
+              </div>
+            }
           </div>
-        }
-      </div>
+        </div>
+      }
 
       <!-- Bulk Action Bar -->
       @if (selectedLeads.size > 0) {
@@ -205,6 +263,73 @@
     </div>
   </div>
 </div>
+
+<!-- Lead detail drawer (opens when View → is clicked) -->
+@if (detailLead) {
+  <div class="lead-detail-backdrop" (click)="closeDetail()"></div>
+  <div class="lead-detail-drawer">
+    <div class="lead-detail-header">
+      <h2 class="lead-detail-title">Lead details</h2>
+      <button type="button" class="lead-detail-close" aria-label="Close" (click)="closeDetail()">
+        <iconify-icon icon="lucide:x"></iconify-icon>
+      </button>
+    </div>
+    <div class="lead-detail-body">
+      <div class="lead-detail-profile">
+        <div class="lead-detail-avatar-wrap">
+          <div class="lead-detail-match-ring" [style.--match-pct]="detailLead.matchScore + '%'"></div>
+          <img [src]="detailLead.avatar" class="lead-detail-avatar" [alt]="detailLead.name" />
+        </div>
+        <div class="lead-detail-name">{{ detailLead.name }}</div>
+        <div class="lead-detail-role">{{ detailLead.role }}</div>
+        <div class="lead-detail-meta">
+          <span class="lead-detail-match">{{ detailLead.matchScore }}% match</span>
+          <span class="lead-detail-company">{{ detailLead.company }} · {{ detailLead.stage }} · {{ detailLead.location }}</span>
+        </div>
+        <div class="lead-detail-actions">
+          <button type="button" class="lead-detail-cta lead-detail-cta--primary" (click)="addToCampaign(); closeDetail()">
+            <iconify-icon icon="lucide:user-plus"></iconify-icon>
+            Add to campaign
+          </button>
+          <button type="button" class="lead-detail-cta lead-detail-cta--secondary" (click)="closeDetail()">
+            <iconify-icon icon="lucide:external-link"></iconify-icon>
+            View full profile
+          </button>
+        </div>
+      </div>
+      <div class="lead-detail-section lead-detail-section--card">
+        <div class="lead-detail-label">
+          <iconify-icon icon="lucide:sparkles"></iconify-icon>
+          Why they match
+        </div>
+        <p class="lead-detail-reason">{{ detailLead.aiReason }}</p>
+      </div>
+      <div class="lead-detail-section lead-detail-section--card">
+        <div class="lead-detail-label">
+          <iconify-icon icon="lucide:tags"></iconify-icon>
+          Tags
+        </div>
+        <div class="lead-detail-tags">
+          @for (tag of detailLead.tags; track tag) {
+            <span class="lead-detail-tag">{{ tag }}</span>
+          }
+        </div>
+      </div>
+      <div class="lead-detail-section lead-detail-section--card">
+        <div class="lead-detail-label">
+          <iconify-icon icon="lucide:trending-up"></iconify-icon>
+          Engagement probability
+        </div>
+        <div class="lead-detail-prob">
+          <span class="lead-detail-prob-value" [style.color]="detailLead.probabilityColor">{{ detailLead.probabilityLabel }}</span>
+          <div class="lead-detail-prob-bar">
+            <div class="lead-detail-prob-fill" [style.width.%]="detailLead.probabilityPercent" [style.background]="detailLead.probabilityColor"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+}
 
 <!-- SVG Gradient Definition -->
 <svg style="width: 0; height: 0; position: absolute" aria-hidden="true">

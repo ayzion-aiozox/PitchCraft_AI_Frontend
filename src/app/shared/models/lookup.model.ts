@@ -1,4 +1,4 @@
-export class Lookup {
+export interface Lookup {
   LookupId: number;
   LookupType: string;
   Description: string;

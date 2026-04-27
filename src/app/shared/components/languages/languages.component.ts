@@ -1,14 +1,15 @@
 import { Component, Output, EventEmitter, Inject, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog'; // Import MatDialogRef
 import { TranslateService } from '@ngx-translate/core';
-import { MATERIAL, SHARED_COMPONENTS } from '../../modules/shared-imports';
+import { MATERIAL } from '../../modules/shared-imports';
 import { CommonModule } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { RadioButtonComponent } from '../radio-button/radio-button.component';
 
 @Component({
   selector: 'app-languages',
   standalone: true,
-  imports: [MATERIAL, CommonModule, SHARED_COMPONENTS, ReactiveFormsModule],
+  imports: [MATERIAL, CommonModule, ReactiveFormsModule, RadioButtonComponent],
   templateUrl: './languages.component.html',
   styleUrls: ['./languages.component.scss'],
 })

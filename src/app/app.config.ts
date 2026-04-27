@@ -1,4 +1,5 @@
 import { ApplicationConfig } from '@angular/core';
+import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
 import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -24,6 +25,7 @@ const translateModule = TranslateModule.forRoot({
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideAnimations(),
     provideRouter(routes),
     provideHttpClient(
       withInterceptors([

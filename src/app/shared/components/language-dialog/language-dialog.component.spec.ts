@@ -1,4 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogRef } from '@angular/material/dialog';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { LanguageDialogComponent } from './language-dialog.component';
 
@@ -8,7 +11,8 @@ describe('LanguageDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LanguageDialogComponent]
+      imports: [NoopAnimationsModule, TranslateModule.forRoot(), LanguageDialogComponent],
+      providers: [{ provide: MatDialogRef, useValue: { close: () => {} } }],
     })
     .compileComponents();
 

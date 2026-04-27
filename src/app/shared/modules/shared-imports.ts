@@ -31,14 +31,6 @@ import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
-import { CircularImageComponent } from '../components/circular-image/circular-image.component';
-import { DateTimeComponent } from '../components/date-time/date-time.component';
-import { LanguageDialogComponent } from '../components/language-dialog/language-dialog.component';
-import { LanguagesComponent } from '../components/languages/languages.component';
-import { RadioButtonComponent } from '../components/radio-button/radio-button.component';
-import { SelectComponent } from '../components/select/select.component';
-import { InputTextComponent } from '../components/text-input/text-input.component';
-
 /** Angular Material modules used across the app */
 export const MATERIAL = [
   MatDatepickerModule,
@@ -77,15 +69,4 @@ export const SHARED_MODULES = [
   CommonModule,
   FormsModule,
   TranslateModule,
-];
-
-/** Reusable UI components for feature imports */
-export const SHARED_COMPONENTS = [
-  CircularImageComponent,
-  DateTimeComponent,
-  LanguageDialogComponent,
-  LanguagesComponent,
-  RadioButtonComponent,
-  SelectComponent,
-  InputTextComponent,
 ];

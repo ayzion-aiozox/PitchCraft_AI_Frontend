@@ -12,7 +12,8 @@ import { MATERIAL, SHARED_MODULES } from '../../modules/shared-imports';
 export class RadioButtonComponent {
   @Input() label: string = ''; // Optional label for the radio group
   @Input() options: { value: string, label: string }[] = []; // Options for radio buttons
-  @Input() formControl: FormControl = new FormControl(); // Form control for reactive forms
+  // Use `control` (not `formControl`) to avoid clashing with Angular's FormControlDirective.
+  @Input() control: FormControl = new FormControl();
   @Input() disabled: boolean = false; // Disabled state for the radio buttons
 
   @Output() selectedValue = new EventEmitter<string>(); // Emit selected value

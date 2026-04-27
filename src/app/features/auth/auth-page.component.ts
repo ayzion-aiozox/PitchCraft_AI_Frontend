@@ -20,6 +20,8 @@ export class AuthPageComponent {
 
   activeTab: 'login' | 'signup' = 'login';
   errorMessage = '';
+  /** Shown when redirected after API 401 (session expired) */
+  sessionExpiredMessage = '';
   loading = false;
   /** Prevents browser autofill; cleared on first focus */
   loginEmailReadonly = true;
@@ -48,6 +50,11 @@ export class AuthPageComponent {
       const tab = params['tab'];
       if (tab === 'signup') this.activeTab = 'signup';
       else if (tab === 'login') this.activeTab = 'login';
+      if (params['session'] === 'expired') {
+        this.sessionExpiredMessage = 'Your session expired. Please sign in again.';
+      } else {
+        this.sessionExpiredMessage = '';
+      }
     });
   }
 

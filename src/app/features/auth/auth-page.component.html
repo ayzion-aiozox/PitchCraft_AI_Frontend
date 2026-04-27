@@ -82,6 +82,9 @@
       <!-- Login form -->
       <div id="login-pane" class="auth-pane" [class.auth-pane-active]="activeTab === 'login'">
         <form [formGroup]="loginForm" (ngSubmit)="onSubmitLogin()" autocomplete="off">
+          @if (sessionExpiredMessage && activeTab === 'login') {
+            <div class="auth-error auth-error--info" role="status">{{ sessionExpiredMessage }}</div>
+          }
           @if (errorMessage && activeTab === 'login') {
             <div class="auth-error" role="alert">{{ errorMessage }}</div>
           }

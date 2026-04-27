@@ -6,4 +6,6 @@ export class LocalStorageConstant {
   static readonly UserId = 'UserId';
   static readonly User = 'User';
   static readonly WorkspaceId = 'WorkspaceId';
+  /** Qdrant collection id for current workspace (from login user payload) */
+  static readonly QdrantCollectionId = 'QdrantCollectionId';
 }

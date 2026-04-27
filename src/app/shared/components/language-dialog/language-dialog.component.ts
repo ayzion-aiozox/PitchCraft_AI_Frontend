@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { MATERIAL, SHARED_COMPONENTS, SHARED_MODULES } from '../../modules/shared-imports';
+import { LanguagesComponent } from '../languages/languages.component';
 
 @Component({
   selector: 'app-language-dialog',
   standalone: true,
-  imports: [SHARED_COMPONENTS, MATERIAL, SHARED_MODULES],
+  imports: [LanguagesComponent],
   templateUrl: './language-dialog.component.html',
   styleUrl: './language-dialog.component.scss',
 })

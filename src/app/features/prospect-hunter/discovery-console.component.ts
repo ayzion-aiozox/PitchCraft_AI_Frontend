@@ -242,9 +242,20 @@ export class DiscoveryConsoleComponent {
     }
   }
 
+  /** Lead id when detail drawer is open; null when closed */
+  detailLeadId: string | null = null;
+
+  get detailLead(): Lead | null {
+    if (!this.detailLeadId) return null;
+    return this.leads.find((l) => l.id === this.detailLeadId) ?? null;
+  }
+
   viewProfile(leadId: string): void {
-    // TODO: Navigate to lead profile
-    console.log('View profile', leadId);
+    this.detailLeadId = leadId;
+  }
+
+  closeDetail(): void {
+    this.detailLeadId = null;
   }
 
   generateStrategies(): void {

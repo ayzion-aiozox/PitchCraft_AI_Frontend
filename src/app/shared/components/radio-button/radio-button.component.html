@@ -2,7 +2,7 @@
   <label class="radio-button-label">{{ label }}</label>
 </div>
 <mat-radio-group
-  [formControl]="formControl"
+  [formControl]="control"
   [disabled]="disabled"
   (change)="onRadioChange($event.value)"
   aria-label="Select an option"

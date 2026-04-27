@@ -1,0 +1,47 @@
+<svg
+  class="pl-radar-svg"
+  [attr.viewBox]="viewBox"
+  xmlns="http://www.w3.org/2000/svg"
+  role="img"
+  [attr.aria-label]="'Competitive radar chart with ' + labels.length + ' dimensions'"
+>
+  @if (labels.length >= 3) {
+    @for (poly of gridPolygons; track $index) {
+      <polygon class="pl-radar-grid" [attr.points]="poly" />
+    }
+    @for (line of axisLines; track $index) {
+      <line
+        class="pl-radar-axis"
+        [attr.x1]="line.x1"
+        [attr.y1]="line.y1"
+        [attr.x2]="line.x2"
+        [attr.y2]="line.y2"
+      />
+    }
+    @for (path of pathDs; track path.name) {
+      <path
+        class="pl-radar-area"
+        [class.pl-radar-area--dashed]="path.dashed"
+        [attr.d]="path.d"
+        [attr.stroke]="path.color"
+        [attr.fill]="path.dashed ? 'none' : path.color"
+        [attr.fill-opacity]="path.dashed ? 0 : 0.12"
+      />
+    }
+    @for (la of labelAnchors; track la.label + $index) {
+      <text
+        class="pl-radar-label"
+        [attr.x]="la.x"
+        [attr.y]="la.y"
+        [attr.text-anchor]="la.anchor"
+        [attr.dy]="la.dy"
+      >
+        {{ la.label }}
+      </text>
+    }
+  } @else {
+    <text class="pl-radar-empty" [attr.x]="size / 2" [attr.y]="size / 2" text-anchor="middle">
+      Need ≥3 dimensions for radar
+    </text>
+  }
+</svg>

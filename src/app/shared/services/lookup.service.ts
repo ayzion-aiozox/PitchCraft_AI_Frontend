@@ -1,83 +1,63 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, catchError, map, of, shareReplay } from 'rxjs';
 import { Lookup } from '../models/lookup.model';
-import { ApiService } from './api.service';
 import { ApiEndpoints } from '../constants/api-endpoints';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LookupService {
-  private lookupValuesAsMap = new Map<string, Map<number, Lookup>>();
-  private lookupValuesAsArray = new Map<string, Lookup[]>();
+  private readonly baseUrl = (environment as { apiUrl?: string })?.apiUrl ?? '';
+  private readonly cache$ = new Map<string, Observable<Lookup[]>>();
 
-  constructor(private apiService: ApiService) {}
+  constructor(private readonly http: HttpClient) {}
 
-  getLookupsAsMap(lookupType: string): Map<number, Lookup> | any {
-    //If lookup already exists in lookups Map then return it
-    const lookupMap = this.lookupValuesAsMap.get(lookupType);
-    if (lookupMap) {
-      return lookupMap;
-    }
-
-    //If lookup doesnt exist in lookup Map then fetch from database
-    this.apiService.get(ApiEndpoints.lookup.byType, { lookupType }).subscribe({
-      next: (response: any): Map<number, Lookup> | any => {
-        if (response && response.data) {
-          const lookup = response.data as Lookup;
-          this.loadLookupIntoLookupMapAndLookupArray(lookup);
-          return this.lookupValuesAsMap.get(lookupType);
-        }
-        return null;
-      },
-      error: (err) => {
-        alert(`Unable to fetch lookup with lookup Type = ${lookupType}`);
-        return null;
-      },
-    });
+  private url(path: string): string {
+    const base = this.baseUrl.replace(/\/$/, '');
+    return path.startsWith('http') ? path : `${base}/${path}`;
   }
 
-  getLookupsAsArrayByType(
-    lookupType: string,
-    hiddenValue: string = ''
-  ): Lookup[] | any {
-    const lookupArray = this.lookupValuesAsArray.get(lookupType);
-    //If lookup already exists in lookups Array Map then return it
-    if (lookupArray) {
-      return lookupArray;
-    }
-
-    //If lookup doesnt exist in lookups Array Map then fetch from database
-    this.apiService.get(ApiEndpoints.lookup.byType, { lookupType }).subscribe({
-      next: (response: any): Map<number, Lookup> | any => {
-        if (response && response.data) {
-          const lookup = response.data as Lookup;
-          this.loadLookupIntoLookupMapAndLookupArray(lookup);
-          const lkpsByType = this.lookupValuesAsArray.get(lookup.LookupType);
-          if (hiddenValue) {
-            return lkpsByType?.find(
-              (lkpByType) => lkpByType.HiddenValue === hiddenValue
-            );
-          } else {
-            return lkpsByType;
-          }
-        }
-        return null;
-      },
-      error: (err) => {
-        alert(`Unable to fetch lookup with lookup Type = ${lookupType}`);
-        return null;
-      },
-    });
+  private replaceParam(endpoint: string, params: Record<string, string>): string {
+    return endpoint.replace(/{(\w+)}/g, (match, key) => params[key] ?? match);
   }
 
-  loadLookupIntoLookupMapAndLookupArray(lookup: Lookup) {
-    let lookupMap = this.lookupValuesAsMap.get(lookup.LookupType);
-    let lookupArray = this.lookupValuesAsArray.get(lookup.LookupType);
-    if (!lookupMap) {
-      this.lookupValuesAsMap.set(lookup.LookupType, new Map<number, Lookup>());
-      this.lookupValuesAsArray.set(lookup.LookupType, []);
-    }
-    lookupMap?.set(lookup.LookupId, lookup);
-    lookupArray?.push(lookup);
+  /**
+   * Fetch lookups by type from backend.
+   * Supports multiple response shapes: `{ data: Lookup[] }`, `{ data: { items: Lookup[] } }`, or a single `Lookup`.
+   */
+  getLookups$(lookupType: string): Observable<Lookup[]> {
+    const key = (lookupType ?? '').trim();
+    if (!key) return of([]);
+    const cached = this.cache$.get(key);
+    if (cached) return cached;
+
+    const endpoint = this.replaceParam(ApiEndpoints.lookup.byType, { lookupType: key });
+    const req$ = this.http.get<unknown>(this.url(endpoint)).pipe(
+      map((raw) => {
+        const r = raw as any;
+        const data = r?.data ?? r?.Data ?? r;
+        const items = data?.items ?? data?.Items ?? data;
+        const arr = Array.isArray(items) ? (items as Lookup[]) : items ? [items as Lookup] : [];
+        // Filter invalid rows and keep stable order
+        return arr.filter((x) => x && typeof x === 'object' && (x as any).VisibleValue != null);
+      }),
+      catchError(() => of([])),
+      shareReplay(1)
+    );
+    this.cache$.set(key, req$);
+    return req$;
+  }
+
+  /** Convenience: return VisibleValue strings for dropdowns */
+  getVisibleValues$(lookupType: string): Observable<string[]> {
+    return this.getLookups$(lookupType).pipe(
+      map((rows) =>
+        rows
+          .map((x) => String(x.VisibleValue ?? '').trim())
+          .filter(Boolean)
+      )
+    );
   }
 }

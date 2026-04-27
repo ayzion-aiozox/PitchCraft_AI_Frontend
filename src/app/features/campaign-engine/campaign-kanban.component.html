@@ -14,6 +14,8 @@
     (viewModeChange)="setViewMode($event)"
     [showCampaignSelector]="true"
     [showPerformance]="true"
+    [performanceActive]="showPerformanceView"
+    (performanceClick)="onPerformanceClick()"
   >
     <div class="control-bar-right">
       <div class="avatar-stack">
@@ -29,105 +31,230 @@
     </div>
   </app-campaign-view-bar>
 
-  <div class="kanban-board">
-    @for (column of columns; track column.id) {
-      <div class="kanban-column">
-        <div class="column-header">
-          <div class="column-title">
-            <span class="column-accent" [style.background]="column.accentColor"></span>
-            {{ column.title }}
-            @if (column.count != null) {
-              <app-status-badge class="count-badge" [ngStyle]="column.countBadgeStyles">{{ column.count }}</app-status-badge>
-            }
+  <!-- Performance view -->
+  @if (showPerformanceView) {
+    <div class="campaign-performance-view">
+      <div class="performance-header">
+        <h2 class="performance-title">
+          <iconify-icon icon="lucide:bar-chart-2"></iconify-icon>
+          Campaign performance
+        </h2>
+        <p class="performance-subtitle">{{ selectedCampaignName }} — last 30 days</p>
+      </div>
+      <div class="performance-kpis">
+        @for (kpi of performanceKpis; track kpi.label) {
+          <div class="performance-kpi-card">
+            <div class="performance-kpi-icon">
+              <iconify-icon [icon]="kpi.icon"></iconify-icon>
+            </div>
+            <div class="performance-kpi-content">
+              <span class="performance-kpi-value">{{ kpi.value }}</span>
+              <span class="performance-kpi-label">{{ kpi.label }}</span>
+              <span class="performance-kpi-trend" [class.positive]="kpi.trend >= 0" [class.negative]="kpi.trend < 0">
+                {{ kpi.trend >= 0 ? '+' : '' }}{{ kpi.trend }}% vs last period
+              </span>
+            </div>
           </div>
-          <button mat-icon-button [matMenuTriggerFor]="columnMenu" type="button" aria-label="Column menu" class="column-menu-btn">
-            <iconify-icon icon="lucide:more-horizontal"></iconify-icon>
-          </button>
-        </div>
-        <div class="column-body">
-          @for (card of column.cards; track card.id) {
-            <div
-              class="kanban-card"
-              [class.card-left-accent]="card.leftBorderAccent"
-              [style.opacity]="card.opacity"
-            >
-              @if (card.statusChip) {
-                <app-status-badge
-                  class="status-chip"
-                  [style.background]="card.statusChip.bg"
-                  [style.color]="card.statusChip.color"
-                >
-                  {{ card.statusChip.text }}
-                </app-status-badge>
-              }
-              <div class="card-header">
-                <div class="card-user">
-                  @if (card.avatarUrl) {
-                    <img [src]="card.avatarUrl" class="card-avatar" [alt]="card.name" />
-                  }
-                  @if (card.placeholderInitials) {
-                    <div class="card-avatar card-avatar-placeholder">{{ card.placeholderInitials }}</div>
-                  }
-                  <div class="card-info">
-                    <h4>{{ card.name }}</h4>
-                    <p>{{ card.role }}</p>
-                  </div>
-                </div>
-                @if (card.strategyIcon) {
-                  <div
-                    class="strategy-icon"
-                    [style.background]="card.strategyIconBg || 'rgba(6, 182, 212, 0.1)'"
-                    [style.color]="card.strategyIconColor || 'var(--secondary)'"
-                  >
-                    <iconify-icon [icon]="card.strategyIcon"></iconify-icon>
-                  </div>
-                }
+        }
+      </div>
+      <div class="performance-chart-section">
+        <h3 class="performance-section-title">
+          <iconify-icon icon="lucide:pie-chart"></iconify-icon>
+          Activity breakdown
+        </h3>
+        <div class="performance-bars">
+          @for (item of performanceBreakdown; track item.label) {
+            <div class="performance-bar-row">
+              <span class="performance-bar-label">{{ item.label }}</span>
+              <div class="performance-bar-track">
+                <div class="performance-bar-fill" [style.width.%]="item.value"></div>
               </div>
-              @if (card.replyText) {
-                <div class="reply-preview">{{ card.replyText }}</div>
-              }
-              @if (card.replyAction) {
-                <button mat-stroked-button type="button" class="reply-action">
-                  {{ card.replyAction }}
-                  <mat-icon>expand_more</mat-icon>
-                </button>
-              }
-              @if (card.metaTags.length || card.metaRight || card.sendButton) {
-                <div class="card-meta">
-                  @if (card.metaTags.length) {
-                    @for (m of card.metaTags; track m.text; let i = $index) {
-                      <span
-                        class="meta-tag"
-                        [class.stuck-alert]="m.isStuck"
-                        [style.color]="m.iconColor"
-                      >
-                        @if (m.isStuck) {
-                          <mat-icon class="meta-icon">warning</mat-icon>
-                        }
-                        @if (!m.isStuck && m.icon) {
-                          <iconify-icon [icon]="m.icon"></iconify-icon>
-                        }
-                        @if (!m.isStuck && !m.icon && m.showClock) {
-                          <mat-icon class="meta-icon">schedule</mat-icon>
-                        }
-                        {{ m.text }}
-                      </span>
-                    }
-                  }
-                  @if (card.metaRight) {
-                    <span class="meta-tag meta-right" [style.color]="card.metaRightColor">{{ card.metaRight }}</span>
-                  }
-                  @if (card.sendButton) {
-                    <button mat-raised-button color="primary" type="button" class="btn-send">Send</button>
-                  }
-                </div>
-              }
+              <span class="performance-bar-value">{{ item.value }}%</span>
             </div>
           }
         </div>
       </div>
-    }
-  </div>
+    </div>
+  }
+
+  <!-- Board view: Kanban columns -->
+  @if (!showPerformanceView && viewMode === 'board') {
+    <div class="kanban-board">
+      @for (column of columns; track column.id) {
+        <div class="kanban-column">
+          <div class="column-header">
+            <div class="column-title">
+              <span class="column-accent" [style.background]="column.accentColor"></span>
+              {{ column.title }}
+              @if (column.count != null) {
+                <app-status-badge class="count-badge" [ngStyle]="column.countBadgeStyles">{{ column.count }}</app-status-badge>
+              }
+            </div>
+            <button mat-icon-button [matMenuTriggerFor]="columnMenu" type="button" aria-label="Column menu" class="column-menu-btn">
+              <iconify-icon icon="lucide:more-horizontal"></iconify-icon>
+            </button>
+          </div>
+          <div class="column-body">
+            @for (card of column.cards; track card.id) {
+              <div
+                class="kanban-card"
+                [class.card-left-accent]="card.leftBorderAccent"
+                [style.opacity]="card.opacity"
+              >
+                @if (card.statusChip) {
+                  <app-status-badge
+                    class="status-chip"
+                    [style.background]="card.statusChip.bg"
+                    [style.color]="card.statusChip.color"
+                  >
+                    {{ card.statusChip.text }}
+                  </app-status-badge>
+                }
+                <div class="card-header">
+                  <div class="card-user">
+                    @if (card.avatarUrl) {
+                      <img [src]="card.avatarUrl" class="card-avatar" [alt]="card.name" />
+                    }
+                    @if (card.placeholderInitials) {
+                      <div class="card-avatar card-avatar-placeholder">{{ card.placeholderInitials }}</div>
+                    }
+                    <div class="card-info">
+                      <h4>{{ card.name }}</h4>
+                      <p>{{ card.role }}</p>
+                    </div>
+                  </div>
+                  @if (card.strategyIcon) {
+                    <div
+                      class="strategy-icon"
+                      [style.background]="card.strategyIconBg || 'rgba(6, 182, 212, 0.1)'"
+                      [style.color]="card.strategyIconColor || 'var(--secondary)'"
+                    >
+                      <iconify-icon [icon]="card.strategyIcon"></iconify-icon>
+                    </div>
+                  }
+                </div>
+                @if (card.replyText) {
+                  <div class="reply-preview">{{ card.replyText }}</div>
+                }
+                @if (card.replyAction) {
+                  <button mat-stroked-button type="button" class="reply-action">
+                    {{ card.replyAction }}
+                    <mat-icon>expand_more</mat-icon>
+                  </button>
+                }
+                @if (card.metaTags.length || card.metaRight || card.sendButton) {
+                  <div class="card-meta">
+                    @if (card.metaTags.length) {
+                      @for (m of card.metaTags; track m.text; let i = $index) {
+                        <span
+                          class="meta-tag"
+                          [class.stuck-alert]="m.isStuck"
+                          [style.color]="m.iconColor"
+                        >
+                          @if (m.isStuck) {
+                            <mat-icon class="meta-icon">warning</mat-icon>
+                          }
+                          @if (!m.isStuck && m.icon) {
+                            <iconify-icon [icon]="m.icon"></iconify-icon>
+                          }
+                          @if (!m.isStuck && !m.icon && m.showClock) {
+                            <mat-icon class="meta-icon">schedule</mat-icon>
+                          }
+                          {{ m.text }}
+                        </span>
+                      }
+                    }
+                    @if (card.metaRight) {
+                      <span class="meta-tag meta-right" [style.color]="card.metaRightColor">{{ card.metaRight }}</span>
+                    }
+                    @if (card.sendButton) {
+                      <button mat-raised-button color="primary" type="button" class="btn-send">Send</button>
+                    }
+                  </div>
+                }
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  }
+
+  <!-- List view: table-style rows -->
+  @if (!showPerformanceView && viewMode === 'list') {
+    <div class="campaign-list-view">
+      <div class="campaign-list-toolbar">
+        <span class="campaign-list-count">{{ listRows.length }} items</span>
+      </div>
+      <div class="campaign-list-table">
+        <div class="campaign-list-header">
+          <span class="col-status">Status</span>
+          <span class="col-contact">Contact</span>
+          <span class="col-stage">Stage</span>
+          <span class="col-meta">Activity</span>
+        </div>
+        @for (row of listRows; track row.card.id) {
+          <div class="campaign-list-row">
+            <span class="col-status">
+              @if (row.card.statusChip) {
+                <app-status-badge
+                  [style.background]="row.card.statusChip.bg"
+                  [style.color]="row.card.statusChip.color"
+                >
+                  {{ row.card.statusChip.text }}
+                </app-status-badge>
+              }
+              @if (!row.card.statusChip) {
+                <span class="text-muted">—</span>
+              }
+            </span>
+            <span class="col-contact">
+              @if (row.card.avatarUrl) {
+                <img [src]="row.card.avatarUrl" class="list-avatar" [alt]="row.card.name" />
+              }
+              @if (row.card.placeholderInitials) {
+                <span class="list-avatar list-avatar-placeholder">{{ row.card.placeholderInitials }}</span>
+              }
+              <div class="list-contact-info">
+                <strong>{{ row.card.name }}</strong>
+                <span class="list-role">{{ row.card.role }}</span>
+              </div>
+            </span>
+            <span class="col-stage">{{ row.columnTitle }}</span>
+            <span class="col-meta">
+              @if (row.card.metaTags.length) {
+                {{ row.card.metaTags[0].text }}
+              }
+              @if (!row.card.metaTags.length && row.card.metaRight) {
+                {{ row.card.metaRight }}
+              }
+              @if (!row.card.metaTags.length && !row.card.metaRight) {
+                <span class="text-muted">—</span>
+              }
+            </span>
+          </div>
+        }
+      </div>
+    </div>
+  }
+
+  <!-- Calendar view: Angular Material calendar -->
+  @if (!showPerformanceView && viewMode === 'calendar') {
+    <div class="campaign-calendar-view">
+      <div class="campaign-calendar-header">
+        <h2 class="campaign-calendar-title">
+          <iconify-icon icon="lucide:calendar"></iconify-icon>
+          Calendar
+        </h2>
+      </div>
+      <div class="campaign-calendar-mat">
+        <mat-calendar
+          [(selected)]="calendarSelectedDate"
+          [startAt]="calendarStartAt"
+        ></mat-calendar>
+      </div>
+    </div>
+  }
 </div>
 
 <mat-menu #columnMenu="matMenu">

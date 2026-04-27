@@ -1,4 +1,4 @@
-<div class="campaign-view-bar">
+<div class="campaign-view-bar" [class.campaign-view-bar--pill]="variant === 'pill'">
   <div class="campaign-view-bar__left">
     <ng-content select="[campaignViewBarStart]"></ng-content>
     @if (showCampaignSelector && campaigns.length) {
@@ -29,7 +29,12 @@
     </div>
     @if (showPerformance) {
       <span class="campaign-view-bar__divider"></span>
-      <button type="button" class="campaign-view-bar__performance" (click)="onPerformanceClick()">
+      <button
+        type="button"
+        class="campaign-view-bar__performance"
+        [class.campaign-view-bar__performance--active]="performanceActive"
+        (click)="onPerformanceClick()"
+      >
         <iconify-icon icon="lucide:bar-chart-2" class="campaign-view-bar__performance-icon"></iconify-icon>
         Performance
       </button>

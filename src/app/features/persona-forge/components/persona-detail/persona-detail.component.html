@@ -14,13 +14,13 @@
         <span class="breadcrumb-active">{{ personaName }} ({{ personaRoleAbbr }})</span>
       </div>
       <div class="header-actions">
-        <button type="button" class="btn btn-outline">
-          <iconify-icon icon="lucide:columns" style="font-size: 16px"></iconify-icon>
-          Compare Mode
+        <button type="button" class="pf-action-btn pf-action-btn--outline">
+          <iconify-icon icon="lucide:columns" class="pf-action-btn__icon"></iconify-icon>
+          <span class="pf-action-btn__label">Compare Mode</span>
         </button>
-        <button type="button" class="btn btn-primary">
-          <iconify-icon icon="lucide:file-text" style="font-size: 16px"></iconify-icon>
-          Generate Strategy
+        <button type="button" class="pf-action-btn pf-action-btn--primary">
+          <iconify-icon icon="lucide:file-text" class="pf-action-btn__icon"></iconify-icon>
+          <span class="pf-action-btn__label">Generate Strategy</span>
         </button>
       </div>
     </div>
@@ -92,81 +92,168 @@
               [class.active]="activeDetailTab === tab.id"
               (click)="activeDetailTab = tab.id"
             >
-              {{ tab.label }}
+              <iconify-icon [icon]="tab.icon" class="tab-link__icon"></iconify-icon>
+              <span class="tab-link__label">{{ tab.label }}</span>
             </button>
           }
         </div>
 
-        <!-- Quote Highlight -->
-        <div class="quote-card">
-          <iconify-icon icon="lucide:quote" class="quote-icon"></iconify-icon>
-          <div class="quote-text">{{ quote }}</div>
-        </div>
-
-        <!-- Pain Points Section -->
-        <div class="card-section">
-          <div class="section-title">
-            <iconify-icon icon="lucide:frown" style="color: var(--destructive); font-size: 20px"></iconify-icon>
-            Core Pain Points
-          </div>
-
-          @for (pain of painPoints; track pain.label) {
-            <div class="pain-point-item">
-              <div class="pain-header">
-                <span>{{ pain.label }}</span>
-                <span [style.color]="pain.color">{{ pain.severity }}</span>
-              </div>
-              <div class="pain-bar">
-                <div class="pain-fill" [ngClass]="pain.barClass" [style.width.%]="pain.percent"></div>
+        <!-- Tab content wrapper – always in DOM to keep consistent width -->
+        <div class="tab-content">
+        @if (activeDetailTab === 'psychographics') {
+          <div class="tab-panel tab-panel--psychographics">
+            <div class="psycho-hero">
+              <div class="quote-card">
+                <iconify-icon icon="lucide:quote" class="quote-icon"></iconify-icon>
+                <div class="quote-text">{{ quote }}</div>
               </div>
             </div>
-          }
-        </div>
-
-        <!-- Motivations & KPIs -->
-        <div class="motivation-kpi-grid">
-          <div class="card-section">
-            <div class="section-title">
-              <iconify-icon icon="lucide:target" style="color: var(--primary); font-size: 20px"></iconify-icon>
-              Key Motivations
-            </div>
-            <div class="motivation-grid" style="margin-top: 0; grid-template-columns: 1fr">
-              @for (m of motivations; track m.title) {
-                <div class="motivation-item">
-                  <div class="motivation-icon">
-                    <iconify-icon [icon]="m.icon" style="font-size: 18px"></iconify-icon>
+            <div class="psycho-sections">
+              <div class="card-section">
+                <div class="section-title">
+                  <iconify-icon icon="lucide:frown" style="color: var(--destructive); font-size: 20px"></iconify-icon>
+                  Core Pain Points
+                </div>
+                @for (pain of painPoints; track pain.label) {
+                  <div class="pain-point-item">
+                    <div class="pain-header">
+                      <span>{{ pain.label }}</span>
+                      <span [style.color]="pain.color">{{ pain.severity }}</span>
+                    </div>
+                    <div class="pain-bar">
+                      <div class="pain-fill" [ngClass]="pain.barClass" [style.width.%]="pain.percent"></div>
+                    </div>
                   </div>
-                  <div>
-                    <div style="font-weight: 600; font-size: 13px">{{ m.title }}</div>
-                    <div style="font-size: 12px; color: var(--muted-foreground)">{{ m.desc }}</div>
+                }
+              </div>
+              <div class="motivation-kpi-grid">
+                <div class="card-section">
+                  <div class="section-title">
+                    <iconify-icon icon="lucide:target" style="color: var(--primary); font-size: 20px"></iconify-icon>
+                    Key Motivations
+                  </div>
+                  <div class="motivation-grid" style="margin-top: 0; grid-template-columns: 1fr">
+                    @for (m of motivations; track m.title) {
+                      <div class="motivation-item">
+                        <div class="motivation-icon">
+                          <iconify-icon [icon]="m.icon" style="font-size: 18px"></iconify-icon>
+                        </div>
+                        <div>
+                          <div style="font-weight: 600; font-size: 13px">{{ m.title }}</div>
+                          <div style="font-size: 12px; color: var(--muted-foreground)">{{ m.desc }}</div>
+                        </div>
+                      </div>
+                    }
+                  </div>
+                </div>
+                <div class="card-section">
+                  <div class="section-title">
+                    <iconify-icon icon="lucide:bar-chart-2" style="color: var(--success); font-size: 20px"></iconify-icon>
+                    KPIs They Care About
+                  </div>
+                  <div class="chip-container">
+                    @for (kpi of kpis; track kpi) {
+                      <span class="chip chip-green">{{ kpi }}</span>
+                    }
+                  </div>
+                  <div style="margin-top: 20px">
+                    <div class="section-title" style="font-size: 14px; margin-bottom: 12px">Tech Stack</div>
+                    <div class="tech-grid">
+                      @for (tech of techStack; track tech.name) {
+                        <div class="tech-logo" [title]="tech.name">
+                          <iconify-icon [icon]="tech.icon"></iconify-icon>
+                        </div>
+                      }
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+
+        @if (activeDetailTab === 'behavioral') {
+          <div class="tab-panel tab-panel--behavioral">
+            <div class="behavioral-header">
+              <iconify-icon icon="lucide:activity" class="behavioral-header__icon"></iconify-icon>
+              <div>
+                <h3 class="behavioral-header__title">Behavioral Patterns</h3>
+                <p class="behavioral-header__desc">Engagement style, decision pace, and communication preferences.</p>
+              </div>
+            </div>
+            <div class="behavioral-list">
+              @for (pattern of behavioralPatterns; track pattern.title) {
+                <div class="behavioral-card">
+                  <div class="behavioral-card__accent"></div>
+                  <div class="behavioral-card__icon">
+                    <iconify-icon [icon]="pattern.icon"></iconify-icon>
+                  </div>
+                  <div class="behavioral-card__body">
+                    <div class="behavioral-card__title">{{ pattern.title }}</div>
+                    <div class="behavioral-card__desc">{{ pattern.desc }}</div>
                   </div>
                 </div>
               }
             </div>
           </div>
+        }
 
-          <div class="card-section">
-            <div class="section-title">
-              <iconify-icon icon="lucide:bar-chart-2" style="color: var(--success); font-size: 20px"></iconify-icon>
-              KPIs They Care About
-            </div>
-            <div class="chip-container">
-              @for (kpi of kpis; track kpi) {
-                <span class="chip chip-green">{{ kpi }}</span>
-              }
-            </div>
-
-            <div style="margin-top: 20px">
-              <div class="section-title" style="font-size: 14px; margin-bottom: 12px">Tech Stack</div>
-              <div class="tech-grid">
-                @for (tech of techStack; track tech.name) {
-                  <div class="tech-logo" [title]="tech.name">
-                    <iconify-icon [icon]="tech.icon"></iconify-icon>
-                  </div>
-                }
+        @if (activeDetailTab === 'quotes') {
+          <div class="tab-panel tab-panel--quotes">
+            <div class="quotes-featured">
+              <div class="quote-card quote-card--featured">
+                <iconify-icon icon="lucide:quote" class="quote-icon"></iconify-icon>
+                <div class="quote-text">{{ quote }}</div>
               </div>
             </div>
+            <div class="quotes-list">
+              <h4 class="quotes-list__title">
+                <iconify-icon icon="lucide:message-square-quote"></iconify-icon>
+                More quotes
+              </h4>
+              @for (q of extraQuotes; track q) {
+                <div class="quote-tile">
+                  <iconify-icon icon="lucide:quote" class="quote-tile__icon"></iconify-icon>
+                  <span class="quote-tile__text">{{ q }}</span>
+                </div>
+              }
+            </div>
           </div>
+        }
+
+        @if (activeDetailTab === 'settings') {
+          <div class="tab-panel tab-panel--settings">
+            <div class="settings-header">
+              <iconify-icon icon="lucide:settings" class="settings-header__icon"></iconify-icon>
+              <div>
+                <h3 class="settings-header__title">Persona settings</h3>
+                <p class="settings-header__desc">Configure visibility, sharing, and notifications.</p>
+              </div>
+            </div>
+            <div class="settings-groups">
+              @for (group of settingsGroups; track group.label) {
+                <div class="settings-group">
+                  <div class="settings-group__label">{{ group.label }}</div>
+                  <div class="settings-rows">
+                    @for (item of group.items; track item.label) {
+                      <div class="settings-row">
+                        <div class="settings-row__main">
+                          <span class="settings-row__label">{{ item.label }}</span>
+                          <span class="settings-row__desc">{{ item.description }}</span>
+                        </div>
+                        <div class="settings-row__control">
+                          <span class="settings-toggle" [class.settings-toggle--on]="item.value">
+                            <span class="settings-toggle__thumb"></span>
+                          </span>
+                        </div>
+                      </div>
+                    }
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        }
         </div>
       </div>
     </div>

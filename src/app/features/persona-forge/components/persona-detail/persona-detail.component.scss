@@ -1,8 +1,454 @@
-// Persona Forge detail – ensure host fills so content is visible
+// Persona Forge detail
 :host {
   display: flex;
   flex-direction: column;
   height: 100%;
   min-height: 0;
   overflow: auto;
+}
+
+// Force details column to always fill the grid column
+.details-container {
+  width: 100%;
+  min-width: 0;
+  align-self: stretch;
+  justify-self: stretch;
+}
+
+// Permanent wrapper – always in DOM so width never changes between tabs
+.tab-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+}
+
+// Detail tabs: icons + labels, modern pill-style bar
+.details-container .tabs-nav {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  margin-bottom: 20px;
+  border-radius: var(--radius-lg);
+  background: var(--muted);
+  border: none;
+}
+
+.details-container .tab-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+  padding: 10px 16px;
+  border-radius: var(--radius-md);
+  color: var(--muted-foreground);
+  font-weight: 500;
+  font-size: var(--font-size-sm);
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  border: 1px solid transparent;
+
+  &__icon {
+    font-size: 18px;
+    opacity: 0.85;
+  }
+
+  &__label {
+    white-space: nowrap;
+  }
+
+  &:hover {
+    color: var(--foreground);
+    background: rgba(255, 255, 255, 0.6);
+    .tab-link__icon { opacity: 1; }
+  }
+
+  &.active {
+    background: #ffffff;
+    color: var(--primary);
+    font-weight: 600;
+    border-color: rgba(0, 0, 0, 0.08);
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+    .tab-link__icon { opacity: 1; }
+  }
+
+  &.active::after {
+    display: none;
+  }
+}
+
+// All four tab panels share the same fixed container size
+.tab-panel {
+  animation: tabFade 0.2s ease-out;
+  width: 100%;
+  min-width: 0;
+  min-height: 440px;
+  box-sizing: border-box;
+  padding: 24px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.tab-panel-text {
+  font-size: var(--font-size-sm);
+  color: var(--muted-foreground);
+  margin: 0 0 12px;
+  line-height: 1.5;
+}
+
+@keyframes tabFade {
+  from { opacity: 0.6; }
+  to { opacity: 1; }
+}
+
+// ---- Psychographics ----
+.tab-panel--psychographics {
+  .psycho-hero {
+    width: 100%;
+  }
+
+  .psycho-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+  }
+}
+
+// ---- Behavioral ----
+.behavioral-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  width: 100%;
+
+  &__icon {
+    font-size: 28px;
+    color: var(--primary);
+    flex-shrink: 0;
+  }
+
+  &__title {
+    margin: 0 0 4px;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--foreground);
+  }
+
+  &__desc {
+    margin: 0;
+    font-size: var(--font-size-sm);
+    color: var(--muted-foreground);
+    line-height: 1.45;
+  }
+}
+
+.behavioral-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.behavioral-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 18px;
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--muted);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+
+  &__accent {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: var(--primary);
+    border-radius: 2px 0 0 2px;
+  }
+
+  &__icon {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-md);
+    background: var(--card);
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    iconify-icon {
+      font-size: 20px;
+    }
+  }
+
+  &__body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__title {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--foreground);
+    margin-bottom: 4px;
+  }
+
+  &__desc {
+    font-size: 13px;
+    color: var(--muted-foreground);
+    line-height: 1.45;
+    margin: 0;
+  }
+}
+
+// ---- Quotes ----
+.quotes-featured {
+  width: 100%;
+}
+
+.quote-card--featured {
+  width: 100%;
+}
+
+.quotes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.quotes-list__title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 4px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--foreground);
+
+  iconify-icon {
+    font-size: 18px;
+    color: var(--primary);
+  }
+}
+
+.quote-tile {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--muted);
+  border-radius: var(--radius-md);
+  border-left: 3px solid var(--primary);
+
+  &__icon {
+    font-size: 18px;
+    color: var(--primary);
+    opacity: 0.8;
+    flex-shrink: 0;
+  }
+
+  &__text {
+    font-size: var(--font-size-sm);
+    color: var(--foreground);
+    font-style: italic;
+    line-height: 1.5;
+  }
+}
+
+// ---- Settings ----
+.settings-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  width: 100%;
+
+  &__icon {
+    font-size: 28px;
+    color: var(--primary);
+    flex-shrink: 0;
+  }
+
+  &__title {
+    margin: 0 0 4px;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--foreground);
+  }
+
+  &__desc {
+    margin: 0;
+    font-size: var(--font-size-sm);
+    color: var(--muted-foreground);
+    line-height: 1.45;
+  }
+}
+
+.settings-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+.settings-group {
+  width: 100%;
+
+  &__label {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--muted-foreground);
+    margin-bottom: 12px;
+  }
+}
+
+.settings-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+  background: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &__main {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  &__label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--foreground);
+  }
+
+  &__desc {
+    font-size: 12px;
+    color: var(--muted-foreground);
+  }
+
+  &__control {
+    flex-shrink: 0;
+  }
+}
+
+.settings-toggle {
+  display: inline-flex;
+  width: 44px;
+  height: 24px;
+  border-radius: 12px;
+  background: var(--muted);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+  padding: 2px;
+
+  &__thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s;
+  }
+
+  &--on {
+    background: var(--primary);
+    border-color: var(--primary);
+
+    .settings-toggle__thumb {
+      transform: translateX(20px);
+    }
+  }
+}
+
+// Header action buttons (Compare Mode, Generate Strategy)
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pf-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid transparent;
+
+  &__icon {
+    font-size: 18px;
+  }
+
+  &__label {
+    white-space: nowrap;
+  }
+
+  &--outline {
+    background: #ffffff;
+    border-color: var(--border);
+    color: var(--muted-foreground);
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  }
+
+  &--outline:hover {
+    background: var(--muted);
+    border-color: #cbd5e1;
+    color: var(--foreground);
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06);
+  }
+
+  &--primary {
+    background: linear-gradient(180deg, var(--primary) 0%, #1e40af 100%);
+    color: var(--primary-foreground);
+    box-shadow: 0 2px 8px rgba(30, 58, 138, 0.25);
+  }
+
+  &--primary:hover {
+    background: linear-gradient(180deg, #1e40af 0%, #1e3a8a 100%);
+    box-shadow: 0 4px 12px rgba(30, 58, 138, 0.3);
+  }
+
+  &--primary:active,
+  &--outline:active {
+    transform: scale(0.98);
+  }
 }

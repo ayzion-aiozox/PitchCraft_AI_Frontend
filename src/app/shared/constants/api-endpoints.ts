@@ -20,11 +20,19 @@ export const ApiEndpoints = {
   },
   /** Lookup: reference data */
   lookup: {
-    byType: 'Lookup/LookupByType/{lookupType}',
+    byType: 'api/lookup/LookupByType/{lookupType}',
   },
   /** Product Lab: products, search, stats, value-matrix, documents, templates */
   products: {
     base: 'api/products',
+    /** Start a web extraction job */
+    extract: 'api/products/extract',
+    /** Poll extraction job */
+    extractById: (extractionId: string) => `api/products/extract/${extractionId}`,
+    /** Download extracted markdown */
+    extractDownloadMd: (extractionId: string) => `api/products/extract/${extractionId}/download`,
+    /** Download extracted pdf */
+    extractDownloadPdf: (extractionId: string) => `api/products/extract/${extractionId}/download/pdf`,
     byId: (id: string) => `api/products/${id}`,
     status: (id: string) => `api/products/${id}/status`,
     duplicate: (id: string) => `api/products/${id}/duplicate`,
@@ -32,8 +40,20 @@ export const ApiEndpoints = {
     stats: 'api/products/stats',
     valueMatrix: (id: string) => `api/products/${id}/value-matrix`,
     documents: (id: string) => `api/products/${id}/documents`,
+    /** Multipart upload: form field name `file` (see ProductService.uploadDocument). */
+    documentUpload: (id: string) => `api/products/${id}/documents/upload`,
     documentById: (documentId: string) => `api/products/documents/${documentId}`,
     templates: 'api/products/templates',
+    /** Embed via BFF; body includes `collection_id` (Qdrant id from login, see LocalStorageConstant.QdrantCollectionId). */
+    embed: (id: string) => `api/products/${id}/embed`,
+    analyzeKnowledge: (id: string) => `api/products/${id}/analyze-knowledge`,
+    analyzeStrategic: (id: string) => `api/products/${id}/analyze-strategic`,
+    marketRadar: (id: string) => `api/products/${id}/market-radar`,
+    generateValueMatrix: (id: string) => `api/products/${id}/generate-value-matrix`,
+    score: (id: string) => `api/products/${id}/score`,
+    auditLive: 'api/products/audit-live',
+    /** BFF ContextBuilder: AI-suggested values for empty form fields (optional; 404 OK). */
+    proposedFields: (id: string) => `api/products/${id}/proposed-fields`,
   },
 } as const;
 

@@ -44,6 +44,11 @@ export class CampaignViewBarComponent {
 
   /** Whether to show the Performance button */
   @Input() showPerformance = true;
+  /** When true, Performance button is shown as active (e.g. performance view is open) */
+  @Input() performanceActive = false;
+
+  /** 'default' | 'pill' — pill gives a clear segmented control look for Grid/List etc. */
+  @Input() variant: 'default' | 'pill' = 'default';
 
   @Output() selectedCampaignIdChange = new EventEmitter<string>();
   @Output() viewModeChange = new EventEmitter<string>();

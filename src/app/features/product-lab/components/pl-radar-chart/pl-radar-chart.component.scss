@@ -1,0 +1,39 @@
+.pl-radar-svg {
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.pl-radar-grid {
+  fill: none;
+  stroke: var(--border, #e2e8f0);
+  stroke-width: 1;
+}
+
+.pl-radar-axis {
+  stroke: var(--border, #e2e8f0);
+  stroke-width: 1;
+}
+
+.pl-radar-area {
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+}
+
+.pl-radar-area--dashed {
+  fill: none !important;
+  stroke-dasharray: 6 4;
+}
+
+.pl-radar-label {
+  font-size: 10px;
+  font-weight: 600;
+  fill: var(--muted-foreground, #64748b);
+}
+
+.pl-radar-empty {
+  font-size: 12px;
+  fill: var(--muted-foreground, #64748b);
+}
