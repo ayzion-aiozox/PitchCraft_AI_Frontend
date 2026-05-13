@@ -1,3 +1,3 @@
 export const APP_CONSTANTS = {
-    name: 'PitchCraft'
+    name: 'Cyphary'
 };

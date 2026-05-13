@@ -50,9 +50,9 @@ export class AnalyticsDashboardComponent {
 
   funnelSteps: FunnelStep[] = [
     { label: 'Product Loaded', count: 1250, pct: 100, width: 100, gradient: 'linear-gradient(to right, var(--primary), var(--tertiary))', dropoff: '5% drop-off' },
-    { label: 'Persona Generated', count: 1187, pct: 95, width: 90, gradient: 'linear-gradient(to right, #1d4ed8, #60a5fa)', dropoff: '12% drop-off' },
-    { label: 'Lead Identified', count: 1045, pct: 83, width: 78, gradient: 'linear-gradient(to right, #2563eb, var(--secondary))', dropoff: '28% drop-off' },
-    { label: 'Strategy Created', count: 752, pct: 60, width: 50, gradient: 'linear-gradient(to right, #0ea5e9, var(--secondary))', dropoff: '45% drop-off' },
+    { label: 'Persona Generated', count: 1187, pct: 95, width: 90, gradient: 'linear-gradient(to right, #15803d, #34d399)', dropoff: '12% drop-off' },
+    { label: 'Lead Identified', count: 1045, pct: 83, width: 78, gradient: 'linear-gradient(to right, var(--primary), var(--secondary))', dropoff: '28% drop-off' },
+    { label: 'Strategy Created', count: 752, pct: 60, width: 50, gradient: 'linear-gradient(to right, #0d9488, var(--secondary))', dropoff: '45% drop-off' },
     { label: 'Meeting Booked', count: 413, pct: 33, width: 25, gradient: 'linear-gradient(to right, var(--secondary), var(--success))', dropoff: '8% conversion' },
     { label: 'Customer', count: 33, pct: 2.6, width: 15, gradient: 'linear-gradient(to right, var(--success), #34d399)', dropoff: '' },
   ];
@@ -77,7 +77,7 @@ export class AnalyticsDashboardComponent {
   trendingHighlightTopic = 'Zero Trust';
 
   shareOfVoice: ShareOfVoiceItem[] = [
-    { label: 'PitchCraft AI', pct: 65, color: 'var(--primary)' },
+    { label: 'Cyphary', pct: 65, color: 'var(--primary)' },
     { label: 'OutreachX', pct: 25, color: 'var(--muted-foreground)' },
     { label: 'SalesBot', pct: 10, color: 'var(--border)' },
   ];
@@ -89,7 +89,7 @@ export class AnalyticsDashboardComponent {
 
   timeSavedHours = '40.5';
   reportGeneratedDate = 'Oct 24, 2024';
-  reportSummary = 'This week, PitchCraft AI analyzed 1,250 data points across your target market. We detected a significant shift in interest towards "Cost Optimization" among Fintech CTOs. Your current campaigns emphasizing "Compliance" are performing well, but pivoting to "Cost Efficiency" could increase conversion by ~15%.';
+  reportSummary = 'This week, Cyphary analyzed 1,250 data points across your target market. We detected a significant shift in interest towards "Cost Optimization" among Fintech CTOs. Your current campaigns emphasizing "Compliance" are performing well, but pivoting to "Cost Efficiency" could increase conversion by ~15%.';
 
   reportOpportunities: ReportOpportunity[] = [
     { title: 'Strike Zone', text: '45 Mid-Market CTOs entered "Evaluation" phase.', icon: 'lucide:target', type: 'success' },

@@ -36,7 +36,7 @@
 .funnel-bar-container {
   flex: 1;
   height: 32px; /* Changed from 24px to 32px */
-  background: var(--muted); /* #f1f5f9 */
+  background: var(--muted); /* #ecfdf5 */
   border-radius: 4px; /* Changed from 12px to 4px */
   overflow: hidden;
   position: relative;
@@ -64,5 +64,5 @@
   text-align: right; /* Alignment: Right */
   font-size: 13px; /* Changed from 14px */
   font-weight: 600;
-  color: var(--foreground); /* #0f172a */
+  color: var(--foreground); /* #052e16 */
 }

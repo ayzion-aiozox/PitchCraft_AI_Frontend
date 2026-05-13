@@ -25,7 +25,7 @@
 .page-header__title {
   font-size: 20px;
   font-weight: 600;
-  color: var(--foreground, #0f172a);
+  color: var(--foreground, #052e16);
   margin: 0;
 }
 
@@ -45,16 +45,16 @@
   height: 40px;
   padding: 0 16px 0 40px;
   border-radius: var(--radius-md, 8px);
-  border: 1px solid var(--border, #e2e8f0);
+  border: 1px solid var(--border, #d1fae5);
   background-color: var(--card, #ffffff);
-  color: var(--foreground, #0f172a);
+  color: var(--foreground, #052e16);
   font-size: var(--font-size-base, 14px);
   font-family: var(--font-family-body);
 
   &:focus {
     outline: none;
-    border-color: var(--ring, #06b6d4);
-    box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.1);
+    border-color: var(--ring, #0d9488);
+    box-shadow: 0 0 0 2px rgba(13, 148, 136, 0.1);
   }
 }
 
@@ -82,8 +82,8 @@
   background: transparent;
 
   &:hover {
-    background-color: var(--muted, #f1f5f9);
-    color: var(--foreground, #0f172a);
+    background-color: var(--muted, #ecfdf5);
+    color: var(--foreground, #052e16);
   }
 
   iconify-icon {
@@ -119,7 +119,7 @@
 .page-header__user-name {
   font-size: var(--font-size-base, 14px);
   font-weight: 500;
-  color: var(--foreground, #0f172a);
+  color: var(--foreground, #052e16);
 }
 
 .page-header__chevron {

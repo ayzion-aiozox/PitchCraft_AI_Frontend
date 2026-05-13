@@ -65,7 +65,7 @@ export const DEFAULT_KANBAN_COLUMNS: KanbanColumn[] = [
         avatarUrl: 'https://storage.googleapis.com/banani-avatars/avatar%2Fmale%2F50-65%2FEuropean%2F1',
         name: 'Robert Fox',
         role: 'CTO @ Volare',
-        statusChip: { text: 'High Intent', bg: '#eff6ff', color: 'var(--primary)' },
+        statusChip: { text: 'High Intent', bg: '#ecfdf5', color: 'var(--primary)' },
         metaTags: [{ text: 'Ready to send', isStuck: false }],
         strategyIcon: 'lucide:linkedin',
         sendButton: true,

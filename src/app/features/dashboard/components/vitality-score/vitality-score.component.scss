@@ -58,15 +58,15 @@
   clip-path: polygon(50% 0%, 54% 100%, 46% 100%);
   background: linear-gradient(
     100deg,
-    #3b82f6 0%,
-    var(--primary, #1e3a8a) 35%,
-    var(--primary, #1e3a8a) 65%,
-    #1e3a8a 100%
+    #0d9488 0%,
+    var(--primary, #2da86e) 35%,
+    var(--primary, #2da86e) 65%,
+    #2da86e 100%
   );
   border-radius: 0 0 3px 3px;
   box-shadow:
-    0 6px 18px rgba(30, 58, 138, 0.5),
-    0 2px 8px rgba(30, 58, 138, 0.3),
+    0 3px 10px rgba(45, 168, 110, 0.22),
+    0 1px 4px rgba(45, 168, 110, 0.12),
     inset 2px 0 0 rgba(255, 255, 255, 0.2);
 }
 
@@ -99,15 +99,15 @@
   height: 22px;
   background: linear-gradient(
     145deg,
-    #60a5fa 0%,
-    var(--primary, #1e3a8a) 40%,
-    #1e3a8a 100%
+    #34d399 0%,
+    var(--primary, #2da86e) 40%,
+    #2da86e 100%
   );
   border-radius: 50%;
   z-index: 3;
   box-shadow:
-    0 4px 12px rgba(30, 58, 138, 0.4),
-    0 1px 3px rgba(30, 58, 138, 0.3),
+    0 2px 8px rgba(45, 168, 110, 0.2),
+    0 1px 3px rgba(45, 168, 110, 0.12),
     inset 0 2px 4px rgba(255, 255, 255, 0.35),
     inset 0 -1px 2px rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.25);
@@ -133,7 +133,7 @@
   transform: translateX(-50%);
   font-size: 32px; /* Font: 32px */
   font-weight: 800; /* Weight: 800 */
-  color: var(--foreground); /* Color: #0f172a */
+  color: var(--foreground); /* Color: #052e16 */
   background: white; /* Added background */
   padding: 0 12px; /* Added padding */
 }

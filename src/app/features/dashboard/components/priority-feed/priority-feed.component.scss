@@ -33,7 +33,7 @@
   align-items: center;
   padding: 16px; /* Padding: 16px */
   background: var(--card); /* #ffffff */
-  border: 1px solid var(--border); /* #e2e8f0 */
+  border: 1px solid var(--border); /* #d1fae5 */
   border-radius: var(--radius-lg); /* 12px */
   transition: border-color 0.2s; /* Changed transition */
 }
@@ -52,7 +52,7 @@
 .action-title {
   font-size: 14px; /* Added font size */
   font-weight: 500; /* Changed from 600 to 500 */
-  color: var(--foreground); /* #0f172a */
+  color: var(--foreground); /* #052e16 */
 }
 
 .action-meta {
@@ -74,12 +74,12 @@
   }
 
   &.badge-info {
-    background: #ecfeff; /* Changed from var(--secondary) */
+    background: #ccfbf1; /* Changed from var(--secondary) */
     color: #0e7490; /* Changed from white */
   }
 
   &.badge-success {
-    background: #f0fdf4; /* Changed from var(--success) */
+    background: #f8fafc; /* Changed from var(--success) */
     color: #15803d; /* Changed from white */
   }
 }

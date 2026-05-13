@@ -1,0 +1,79 @@
+:root {
+  /* Core Colors — emerald primary + teal accent */
+  --primary: #2da86e;
+  --primary-foreground: #ffffff;
+  --secondary: #0d9488;
+  --secondary-foreground: #ffffff;
+  --tertiary: #14b8a6;
+
+  /* Backgrounds & Surfaces */
+  --background: #f8fafc;
+  --foreground: #052e16;
+  --card: #ffffff;
+  --card-foreground: #052e16;
+  --popover: #ffffff;
+  --popover-foreground: #052e16;
+
+  /* UI Elements */
+  --muted: #ecfdf5;
+  --muted-foreground: #64748b;
+  --accent: #ccfbf1;
+  --accent-foreground: #0f766e;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --border: #d1fae5;
+  --input: #d1fae5;
+  --ring: #0d9488;
+
+  /* Buttons — shared by .btn-* and Material primary overrides */
+  --btn-primary-hover: #238f5d;
+  --btn-secondary-hover: #0f766e;
+  --btn-focus-ring: rgba(13, 148, 136, 0.22);
+  /* Light CTA on dark surfaces (Command Center hero only) */
+  --btn-on-dark-bg: #f8fafc;
+  --btn-on-dark-bg-hover: #e2e8f0;
+  --btn-on-dark-fg: #052e16;
+
+  /* Sidebar */
+  --sidebar: #ffffff;
+  --sidebar-foreground: #64748b;
+  --sidebar-active: #ecfdf5;
+  --sidebar-active-foreground: #2da86e;
+  --sidebar-primary: #ecfdf5;
+
+  /* Dimensions */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 24px;
+
+  /* Persona / Department accents */
+  --dept-eng: #0d9488;
+  --dept-mkt: #8b5cf6;
+  --dept-sales: #f97316;
+  --dept-exec: #2da86e;
+
+  /* Campaign Engine kanban column accents */
+  --col-prospecting: #94a3b8;
+  --col-strategy: #2da86e;
+  --col-sent: #0d9488;
+  --col-responded: #10b981;
+  --col-booked: #8b5cf6;
+  --col-closed: #64748b;
+
+  /* Fonts */
+  --font-family-body: "Inter", "Plus Jakarta Sans", sans-serif;
+  --font-family-logo: "Inter", "Plus Jakarta Sans", sans-serif;
+
+  /* Additional font sizes for specific components */
+  --font-size-xs: 12px;
+  --font-size-sm: 13px;
+  --font-size-base: 14px;
+  --font-size-lg: 16px;
+  --font-size-xl: 20px;
+  --font-size-2xl: 28px;
+  --font-size-3xl: 32px;
+}

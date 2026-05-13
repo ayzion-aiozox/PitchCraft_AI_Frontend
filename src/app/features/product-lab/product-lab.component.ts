@@ -1,4 +1,12 @@
-import { Component, inject, CUSTOM_ELEMENTS_SCHEMA, HostListener, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  inject,
+  CUSTOM_ELEMENTS_SCHEMA,
+  HostListener,
+  OnDestroy,
+  OnInit,
+  ViewEncapsulation,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
@@ -134,7 +142,8 @@ function listItemToPortfolio(item: ProductListItem): PortfolioProduct {
     PlRadarChartComponent,
   ],
   templateUrl: './product-lab.component.html',
-  styleUrls: ['./product-lab.component.scss'],
+  styleUrls: ['./product-lab.component.scss', './product-lab.theme.scss'],
+  encapsulation: ViewEncapsulation.None,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ProductLabComponent implements OnInit, OnDestroy {
@@ -620,14 +629,18 @@ export class ProductLabComponent implements OnInit, OnDestroy {
   loadProducts(): void {
     this.loading = true;
     this.errorMessage = '';
-    this.productService.getProducts(1, 50).subscribe((res) => {
-      this.loading = false;
-      if (res.success && res.data) {
-        this.portfolioProducts = (res.data.items || []).map(listItemToPortfolio);
-      } else if (!res.success && res.message) {
-        this.errorMessage = res.message;
-      }
-    });
+    this.productService
+      .getProducts(1, 50)
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe((res) => {
+        if (res.success && res.data) {
+          this.portfolioProducts = (res.data.items || []).map(listItemToPortfolio);
+        } else if (!res.success && res.message) {
+          this.errorMessage = res.message;
+        } else if (!res.success) {
+          this.errorMessage = 'Could not load products.';
+        }
+      });
   }
 
   loadTemplates(): void {
@@ -2253,7 +2266,7 @@ export class ProductLabComponent implements OnInit, OnDestroy {
     if (preview.length < 3) return [];
     const ours = preview.map((p) => this.parsePercentLike(p.value));
     const series: PlRadarSeries[] = [
-      { name: 'Our product', values: ours, dashed: false, color: '#06b6d4' },
+      { name: 'Our product', values: ours, dashed: false, color: '#0d9488' },
     ];
     const rr = this.radarResult as Record<string, unknown> | null;
     if (!rr) return series;

@@ -8,23 +8,23 @@ export const SETTINGS_TABS = [
 ] as const;
 
 export const GENERAL_DEFAULT = {
-  workspaceName: 'PitchCraft HQ',
-  workspaceUrl: 'pitchcraft.ai/w/hq-8392',
+  workspaceName: 'Cyphary HQ',
+  workspaceUrl: 'cyphary.ai/w/hq-8392',
   timezoneOptions: [
     '(GMT-08:00) Pacific Time (US & Canada)',
     '(GMT-05:00) Eastern Time (US & Canada)',
     '(GMT+00:00) London',
   ],
   languageOptions: ['English (United States)', 'French', 'German'],
-  primaryColor: '#1e3a8a',
-  secondaryColor: '#06b6d4',
+  primaryColor: '#2da86e',
+  secondaryColor: '#0d9488',
 };
 
 export const TEAM_MEMBERS = [
   {
     id: '1',
     name: 'Alex Morgan',
-    email: 'alex@pitchcraft.ai',
+    email: 'alex@cyphary.ai',
     avatarUrl: 'https://storage.googleapis.com/banani-avatars/avatar%2Fmale%2F35-50%2FNorth%20American%2F3',
     role: 'admin',
     roleLabel: 'Admin',
@@ -34,7 +34,7 @@ export const TEAM_MEMBERS = [
   {
     id: '2',
     name: 'Sarah Chen',
-    email: 'sarah@pitchcraft.ai',
+    email: 'sarah@cyphary.ai',
     avatarUrl: 'https://storage.googleapis.com/banani-avatars/avatar%2Ffemale%2F25-35%2FAsian%2F1',
     role: 'sales',
     roleLabel: 'Sales Rep',
@@ -44,7 +44,7 @@ export const TEAM_MEMBERS = [
   {
     id: '3',
     name: 'John Doe',
-    email: 'john@pitchcraft.ai',
+    email: 'john@cyphary.ai',
     avatarUrl: '',
     initials: 'JD',
     role: 'viewer',

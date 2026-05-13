@@ -3,6 +3,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { FlexLayoutModule } from '@ngbracket/ngx-layout';
 
+import { CurrencyPkPipe } from '../pipes/currency-pk.pipe';
+import { MatchScorePipe } from '../pipes/match-score.pipe';
+import { TimeAgoPipe } from '../pipes/time-ago.pipe';
+import { TruncatePipe } from '../pipes/truncate.pipe';
+
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
@@ -70,3 +75,6 @@ export const SHARED_MODULES = [
   FormsModule,
   TranslateModule,
 ];
+
+/** Standalone pipes — import alongside `SHARED_MODULES` where needed */
+export const SHARED_PIPES = [MatchScorePipe, TruncatePipe, TimeAgoPipe, CurrencyPkPipe];

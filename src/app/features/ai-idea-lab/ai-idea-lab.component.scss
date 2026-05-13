@@ -1,0 +1,17 @@
+/* Layout + overflow: tokens and visuals live in styles.scss (.ailab-*). */
+:host {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  min-width: 0;
+  height: 100%;
+  font-family: var(--font-family-body);
+  color: var(--foreground);
+  background: var(--background);
+}
+
+.ailab-child-shells {
+  display: none;
+}
+

@@ -1,0 +1,306 @@
+<div class="aiw">
+  <header class="aiw-topbar" (click)="$event.stopPropagation()">
+    <div class="aiw-topbar__left">
+      <div class="aiw-topbar__appic" aria-hidden="true">
+        <iconify-icon icon="lucide:bot"></iconify-icon>
+      </div>
+      <div class="aiw-topbar__titles">
+        <div class="aiw-topbar__title">AI Workspace</div>
+        <div class="aiw-topbar__sub">Multi-agent marketing command center</div>
+      </div>
+    </div>
+
+    <div class="aiw-topbar__right">
+      <div class="aiw-product aiw-product--top" (click)="$event.stopPropagation()">
+        <button type="button" class="aiw-product__trigger aiw-product__trigger--top" (click)="toggleProductPicker($event)" aria-haspopup="listbox">
+          <span class="aiw-product__value" [class.muted]="!activeProduct">{{ activeProduct?.title || 'Select product...' }}</span>
+          <iconify-icon class="aiw-product__chev" icon="lucide:chevron-down"></iconify-icon>
+          <span class="aiw-product__floating">Active Product</span>
+        </button>
+
+        @if (productPickerOpen) {
+          <div class="aiw-product__menu" role="listbox">
+            <div class="aiw-product__search">
+              <iconify-icon icon="lucide:search"></iconify-icon>
+              <input
+                class="aiw-product__input"
+                type="text"
+                placeholder="Search products..."
+                [(ngModel)]="productSearch"
+                (click)="$event.stopPropagation()"
+              />
+              <button type="button" class="aiw-icon-btn" (click)="clearProduct($event)" [disabled]="!activeProduct && !productSearch" aria-label="Clear">
+                <iconify-icon icon="lucide:x"></iconify-icon>
+              </button>
+            </div>
+
+            @if (productsLoading) {
+              <div class="aiw-product__empty">Loading products…</div>
+            } @else if (!filteredProducts.length) {
+              <div class="aiw-product__empty">No matching products.</div>
+            } @else {
+              <div class="aiw-product__list">
+                @for (p of filteredProducts; track p.id) {
+                  <button
+                    type="button"
+                    class="aiw-product__item"
+                    [class.active]="activeProduct?.id === p.id"
+                    (click)="pickProduct(p, $event)"
+                  >
+                    <span class="aiw-product__itemTitle">{{ p.title }}</span>
+                    <span class="aiw-product__itemMeta">{{ p.badge || '—' }}</span>
+                  </button>
+                }
+              </div>
+            }
+          </div>
+        }
+      </div>
+
+      <button type="button" class="aiw-topbar__settings" (click)="toggleSettings($event)">
+        <iconify-icon icon="lucide:settings-2"></iconify-icon>
+        Settings
+      </button>
+    </div>
+  </header>
+
+  <div class="aiw__body">
+    <div class="aiw-shell">
+      <main class="aiw-center">
+        <div class="aiw-center__scroll">
+          <div class="aiw-center__wrap">
+            <div class="aiw-banner">
+              <div class="aiw-banner__ic">
+                <iconify-icon icon="lucide:info"></iconify-icon>
+              </div>
+              <div class="aiw-banner__text">
+                Select an <b>Active Product</b> so agents can use your embedded documents.
+              </div>
+              <button type="button" class="aiw-banner__btn" (click)="toggleProductPicker($event)">Select</button>
+            </div>
+
+            <div class="aiw-greet">
+              <div class="aiw-greet__ic">
+                <iconify-icon icon="lucide:sparkles"></iconify-icon>
+              </div>
+              <div class="aiw-greet__title">{{ greetingPrefix }}, {{ greetingName }}</div>
+              <div class="aiw-greet__sub">What outcome would you like Cyphary to achieve today?</div>
+            </div>
+
+            <div class="aiw-tiles">
+              @for (t of tiles; track t.id) {
+                <button type="button" class="aiw-tile" (click)="runTile(t.id)">
+                  <div class="aiw-tile__head">
+                    <iconify-icon class="aiw-tile__ic" [attr.icon]="t.icon"></iconify-icon>
+                    <div class="aiw-tile__title">{{ t.title }}</div>
+                  </div>
+                  <div class="aiw-tile__desc">{{ t.desc }}</div>
+                </button>
+              }
+            </div>
+          </div>
+        </div>
+
+        <div class="aiw-composerDock">
+          <div class="aiw-composerDock__wrap">
+            <div class="aiw-box">
+              <div class="aiw-box__msg">
+                <textarea
+                  class="aiw-box__textarea"
+                  placeholder="Message Cyphary..."
+                  [(ngModel)]="chatInput"
+                ></textarea>
+              </div>
+              <div class="aiw-box__bar">
+                <div class="aiw-box__left">
+                  <button type="button" class="aiw-plus" aria-label="Tools" title="Tools" (click)="toggleToolsMenu($event)">
+                    <iconify-icon icon="lucide:plus"></iconify-icon>
+                  </button>
+
+                  @if (toolsMenuOpen) {
+                    <div class="aiw-toolsMenu" role="menu" (click)="$event.stopPropagation()">
+                      <button type="button" class="aiw-toolsMenu__item" role="menuitem" (click)="openFilePicker($event); closeToolsMenu()">
+                        <iconify-icon icon="lucide:paperclip"></iconify-icon>
+                        <span>Add photos &amp; files</span>
+                      </button>
+                      <div class="aiw-toolsMenu__div"></div>
+                      <button type="button" class="aiw-toolsMenu__item" role="menuitem" (click)="toolCreateImage = !toolCreateImage">
+                        <iconify-icon icon="lucide:image"></iconify-icon>
+                        <span>Create image</span>
+                      </button>
+                      <button type="button" class="aiw-toolsMenu__item" role="menuitem" (click)="toolThinking = !toolThinking">
+                        <iconify-icon icon="lucide:lightbulb"></iconify-icon>
+                        <span>Thinking</span>
+                      </button>
+                      <button type="button" class="aiw-toolsMenu__item" role="menuitem" (click)="toolDeepResearch = !toolDeepResearch">
+                        <iconify-icon icon="lucide:telescope"></iconify-icon>
+                        <span>Deep research</span>
+                      </button>
+                      <button type="button" class="aiw-toolsMenu__item" role="menuitem" (click)="toolWebSearch = !toolWebSearch">
+                        <iconify-icon icon="lucide:globe"></iconify-icon>
+                        <span>Web search</span>
+                      </button>
+                      <button type="button" class="aiw-toolsMenu__item" role="menuitem" (click)="toolCanvas = !toolCanvas">
+                        <iconify-icon icon="lucide:layout-panel-top"></iconify-icon>
+                        <span>Canvas</span>
+                      </button>
+                    </div>
+                  }
+
+                  <input #fileInput type="file" multiple class="aiw-fileInput" (change)="onFilesSelected($event)" />
+
+                  <button type="button" class="aiw-up" title="Voice" aria-label="Voice" (click)="startVoice($event)">
+                    <iconify-icon icon="lucide:mic"></iconify-icon>
+                  </button>
+                  <button type="button" class="aiw-agents" (click)="toggleAgentPicker($event)" aria-haspopup="dialog" [attr.aria-expanded]="agentPickerOpen">
+                    <span class="aiw-agents__stack" aria-hidden="true">
+                      <span class="aiw-agents__a aiw-agents__a--1"><iconify-icon icon="lucide:bot"></iconify-icon></span>
+                      <span class="aiw-agents__a aiw-agents__a--2"><iconify-icon icon="lucide:sparkles"></iconify-icon></span>
+                      <span class="aiw-agents__a aiw-agents__a--3"><iconify-icon icon="lucide:shield"></iconify-icon></span>
+                    </span>
+                    {{ selectedAgentsLabel }}
+                    <iconify-icon class="aiw-agents__chev" icon="lucide:chevron-down"></iconify-icon>
+                  </button>
+
+                  @if (agentPickerOpen) {
+                    <div class="aiw-agentMenu" (click)="$event.stopPropagation()" role="dialog" aria-label="Select agents">
+                      <div class="aiw-agentMenu__title">Agents</div>
+                      <div class="aiw-agentMenu__list">
+                        @for (a of availableAgents; track a.id) {
+                          <button
+                            type="button"
+                            class="aiw-agentMenu__row"
+                            [class.active]="selectedAgentIds.has(a.id)"
+                            [class.locked]="a.id==='orchestrator'"
+                            (click)="toggleAgentSelection(a.id, $event)"
+                          >
+                            <span class="aiw-agentMenu__ic">
+                              <iconify-icon [attr.icon]="a.icon"></iconify-icon>
+                            </span>
+                            <span class="aiw-agentMenu__label">{{ a.label }}</span>
+                            <span class="aiw-agentMenu__check">
+                              <iconify-icon [attr.icon]="selectedAgentIds.has(a.id) ? 'lucide:check' : 'lucide:plus'"></iconify-icon>
+                            </span>
+                          </button>
+                        }
+                      </div>
+                      <div class="aiw-agentMenu__hint">Orchestrator is always enabled.</div>
+                    </div>
+                  }
+                </div>
+
+                <button type="button" class="aiw-send" (click)="send()" aria-label="Send">
+                  <iconify-icon icon="lucide:arrow-up"></iconify-icon>
+                </button>
+              </div>
+            </div>
+
+            <div class="aiw-disclaimer">AI can make mistakes. Consider verifying important information.</div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <aside class="aiw-right">
+      <div class="aiw-right__section">
+        <div class="aiw-sideTop">
+          <div class="aiw-sideTabs">
+            <button type="button" class="aiw-sideTab" [class.active]="rightTab==='runs'" (click)="rightTab='runs'">Runs</button>
+            <button type="button" class="aiw-sideTab" [class.active]="rightTab==='agents'" (click)="rightTab='agents'">Agents</button>
+          </div>
+          <button type="button" class="aiw-sideIcon" aria-label="Panel" title="Panel">
+            <iconify-icon icon="lucide:panel-right-close"></iconify-icon>
+          </button>
+        </div>
+
+        <div class="aiw-rpanelBody">
+          <div class="aiw-sideRow">
+            <div class="aiw-sideLabel">Active now</div>
+            <span class="aiw-sidePill">1 System</span>
+          </div>
+
+          <div class="aiw-runCard">
+            <div class="aiw-runCard__top">
+              <div class="aiw-runCard__left">
+                <span class="aiw-dot">
+                  <span class="aiw-dot__ping"></span>
+                  <span class="aiw-dot__core"></span>
+                </span>
+                <div class="aiw-runCard__name">Orchestrator</div>
+              </div>
+            </div>
+            <div class="aiw-runCard__desc">
+              Standing by to route Prospect + Campaign + Strategy workflows end-to-end.
+            </div>
+            <div class="aiw-runCard__btns">
+              <button type="button" class="aiw-runCard__btn2">View Logs</button>
+              <button type="button" class="aiw-runCard__btn2">Configure</button>
+            </div>
+          </div>
+
+          <div class="aiw-emptyCard">
+            <div class="aiw-emptyCard__ic">
+              <iconify-icon icon="lucide:inbox"></iconify-icon>
+            </div>
+            <div class="aiw-emptyCard__text">No past workflows found for this project session.</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  @if (showSettings) {
+    <div class="aiw-drawer" (click)="$event.stopPropagation()">
+      <div class="aiw-drawer__head">
+        <div class="aiw-drawer__title">Agent / Model settings</div>
+        <button type="button" class="aiw-icon-btn" (click)="showSettings=false">
+          <iconify-icon icon="lucide:x"></iconify-icon>
+        </button>
+      </div>
+
+      <div class="aiw-drawer__body">
+        <div class="aiw-field">
+          <div class="aiw-field__label">Routing</div>
+          <div class="aiw-seg">
+            <button type="button" class="aiw-seg__btn" [class.active]="agentMode==='auto'" (click)="agentMode='auto'">Auto</button>
+            <button type="button" class="aiw-seg__btn" [class.active]="agentMode==='manual'" (click)="agentMode='manual'">Manual</button>
+          </div>
+          <div class="aiw-field__hint">Auto is recommended for core services. Manual is for forcing a specialist agent.</div>
+        </div>
+
+        <div class="aiw-field">
+          <div class="aiw-field__label">Agent override</div>
+          <select class="aiw-select" [(ngModel)]="agentOverride" [disabled]="agentMode==='auto'">
+            <option value="orchestrator">Orchestrator</option>
+            <option value="leads">Lead Agent</option>
+            <option value="campaigns">Campaign Agent</option>
+            <option value="personas">Persona Agent</option>
+            <option value="product">Product Agent</option>
+            <option value="images">Image Agent</option>
+          </select>
+        </div>
+
+        <div class="aiw-field">
+          <div class="aiw-field__label">Image model (only when generating images)</div>
+          <select class="aiw-select">
+            <option selected>Auto</option>
+            <option>High quality</option>
+            <option>Fast</option>
+          </select>
+          <div class="aiw-field__hint">We’ll surface a real model picker once the image backend is connected.</div>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Child shells: compile-time anchors; main layout migrates into these components. -->
+  <div class="aiw-child-shells" aria-hidden="true">
+    <app-agent-selector />
+    <app-chat-interface />
+    <app-message-bubble />
+    <app-agent-status-bar />
+    <app-task-log />
+    <app-product-context-panel />
+  </div>
+</div>
+

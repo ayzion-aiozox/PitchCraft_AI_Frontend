@@ -1,0 +1,90 @@
+/* Cyphary brand: SVG logo (assets) + optional text wordmark fallback. */
+
+.cyphary-logo {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  object-position: left center;
+  flex-shrink: 0;
+}
+
+.cyphary-logo--sidebar {
+  height: clamp(26px, 3.5vw, 32px);
+  width: auto;
+  max-width: min(160px, 100%);
+}
+
+.cyphary-logo--sidebar-collapsed {
+  height: 24px;
+  max-width: 40px;
+  object-position: left center;
+}
+
+.cyphary-logo--command {
+  height: clamp(30px, 3.2vw, 38px);
+  width: auto;
+  max-width: min(200px, 42vw);
+}
+
+.cyphary-logo--auth {
+  height: clamp(40px, 6vw, 52px);
+  width: auto;
+  max-width: min(280px, 85%);
+}
+
+.cyphary-wordmark {
+  font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  font-weight: 700;
+  font-style: normal;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  white-space: nowrap;
+  position: relative;
+  display: inline-block;
+  /* Room for the lime curl under “C” */
+  padding-bottom: 0.34em;
+  background: linear-gradient(
+    92deg,
+    #1a2e05 0%,
+    #14532d 20%,
+    #065f46 42%,
+    #0f766e 64%,
+    #064e3b 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+
+  /* Lime wave under the “C” (brand mark); scales with font-size via em */
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0.1em;
+    top: calc(100% - 0.34em + 0.02em);
+    width: 0.68em;
+    height: 0.24em;
+    background: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 11' fill='none'%3E%3Cpath d='M3 7.5Q10.5 2.8 20 7.5T37 6.8' stroke='%2384cc16' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E")
+      no-repeat center / contain;
+    pointer-events: none;
+  }
+}
+
+.cyphary-wordmark--sidebar {
+  font-size: clamp(1.5rem, 3.2vw, 2rem);
+}
+
+.cyphary-wordmark--sidebar-collapsed {
+  font-size: 1.1rem;
+  letter-spacing: -0.06em;
+}
+
+.cyphary-wordmark--command {
+  font-size: clamp(1.65rem, 3.8vw, 2.35rem);
+}
+
+.cyphary-wordmark--auth {
+  font-size: clamp(2.35rem, 5vw, 2.85rem);
+}

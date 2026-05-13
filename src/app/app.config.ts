@@ -9,6 +9,7 @@ import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { errorInterceptor } from './core/interceptors/error.interceptor';
 import { loaderInterceptor } from './core/interceptors/loader.interceptor';
 import { telemetryInterceptor } from './core/interceptors/telemetry.interceptor';
+import { apiTimeoutInterceptor } from './core/interceptors/api-timeout.interceptor';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -33,6 +34,7 @@ export const appConfig: ApplicationConfig = {
         errorInterceptor,
         loaderInterceptor,
         telemetryInterceptor,
+        apiTimeoutInterceptor,
       ])
     ),
     ...(translateModule.providers ?? []),

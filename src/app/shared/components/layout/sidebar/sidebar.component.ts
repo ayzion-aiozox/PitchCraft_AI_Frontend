@@ -1,11 +1,12 @@
 import { Component, OnInit, Output, EventEmitter, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Router } from '@angular/router';
-import { LucideAngularModule, LayoutDashboard, FlaskConical, Users, Target, Monitor, Rocket, BarChart3, Puzzle, Settings, LogOut, PanelLeftClose, PanelLeftOpen } from 'lucide-angular';
+import { RouterModule } from '@angular/router';
+import { LucideAngularModule, LayoutDashboard, Sparkles, FlaskConical, Users, Target, Monitor, Rocket, BarChart3, Puzzle, Settings, LogOut, PanelLeftClose, PanelLeftOpen, Lightbulb } from 'lucide-angular';
 import { NavigationService } from '../../../services/navigation.service';
 import { AuthService } from '../../../../core/services/auth.service';
 import { MenuItem } from '../../../models/menu-item.model';
 import { Observable } from 'rxjs';
+import type { IsActiveMatchOptions } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -15,8 +16,24 @@ import { Observable } from 'rxjs';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {
+  /**
+   * Stable refs for routerLinkActive — a new object each CD tick can retrigger
+   * RouterLinkActive and cause an infinite change-detection loop (frozen UI / “loading”).
+   */
+  private static readonly linkActiveExact: IsActiveMatchOptions = {
+    paths: 'exact',
+    queryParams: 'ignored',
+    fragment: 'ignored',
+    matrixParams: 'ignored',
+  };
+  private static readonly linkActiveSubset: IsActiveMatchOptions = {
+    paths: 'subset',
+    queryParams: 'ignored',
+    fragment: 'ignored',
+    matrixParams: 'ignored',
+  };
+
   private navigationService = inject(NavigationService);
-  private router = inject(Router);
   private auth = inject(AuthService);
 
   menuItems$: Observable<MenuItem[]>;
@@ -28,6 +45,7 @@ export class SidebarComponent implements OnInit {
   // Icons must be explicitly defined for lucide-angular
   readonly icons = {
     LayoutDashboard,
+    Sparkles,
     FlaskConical,
     Users,
     Target,
@@ -38,7 +56,8 @@ export class SidebarComponent implements OnInit {
     Settings,
     LogOut,
     PanelLeftClose,
-    PanelLeftOpen
+    PanelLeftOpen,
+    Lightbulb
   };
 
   constructor() {
@@ -48,13 +67,9 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  isActive(route: string): boolean {
-    const url = this.router.url;
-    if (url.includes(route)) return true;
-    // Routes that redirect: highlight when we're on the actual path
-    if ((route === '/campaigns' || route === '/campaign-engine') && url.includes('/campaign-engine')) return true;
-    if ((route === '/analytics' || route === '/intelligence-hub') && url.includes('/intelligence-hub')) return true;
-    return false;
+  /** `/ai` uses exact match so `/ai-idea-lab` does not activate AI Workspace. */
+  navLinkActiveOptions(route: string): IsActiveMatchOptions {
+    return route === '/ai' ? SidebarComponent.linkActiveExact : SidebarComponent.linkActiveSubset;
   }
 
   getIcon(name: string) {

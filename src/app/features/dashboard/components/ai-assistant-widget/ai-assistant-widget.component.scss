@@ -11,6 +11,8 @@
   display: flex;
   align-items: center;
   margin-bottom: 16px;
+  justify-content: space-between;
+  gap: 12px;
 }
 
 .zone-title {
@@ -20,6 +22,24 @@
   font-size: 16px;
   font-weight: 600;
   color: var(--foreground);
+}
+
+.ai-open {
+  height: 34px;
+  padding: 0 12px;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid rgba(13, 148, 136, 0.22);
+  background: rgba(13, 148, 136, 0.08);
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 12px;
+  text-decoration: none;
+}
+.ai-open:hover {
+  border-color: rgba(13, 148, 136, 0.30);
+  background: rgba(13, 148, 136, 0.12);
 }
 
 .card {
@@ -87,7 +107,7 @@
 }
 
 .bubble-ai {
-  background: #ecfeff; /* Changed from var(--muted) */
+  background: #ccfbf1; /* Changed from var(--muted) */
   align-self: flex-start;
   border-bottom-left-radius: 2px; /* Changed from 4px */
   border: 1px solid transparent; /* Added border */
@@ -113,7 +133,7 @@
   flex-direction: column;
   gap: 12px;
   background: var(--card); /* #ffffff */
-  border-top: 1px solid var(--border); /* #e2e8f0 */
+  border-top: 1px solid var(--border); /* #d1fae5 */
   padding: 16px;
 }
 
@@ -149,15 +169,15 @@
   flex: 1;
   height: 40px; /* Added height */
   padding: 0 12px; /* Changed padding */
-  border: 1px solid var(--border); /* #e2e8f0 */
-  border-radius: var(--radius-md); /* #e2e8f0 */
+  border: 1px solid var(--border); /* #d1fae5 */
+  border-radius: var(--radius-md); /* #d1fae5 */
   font-size: 14px;
   outline: none;
 }
 
 .chat-input:focus {
   border-color: var(--secondary); /* Changed from var(--primary) */
-  box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1); /* Changed from var(--ring) */
+  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1); /* Changed from var(--ring) */
 }
 
 .send-btn {
@@ -177,6 +197,6 @@
 }
 
 .send-btn:hover {
-  background: #0891b2; /* Changed from var(--primary-foreground) */
-  color: var(--secondary-foreground); /* Changed from var(--primary) */
+  background: var(--btn-secondary-hover);
+  color: var(--secondary-foreground);
 }

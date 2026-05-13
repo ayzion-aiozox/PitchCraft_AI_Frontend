@@ -11,6 +11,8 @@ export interface KPI {
   footerText?: string;
   isPercentage?: boolean;
   progressValue?: number;
+  /** Short badge text on the KPI card (e.g. "+2 products", "+16% week") */
+  badgeCaption?: string;
 }
 
 export interface FunnelStage {

@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
-import { ProductLabComponent } from './features/product-lab/product-lab.component';
 
 export const routes: Routes = [
   {
@@ -23,7 +22,18 @@ export const routes: Routes = [
   },
   {
     path: 'product-lab',
-    component: ProductLabComponent,
+    loadChildren: () =>
+      import('./features/product-lab/product-lab.routes').then((m) => m.PRODUCT_LAB_ROUTES),
+    canActivate: [authGuard]
+  },
+  {
+    path: 'ai',
+    loadChildren: () => import('./features/ai-workspace/ai-workspace.routes').then((m) => m.AI_WORKSPACE_ROUTES),
+    canActivate: [authGuard]
+  },
+  {
+    path: 'ai-idea-lab',
+    loadChildren: () => import('./features/ai-idea-lab/ai-idea-lab.routes').then((m) => m.AI_IDEA_LAB_ROUTES),
     canActivate: [authGuard]
   },
   {

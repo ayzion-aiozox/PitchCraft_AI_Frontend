@@ -1,9 +1,16 @@
 <aside class="sidebar" [class.sidebar--collapsed]="collapsed">
   <!-- Logo Header + Toggle -->
   <div class="sidebar__header">
-    <div class="logo">
-      <span class="logo__text"><span class="logo__pitch">Pitch</span><span class="logo__craft">Craft</span>&nbsp;<span class="logo__ai">AI</span></span>
-    </div>
+    <a routerLink="/dashboard" class="logo" aria-label="Cyphary home">
+      <img
+        src="assets/images/cyphary-logo.svg"
+        alt="Cyphary"
+        class="cyphary-logo cyphary-logo--sidebar"
+        [class.cyphary-logo--sidebar-collapsed]="collapsed"
+        width="160"
+        height="32"
+      />
+    </a>
     <button type="button" class="sidebar__toggle" (click)="toggleSidebar()" [attr.title]="collapsed ? 'Expand sidebar' : 'Collapse sidebar'">
       <i-lucide [name]="collapsed ? getIcon('PanelLeftOpen') : getIcon('PanelLeftClose')" [size]="20" class="sidebar__toggle-icon"></i-lucide>
     </button>
@@ -15,8 +22,9 @@
       <li *ngFor="let item of menuItems$ | async" class="nav-item">
         <a 
           [routerLink]="item.route"
+          routerLinkActive="nav-link--active"
+          [routerLinkActiveOptions]="navLinkActiveOptions(item.route)"
           class="nav-link"
-          [class.nav-link--active]="isActive(item.route)"
           [title]="item.label"
         >
           <i-lucide 
@@ -37,8 +45,9 @@
       <li *ngFor="let item of bottomItems$ | async" class="nav-item">
         <a 
           [routerLink]="item.route"
+          routerLinkActive="nav-link--active"
+          [routerLinkActiveOptions]="navLinkActiveOptions(item.route)"
           class="nav-link nav-link--highlight"
-          [class.nav-link--active]="isActive(item.route)"
           [title]="item.label"
         >
           <i-lucide 

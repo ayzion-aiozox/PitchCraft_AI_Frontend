@@ -56,7 +56,7 @@
 }
 
 .btn-new-campaign:hover {
-  box-shadow: 0 4px 12px rgba(30, 58, 138, 0.25);
+  box-shadow: 0 4px 12px rgba(45, 168, 110, 0.25);
 }
 
 .btn-new-campaign iconify-icon {
@@ -220,7 +220,7 @@
 .kanban-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-  border-color: rgba(6, 182, 212, 0.25);
+  border-color: rgba(13, 148, 136, 0.25);
 }
 
 .kanban-card.card-left-accent {
@@ -320,13 +320,12 @@
   margin-bottom: 0;
   width: 100%;
   padding: 8px 12px;
-  border: 1px solid var(--border);
   border-radius: var(--radius-md);
   font-size: var(--font-size-xs);
   color: var(--foreground);
   background: var(--background);
   cursor: pointer;
-  display: flex;
+  display: inline-flex;
   justify-content: space-between;
   align-items: center;
   transition: border-color 0.2s, background 0.2s;
@@ -334,19 +333,12 @@
 
 .kanban-card .reply-action:hover {
   border-color: var(--secondary);
-  background: rgba(6, 182, 212, 0.06);
+  background: rgba(13, 148, 136, 0.06);
 }
 
 .kanban-card .reply-action iconify-icon,
 .kanban-card .reply-action mat-icon {
   font-size: 16px;
-}
-
-.kanban-card .reply-action.mat-mdc-button {
-  width: 100%;
-  justify-content: space-between;
-  font-size: var(--font-size-xs);
-  background: var(--background);
 }
 
 .kanban-card .card-meta {
@@ -452,14 +444,14 @@
 
 .performance-kpi-card:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-  border-color: rgba(59, 130, 246, 0.2);
+  border-color: rgba(45, 168, 110, 0.2);
 }
 
 .performance-kpi-icon {
   width: 44px;
   height: 44px;
   border-radius: var(--radius-lg);
-  background: rgba(59, 130, 246, 0.1);
+  background: rgba(45, 168, 110, 0.1);
   color: var(--primary);
   display: flex;
   align-items: center;
@@ -554,7 +546,7 @@
 
 .performance-bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--primary), #3b82f6);
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
   border-radius: 5px;
   transition: width 0.3s ease;
 }

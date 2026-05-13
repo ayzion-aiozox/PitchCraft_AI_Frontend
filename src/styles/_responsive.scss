@@ -1,0 +1,50 @@
+﻿/* ========== Responsive breakpoints ========== */
+@media (max-width: 1200px) {
+  .portfolio-grid,
+  .templates-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .wizard-content {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 1024px) {
+  .persona-grid {
+    grid-template-columns: 1fr;
+  }
+  .profile-card {
+    flex-direction: row;
+    align-items: flex-start;
+    text-align: left;
+    gap: 24px;
+    padding: 24px;
+  }
+  .avatar-wrapper { margin-bottom: 0; }
+  .metric-section {
+    border-top: none;
+    padding-top: 0;
+    margin-top: 0;
+    border-left: 1px solid var(--border);
+    padding-left: 24px;
+    width: auto;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+  .radial-chart-wrapper { margin: 0; }
+  .motivation-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+  .portfolio-grid,
+  .templates-row {
+    grid-template-columns: 1fr;
+  }
+  .section-header { flex-direction: column; align-items: stretch; }
+  .wizard-actions { justify-content: stretch; }
+  .card-footer .btn { flex: 1; min-width: 0; }
+}
+

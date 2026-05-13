@@ -1,2 +1,3 @@
-# PitchCraft_AI_Frontend
-This repository contains angular frontend code of pitchcraft ai.
+# Cyphary (Angular frontend)
+
+This repository contains the Angular frontend for **Cyphary**.

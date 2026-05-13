@@ -1,9 +1,9 @@
 .loading-container {
   margin-top: 24px;
-  background: #ecfeff;
+  background: #ccfbf1;
   border-radius: var(--radius-lg, 12px);
   padding: 16px;
-  border-left: 4px solid var(--secondary, #06b6d4);
+  border-left: 4px solid var(--secondary, #0d9488);
   display: flex;
   align-items: center;
   gap: 16px;
@@ -15,7 +15,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--secondary, #06b6d4);
+  color: var(--secondary, #0d9488);
   flex-shrink: 0;
   
   ::ng-deep svg {
@@ -31,7 +31,7 @@
 
 .loading-title {
   font-weight: 500;
-  color: var(--foreground, #0f172a);
+  color: var(--foreground, #052e16);
   font-size: 14px;
   margin-bottom: 2px;
 }
@@ -50,7 +50,7 @@
     animation: pulse 1.5s infinite;
     font-size: 24px;
     line-height: 10px;
-    color: var(--secondary, #06b6d4);
+    color: var(--secondary, #0d9488);
     font-weight: bold;
     
     &:nth-child(2) { animation-delay: 0.2s; }

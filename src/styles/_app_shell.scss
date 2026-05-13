@@ -1,0 +1,62 @@
+﻿/* ========== App shell: ensure routed screens are visible ========== */
+app-root {
+  display: block;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Main content area (next to sidebar) */
+app-root .main-content-wrapper {
+  margin-left: 256px;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/*
+ * Router outlet layout: the outlet host must not share flex space with the page.
+ * When the activated view is a *sibling* of <router-outlet>, giving both flex: 1
+ * splits the column (~50% empty strip above the real screen — e.g. Product Lab).
+ * display:contents lets only the routed component participate as the flex item
+ * (works whether the view is nested inside or beside the outlet in the DOM).
+ */
+app-root .main-content-wrapper router-outlet {
+  display: contents !important;
+}
+
+app-root .main-content-wrapper router-outlet > * {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: auto !important;
+  width: 100% !important;
+}
+
+app-root .main-content-wrapper > *:not(router-outlet) {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: auto !important;
+  width: 100% !important;
+}
+
+/* One Cyphary mark on Command Center: sidebar when expanded, main header when collapsed */
+app-root .app-shell:not(.app-shell--auth):not(.app-shell--sidebar-collapsed) app-dashboard .cc-header__left {
+  display: none !important;
+}
+
+app-root .app-shell.app-shell--sidebar-collapsed:not(.app-shell--auth) app-sidebar .sidebar__header .logo {
+  display: none !important;
+}
+
+/* AI Idea Lab: topbar logo only when sidebar collapsed (same as Command Center) */
+app-root .app-shell:not(.app-shell--auth):not(.app-shell--sidebar-collapsed) app-ai-idea-lab .ailab-topbar__center {
+  display: none !important;
+}
+

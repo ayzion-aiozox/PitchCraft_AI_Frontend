@@ -1,0 +1,1307 @@
+﻿/* ===================== AI Idea Lab (tokens only; matches Banani export layout) ===================== */
+.ailab {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-family-body);
+}
+
+.ailab-topbar {
+  height: 56px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 24px;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 1px 2px rgba(2, 6, 23, 0.06);
+  z-index: 10;
+}
+
+.ailab-topbar__left,
+.ailab-topbar__center,
+.ailab-topbar__right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ailab-topbar__center {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.ailab-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--font-size-sm);
+  color: var(--muted-foreground);
+}
+
+.ailab-breadcrumb__base {
+  color: inherit;
+  text-decoration: none;
+}
+.ailab-breadcrumb__base:hover {
+  color: var(--foreground);
+}
+
+.ailab-breadcrumb__chev {
+  font-size: 16px;
+  color: var(--muted-foreground);
+}
+
+.ailab-breadcrumb__active {
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.ailab .ailab-btn-compact {
+  height: 32px;
+  padding: 0 12px;
+  font-size: 12px;
+  font-weight: 600;
+  gap: 6px;
+}
+.ailab .ailab-btn-compact iconify-icon {
+  font-size: 14px;
+}
+
+.ailab-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  overflow: hidden;
+}
+
+.ailab-aside {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  background: var(--card);
+  border-color: var(--border);
+  min-height: 0;
+}
+
+.ailab-aside--left {
+  width: 280px;
+  border-right: 1px solid var(--border);
+}
+
+.ailab-aside--right {
+  width: 320px;
+  border-left: 1px solid var(--border);
+}
+
+.ailab-aside__scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.ailab-aside__scroll--chat {
+  background: var(--background);
+  padding: 16px;
+  gap: 16px;
+}
+
+.ailab-aside__dock {
+  flex-shrink: 0;
+  padding: 20px;
+  border-top: 1px solid var(--border);
+  background: var(--card);
+}
+
+.ailab-run {
+  width: 100%;
+  height: 44px;
+  border-radius: var(--radius-xl);
+  font-weight: 700;
+  box-shadow: 0 4px 6px -1px rgba(2, 6, 23, 0.1);
+}
+.ailab-run iconify-icon {
+  font-size: 16px;
+  color: color-mix(in srgb, var(--secondary) 85%, white);
+}
+
+.ailab-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--background);
+}
+
+.ailab-main__scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 32px;
+}
+
+.ailab-main__inner {
+  max-width: 56rem;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding-bottom: 80px;
+}
+
+.ailab-kicker {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted-foreground);
+}
+.ailab-kicker--mb {
+  margin-bottom: 12px;
+}
+.ailab-kicker--row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.ailab-kicker--row iconify-icon {
+  font-size: 16px;
+}
+
+.ailab-muted-xs {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--muted-foreground);
+}
+
+.ailab-muted-sm {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.ailab-muted {
+  color: var(--muted-foreground);
+}
+
+.ailab-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ailab-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ailab-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  background: var(--card);
+  box-shadow: 0 1px 2px rgba(2, 6, 23, 0.05);
+  overflow: hidden;
+}
+
+.ailab-card--interactive {
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+.ailab-card--interactive:hover {
+  border-color: color-mix(in srgb, var(--secondary) 55%, var(--border));
+}
+
+.ailab-card__pad {
+  padding: 12px;
+}
+
+.ailab-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  background: var(--muted);
+  border-top: 1px solid color-mix(in srgb, var(--border) 70%, var(--muted));
+}
+
+.ailab-product-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.ailab-product-row__main {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.ailab-product-row__title {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--foreground);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ailab-product-row__chev {
+  font-size: 16px;
+  color: var(--muted-foreground);
+  flex-shrink: 0;
+}
+
+.ailab-ic-box {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-md);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+.ailab-ic-box--primary {
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+  color: var(--primary);
+}
+.ailab-ic-box iconify-icon {
+  font-size: 14px;
+}
+
+.ailab-pill {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  box-shadow: 0 1px 2px rgba(2, 6, 23, 0.06);
+}
+.ailab-pill--success {
+  background: color-mix(in srgb, var(--success) 18%, var(--card));
+  color: color-mix(in srgb, var(--success) 85%, var(--foreground));
+}
+
+.ailab-depth {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background: var(--card);
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.ailab-depth:hover {
+  border-color: color-mix(in srgb, var(--secondary) 45%, var(--border));
+}
+
+.ailab-depth--active {
+  border-width: 2px;
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--tertiary) 8%, var(--card));
+  box-shadow: 0 1px 2px rgba(2, 6, 23, 0.06);
+}
+
+.ailab-depth__ic {
+  font-size: 18px;
+  margin-top: 2px;
+  color: var(--muted-foreground);
+  flex-shrink: 0;
+}
+.ailab-depth--active .ailab-depth__ic {
+  color: var(--primary);
+}
+
+.ailab-depth__title {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--foreground);
+}
+.ailab-depth--active .ailab-depth__title {
+  color: var(--primary);
+}
+
+.ailab-depth__sub {
+  font-size: var(--font-size-xs);
+  margin-top: 2px;
+}
+.ailab-depth--active .ailab-depth__sub {
+  color: color-mix(in srgb, var(--tertiary) 70%, var(--muted-foreground));
+}
+
+.ailab-agent-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ailab-agent-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px;
+  border-radius: var(--radius-lg);
+  transition: background 0.15s ease;
+}
+.ailab-agent-row:hover {
+  background: var(--muted);
+}
+
+.ailab-agent-row__label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: color-mix(in srgb, var(--foreground) 88%, var(--muted-foreground));
+}
+
+.ailab-agent-row__ic {
+  font-size: 16px;
+  color: var(--muted-foreground);
+}
+
+.ailab-switch {
+  position: relative;
+  width: 36px;
+  height: 20px;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+  padding: 0;
+  background: color-mix(in srgb, var(--muted-foreground) 30%, var(--border));
+  transition: background 0.2s ease;
+}
+.ailab-switch--on {
+  background: var(--primary);
+}
+
+.ailab-switch__thumb {
+  pointer-events: none;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--card);
+  box-shadow: 0 1px 2px rgba(2, 6, 23, 0.12);
+  transition: transform 0.2s ease;
+}
+.ailab-switch--on .ailab-switch__thumb {
+  transform: translateX(16px);
+}
+
+.ailab-panel {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  box-shadow: 0 1px 2px rgba(2, 6, 23, 0.05);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ailab-panel--pad-lg {
+  padding: 24px;
+}
+
+.ailab-panel__divider {
+  padding-top: 16px;
+  border-top: 1px solid var(--muted);
+}
+
+.ailab-progress-block__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.ailab-progress-block__stat {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.ailab-bar {
+  width: 100%;
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--muted);
+}
+.ailab-bar--lg {
+  height: 8px;
+}
+.ailab-bar--sm {
+  height: 6px;
+}
+.ailab-bar--inset {
+  background: color-mix(in srgb, var(--card) 50%, var(--muted));
+  border: 1px solid color-mix(in srgb, var(--secondary) 22%, var(--border));
+}
+
+.ailab-bar__fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.5s ease;
+  background: var(--secondary);
+}
+.ailab-bar__fill--dark {
+  background: color-mix(in srgb, var(--foreground) 88%, var(--muted));
+}
+.ailab-bar__fill--cyan {
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--secondary) 90%, white),
+    var(--secondary)
+  );
+}
+
+.ailab-running-title {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--foreground);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ailab-running-eta {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--secondary);
+  flex-shrink: 0;
+}
+
+@keyframes ailab-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.ailab-spin {
+  animation: ailab-spin 1s linear infinite;
+  font-size: 16px;
+  color: var(--secondary);
+}
+.ailab-spin-sm {
+  animation: ailab-spin 1s linear infinite;
+  font-size: 14px;
+  color: var(--secondary);
+  margin-left: 8px;
+}
+
+.ailab-agent-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.ailab-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.ailab-group-title {
+  margin: 0 0 12px;
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted-foreground);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ailab-group-title__ic {
+  font-size: 14px;
+  color: var(--muted-foreground);
+}
+.ailab-group-title__ic--ok {
+  color: var(--success);
+}
+
+.ailab-agent-card {
+  padding: 16px;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border);
+  background: var(--card);
+  box-shadow: 0 1px 2px rgba(2, 6, 23, 0.05);
+}
+
+.ailab-agent-card--run {
+  border-color: color-mix(in srgb, var(--secondary) 55%, var(--border));
+  background: color-mix(in srgb, var(--secondary) 6%, var(--card));
+}
+
+.ailab-agent-card--queue {
+  border-style: dashed;
+  border-color: color-mix(in srgb, var(--muted-foreground) 35%, var(--border));
+  background: color-mix(in srgb, var(--muted) 50%, var(--card));
+}
+
+.ailab-agent-card__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.ailab-agent-card--run .ailab-agent-card__top {
+  margin-bottom: 12px;
+}
+
+.ailab-agent-card__head {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  min-width: 0;
+}
+
+.ailab-ic-tile {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-lg);
+  display: grid;
+  place-items: center;
+  background: var(--muted);
+  color: var(--muted-foreground);
+  flex-shrink: 0;
+}
+.ailab-ic-tile iconify-icon {
+  font-size: 18px;
+}
+.ailab-ic-tile--cyan {
+  background: color-mix(in srgb, var(--secondary) 16%, var(--card));
+  color: color-mix(in srgb, var(--secondary) 90%, var(--foreground));
+}
+.ailab-ic-tile--muted {
+  background: color-mix(in srgb, var(--muted-foreground) 12%, var(--muted));
+  color: color-mix(in srgb, var(--muted-foreground) 75%, var(--foreground));
+}
+
+.ailab-agent-card__name {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--foreground);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ailab-agent-card__name--muted {
+  color: color-mix(in srgb, var(--muted-foreground) 85%, var(--foreground));
+}
+
+.ailab-agent-card__sub {
+  margin: 4px 0 0;
+  font-size: var(--font-size-xs);
+  color: var(--muted-foreground);
+}
+
+.ailab-ic-ok {
+  font-size: 14px;
+  color: var(--success);
+}
+
+.ailab-status {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  flex-shrink: 0;
+}
+.ailab-status--muted {
+  color: var(--muted-foreground);
+}
+.ailab-status--cyan {
+  color: color-mix(in srgb, var(--secondary) 85%, var(--foreground));
+}
+.ailab-status--queue {
+  color: color-mix(in srgb, var(--muted-foreground) 90%, var(--foreground));
+}
+
+.ailab-insight {
+  margin-top: 12px;
+  padding: 12px;
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--success) 10%, var(--card));
+  border: 1px solid color-mix(in srgb, var(--success) 22%, var(--border));
+  font-size: var(--font-size-sm);
+  color: color-mix(in srgb, var(--success) 55%, var(--foreground));
+}
+.ailab-insight__label {
+  font-weight: 600;
+  margin-right: 4px;
+}
+
+@keyframes ailab-ping {
+  75%,
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+.ailab-live-dot {
+  position: relative;
+  display: inline-flex;
+  width: 8px;
+  height: 8px;
+  margin-left: 4px;
+  vertical-align: middle;
+}
+.ailab-live-dot span:first-child {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--secondary) 75%, white);
+  opacity: 0.75;
+  animation: ailab-ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+.ailab-live-dot span:last-child {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--secondary);
+}
+
+.ailab-report {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  margin-top: 16px;
+}
+
+.ailab-report__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid var(--border);
+}
+
+.ailab-report__eyebrow {
+  display: block;
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: color-mix(in srgb, var(--secondary) 85%, var(--foreground));
+  margin-bottom: 4px;
+}
+
+.ailab-report__h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--foreground);
+}
+
+.ailab-badge-cyan {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 6px 16px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--secondary) 18%, var(--card));
+  color: color-mix(in srgb, var(--secondary) 45%, var(--foreground));
+  box-shadow: 0 1px 2px rgba(2, 6, 23, 0.06);
+  margin-bottom: 4px;
+}
+
+.ailab-report__row {
+  display: flex;
+  gap: 24px;
+  align-items: stretch;
+}
+
+.ailab-report__exec {
+  flex: 1;
+  justify-content: center;
+}
+
+.ailab-score {
+  width: 256px;
+  flex-shrink: 0;
+  align-items: center;
+  text-align: center;
+}
+
+.ailab-prose {
+  margin: 0;
+  font-size: var(--font-size-base);
+  line-height: 1.625;
+  color: color-mix(in srgb, var(--foreground) 88%, var(--muted-foreground));
+}
+
+.ailab-score__ring {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  border: 8px solid var(--success);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 2px 4px rgba(2, 6, 23, 0.06);
+}
+.ailab-score__ring span {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.ailab-score__grid {
+  margin-top: 16px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 16px;
+}
+
+.ailab-score__n {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+}
+.ailab-score__n--ok {
+  color: color-mix(in srgb, var(--success) 85%, var(--foreground));
+}
+.ailab-score__n--warn {
+  color: var(--warning);
+}
+
+.ailab-mi-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.ailab-mi-label {
+  margin-bottom: 4px;
+}
+
+.ailab-mi-val {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--foreground);
+}
+.ailab-mi-val--green {
+  color: color-mix(in srgb, var(--success) 90%, var(--foreground));
+}
+
+.ailab-mi-breakdown {
+  margin-top: 0;
+  padding-top: 16px;
+}
+.ailab-mi-breakdown__title {
+  margin-bottom: 12px;
+}
+
+.ailab-segbar {
+  display: flex;
+  height: 16px;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+.ailab-segbar__p {
+  height: 100%;
+}
+.ailab-segbar__p--primary {
+  background: var(--primary);
+}
+.ailab-segbar__p--cyan {
+  background: var(--secondary);
+}
+.ailab-segbar__p--blue {
+  background: color-mix(in srgb, var(--tertiary) 65%, var(--secondary));
+}
+.ailab-segbar__p--muted {
+  background: color-mix(in srgb, var(--muted-foreground) 35%, var(--border));
+}
+
+.ailab-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--foreground) 70%, var(--muted-foreground));
+}
+.ailab-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.ailab-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+.ailab-dot--primary {
+  background: var(--primary);
+}
+.ailab-dot--cyan {
+  background: var(--secondary);
+}
+.ailab-dot--blue {
+  background: color-mix(in srgb, var(--tertiary) 55%, var(--secondary));
+}
+
+.ailab-chart {
+  position: relative;
+  height: 288px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  background: var(--muted);
+  overflow: hidden;
+}
+
+.ailab-chart__axis {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.ailab-chart__axis::before,
+.ailab-chart__axis::after {
+  content: '';
+  position: absolute;
+  background: var(--border);
+}
+.ailab-chart__axis::before {
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  transform: translateX(-50%);
+}
+.ailab-chart__axis::after {
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  transform: translateY(-50%);
+}
+
+.ailab-chart__dot {
+  position: absolute;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--muted-foreground) 25%, var(--border));
+  animation: ailab-pulse 2s ease-in-out infinite;
+  z-index: 1;
+}
+@keyframes ailab-pulse {
+  50% {
+    opacity: 0.55;
+  }
+}
+.ailab-chart__dot--1 {
+  width: 16px;
+  height: 16px;
+  top: 25%;
+  left: 25%;
+}
+.ailab-chart__dot--2 {
+  width: 20px;
+  height: 20px;
+  top: 33%;
+  right: 30%;
+}
+.ailab-chart__dot--3 {
+  width: 16px;
+  height: 16px;
+  bottom: 25%;
+  right: 20%;
+}
+.ailab-chart__dot--4 {
+  width: 24px;
+  height: 24px;
+  bottom: 40%;
+  left: 33%;
+}
+.ailab-chart__dot--5 {
+  width: 16px;
+  height: 16px;
+  top: 15%;
+  right: 15%;
+}
+
+.ailab-chart__lbl {
+  position: absolute;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted-foreground);
+  background: var(--muted);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.ailab-chart__lbl iconify-icon {
+  font-size: 10px;
+}
+.ailab-chart__lbl--x {
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.ailab-chart__lbl--y {
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%) rotate(-90deg);
+  transform-origin: left center;
+  white-space: nowrap;
+}
+
+.ailab-chart__overlay {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: color-mix(in srgb, var(--card) 82%, transparent);
+  backdrop-filter: blur(6px);
+  border: 1px solid var(--muted);
+  border-radius: var(--radius-xl);
+  padding: 16px 20px;
+  box-shadow: 0 1px 2px rgba(2, 6, 23, 0.06);
+  z-index: 2;
+}
+.ailab-chart__overlay-ic {
+  font-size: 24px;
+  color: var(--secondary);
+  animation: ailab-pulse 2s ease-in-out infinite;
+}
+.ailab-chart__overlay span {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted-foreground);
+}
+
+.ailab-skeleton-wrap {
+  opacity: 0.6;
+}
+
+.ailab-skel-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.ailab-skel-row {
+  display: flex;
+  gap: 16px;
+}
+.ailab-skel-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--muted);
+  border: 2px solid var(--card);
+  box-shadow: 0 1px 2px rgba(2, 6, 23, 0.06);
+  flex-shrink: 0;
+  animation: ailab-pulse 2s ease-in-out infinite;
+}
+.ailab-skel-lines {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 4px;
+}
+.ailab-skel-line {
+  height: 8px;
+  border-radius: var(--radius-sm);
+  background: var(--muted);
+  animation: ailab-pulse 2s ease-in-out infinite;
+}
+.ailab-skel-line--75 {
+  width: 75%;
+}
+.ailab-skel-line--85 {
+  width: 83%;
+}
+.ailab-skel-line--66 {
+  width: 66%;
+}
+.ailab-skel-line--33 {
+  width: 33%;
+}
+.ailab-skel-line--25 {
+  width: 25%;
+}
+
+.ailab-table-skel {
+  border: 1px solid var(--muted);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.ailab-table-skel__row {
+  display: flex;
+  gap: 8px;
+  padding: 12px;
+  border-bottom: 1px solid color-mix(in srgb, var(--muted) 80%, var(--border));
+}
+.ailab-table-skel__row:last-child {
+  border-bottom: none;
+}
+.ailab-table-skel__row:first-child {
+  background: var(--muted);
+}
+
+.ailab-opportunity {
+  position: relative;
+  overflow: hidden;
+  padding: 32px;
+  border-radius: 1rem;
+  border: 2px solid color-mix(in srgb, var(--secondary) 50%, var(--border));
+  background: color-mix(in srgb, var(--secondary) 10%, var(--card));
+  box-shadow: 0 1px 2px rgba(2, 6, 23, 0.05);
+  margin-top: 16px;
+}
+.ailab-opportunity__bg-ic {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 16px;
+  font-size: 140px;
+  color: color-mix(in srgb, var(--secondary) 55%, var(--foreground));
+  opacity: 0.1;
+  pointer-events: none;
+}
+.ailab-opportunity__inner {
+  position: relative;
+  z-index: 1;
+}
+.ailab-opportunity__head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.ailab-opportunity__badge {
+  padding: 6px;
+  border-radius: var(--radius-lg);
+  background: var(--secondary);
+  color: var(--secondary-foreground);
+  box-shadow: 0 1px 2px rgba(2, 6, 23, 0.08);
+}
+.ailab-opportunity__badge iconify-icon {
+  font-size: 16px;
+}
+.ailab-opportunity__kicker {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: color-mix(in srgb, var(--secondary) 35%, var(--foreground));
+}
+.ailab-opportunity__title {
+  margin: 0 0 12px;
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: color-mix(in srgb, var(--foreground) 92%, var(--secondary));
+}
+.ailab-opportunity__body {
+  margin: 0;
+  max-width: 42rem;
+  font-size: var(--font-size-base);
+  line-height: 1.625;
+  color: color-mix(in srgb, var(--foreground) 75%, var(--secondary));
+}
+
+.ailab-tabs {
+  flex-shrink: 0;
+  display: flex;
+  align-items: stretch;
+  border-bottom: 1px solid var(--border);
+  height: 56px;
+  background: var(--card);
+  padding: 0 8px;
+}
+
+.ailab-tabs__btn {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+.ailab-tabs__btn:hover {
+  color: color-mix(in srgb, var(--foreground) 65%, var(--muted-foreground));
+}
+.ailab-tabs__btn--active {
+  color: var(--primary);
+  font-weight: 700;
+  border-bottom-color: var(--primary);
+}
+
+.ailab-chat-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 16px;
+  box-shadow: 0 1px 2px rgba(2, 6, 23, 0.05);
+}
+.ailab-chat-card__head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.ailab-chat-card__name {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  color: var(--foreground);
+}
+.ailab-chat-card__msg {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  line-height: 1.625;
+  color: color-mix(in srgb, var(--foreground) 70%, var(--muted-foreground));
+}
+
+.ailab-suggest-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.ailab-chip {
+  text-align: left;
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  color: color-mix(in srgb, var(--foreground) 82%, var(--muted-foreground));
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 12px;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(2, 6, 23, 0.05);
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.ailab-chip:hover {
+  background: var(--muted);
+  border-color: color-mix(in srgb, var(--secondary) 35%, var(--border));
+}
+
+.ailab-placeholder {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--muted-foreground);
+  padding: 16px;
+}
+
+.ailab-aside__input {
+  flex-shrink: 0;
+  padding: 16px;
+  border-top: 1px solid var(--border);
+  background: var(--card);
+}
+
+.ailab-input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border);
+  background: var(--muted);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.ailab-input-row:focus-within {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--primary) 35%, transparent);
+}
+
+.ailab-input-row__fake {
+  flex: 1;
+  padding-left: 8px;
+  font-size: var(--font-size-sm);
+  color: var(--muted-foreground);
+}
+
+.ailab-input-row__send {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  padding: 0;
+  border-radius: var(--radius-lg);
+}
+.ailab-input-row__send iconify-icon {
+  font-size: 16px;
+}
+
+@media (max-width: 1100px) {
+  .ailab-body {
+    flex-direction: column;
+    overflow-y: auto;
+  }
+  .ailab-aside--left,
+  .ailab-aside--right {
+    width: 100%;
+    border-right: none;
+    border-left: none;
+    border-bottom: 1px solid var(--border);
+    max-height: 420px;
+  }
+  .ailab-grid-2 {
+    grid-template-columns: 1fr;
+  }
+  .ailab-report__row {
+    flex-direction: column;
+  }
+  .ailab-score {
+    width: 100%;
+  }
+  .ailab-mi-grid {
+    grid-template-columns: 1fr;
+  }
+}
+

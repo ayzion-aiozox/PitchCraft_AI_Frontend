@@ -19,7 +19,7 @@ export class PersonaDetailComponent {
   userName = 'Sarah Jenning';
   userAvatarUrl = 'https://storage.googleapis.com/banani-avatars/avatar%2Ffemale%2F25-35%2FEuropean%2F3';
   deptBadge = 'C-Suite';
-  generatedFor = 'PitchCraft Analytics';
+  generatedFor = 'Cyphary Analytics';
 
   personaChips = ['Scale-up (50-200)', 'FinTech'];
   decisionPower = 78;
@@ -49,7 +49,7 @@ export class PersonaDetailComponent {
   painPoints = [
     { label: 'Legacy technical debt slowing velocity', severity: 'Critical (9/10)', color: '#ef4444', percent: 90, barClass: 'pain-high' },
     { label: 'Lack of visibility into API latency', severity: 'High (7/10)', color: '#f97316', percent: 65, barClass: 'pain-med' },
-    { label: 'Hiring senior backend talent', severity: 'Medium (4/10)', color: '#06b6d4', percent: 40, barClass: 'pain-low' },
+    { label: 'Hiring senior backend talent', severity: 'Medium (4/10)', color: '#0d9488', percent: 40, barClass: 'pain-low' },
   ];
 
   motivations = [

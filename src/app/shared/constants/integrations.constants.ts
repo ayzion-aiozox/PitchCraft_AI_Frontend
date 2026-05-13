@@ -85,7 +85,7 @@ export const INTEGRATIONS_LIST: Integration[] = [
     id: 'clearbit',
     name: 'Clearbit',
     icon: 'simple-icons:clearbit',
-    iconColor: '#3b82f6',
+    iconColor: '#0d9488',
     category: 'data',
     status: 'connected',
     description: 'Enrich lead data automatically.',

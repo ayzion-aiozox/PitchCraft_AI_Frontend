@@ -4,6 +4,7 @@
       <iconify-icon icon="lucide:sparkles" style="color: var(--secondary)"></iconify-icon>
       AI Assistant
     </div>
+    <a class="ai-open" href="/ai">Open Workspace</a>
   </div>
   <div class="card chat-card">
     <div class="chat-area">
@@ -11,7 +12,7 @@
            [class.bubble-ai]="msg.isAi" 
            [class.bubble-user]="!msg.isAi" 
            *ngFor="let msg of messages">
-        <div [class.ai-text]="msg.isAi" [innerHTML]="msg.text"></div>
+        <div [class.ai-text]="msg.isAi" [innerHTML]="safeMessageHtml(msg.text)"></div>
       </div>
       
       <div class="message-bubble bubble-ai" *ngIf="isTyping">
@@ -29,7 +30,7 @@
       <div class="input-group">
         <input type="text" 
                class="chat-input" 
-               placeholder="Ask PitchCraft anything..." 
+               placeholder="Ask Cyphary anything..."
                [(ngModel)]="chatInput" 
                (keyup.enter)="onSendMessage()" />
         <button class="send-btn" (click)="onSendMessage()">

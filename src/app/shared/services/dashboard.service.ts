@@ -10,7 +10,7 @@ export class DashboardService {
     kpis: [],
     funnelStages: [],
     actions: [],
-    vitalityScore: 78,
+    vitalityScore: 68,
     messages: [{
       text: "Hello! I've analyzed your latest campaign data. Would you like to review the top performing segments?",
       isAi: true
@@ -29,7 +29,7 @@ export class DashboardService {
       kpis: this.getMockKPIs(),
       funnelStages: this.getMockFunnelStages(),
       actions: this.getMockActions(),
-      vitalityScore: 78,
+      vitalityScore: 68,
       messages: [{
         text: "Hello! I've analyzed your latest campaign data. Would you like to review the top performing segments?",
         isAi: true
@@ -44,33 +44,36 @@ export class DashboardService {
     return [
       {
         label: 'Active Products',
-        value: 12,
+        value: 3,
         icon: 'lucide:package',
         trend: { value: 2, isPositive: true },
-        footerText: 'vs last week'
+        footerText: 'vs 1 last month',
+        badgeCaption: '+2 products',
       },
       {
-        label: 'Personas Live',
-        value: 8,
-        icon: 'lucide:users-2',
-        trend: { value: 0, isPositive: true },
-        footerText: 'High engagement'
+        label: 'Leads Found',
+        value: 1284,
+        icon: 'lucide:users',
+        trend: { value: 16, isPositive: true },
+        footerText: '+178 from last week',
+        badgeCaption: '+16% week',
       },
       {
-        label: 'Leads This Week',
-        value: 1248,
-        icon: 'lucide:trending-up',
-        trend: { value: 12, isPositive: true },
-        footerText: 'vs last week'
+        label: 'Campaigns Running',
+        value: 12,
+        icon: 'lucide:rocket',
+        trend: { value: 5, isPositive: false },
+        footerText: '2 need attention',
+        badgeCaption: '−5% week',
       },
       {
-        label: 'Conversion Rate',
-        value: 3.4,
-        icon: 'lucide:bar-chart-3',
-        trend: { value: 0, isPositive: true },
-        isPercentage: true,
-        progressValue: 65
-      }
+        label: 'Meetings Booked',
+        value: 47,
+        icon: 'lucide:calendar-check',
+        trend: { value: 23, isPositive: true },
+        footerText: '3 scheduled today',
+        badgeCaption: '+23% week',
+      },
     ];
   }
 

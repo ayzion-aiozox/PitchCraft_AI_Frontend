@@ -1,0 +1,434 @@
+<div class="ailab">
+  <header class="ailab-topbar">
+    <div class="ailab-topbar__left">
+      <div class="ailab-breadcrumb">
+        <a routerLink="/ai" class="ailab-breadcrumb__base">Workspace</a>
+        <iconify-icon class="ailab-breadcrumb__chev" icon="lucide:chevron-right"></iconify-icon>
+        <span class="ailab-breadcrumb__active">AI Idea Lab</span>
+      </div>
+    </div>
+    <div class="ailab-topbar__center">
+      <!-- Shown only when sidebar is collapsed (styles/_app_shell.scss) -->
+      <img
+        src="assets/images/cyphary-logo.svg"
+        alt="Cyphary"
+        class="ailab-topbar__brand cyphary-logo cyphary-logo--command"
+        width="200"
+        height="38"
+      />
+    </div>
+    <div class="ailab-topbar__right">
+      <button type="button" class="btn btn-outline ailab-btn-compact">
+        <iconify-icon icon="lucide:rotate-cw"></iconify-icon>
+        Re-run Analysis
+      </button>
+      <button type="button" class="btn btn-secondary ailab-btn-compact">
+        <iconify-icon icon="lucide:download"></iconify-icon>
+        Export PDF
+      </button>
+    </div>
+  </header>
+
+  <div class="ailab-body">
+    <aside class="ailab-aside ailab-aside--left">
+      <div class="ailab-aside__scroll">
+        <div class="ailab-card ailab-card--interactive">
+          <div class="ailab-card__pad">
+            <div class="ailab-kicker">Active Product</div>
+            <div class="ailab-product-row">
+              <div class="ailab-product-row__main">
+                <div class="ailab-ic-box ailab-ic-box--primary">
+                  <iconify-icon icon="lucide:box"></iconify-icon>
+                </div>
+                <h3 class="ailab-product-row__title">{{ productName }}</h3>
+              </div>
+              <iconify-icon class="ailab-product-row__chev" icon="lucide:chevron-down"></iconify-icon>
+            </div>
+          </div>
+          <div class="ailab-card__footer">
+            <span class="ailab-muted-xs">Last analyzed: 2 days ago</span>
+            <span class="ailab-pill ailab-pill--success">Lab 100%</span>
+          </div>
+        </div>
+
+        <section class="ailab-section">
+          <h4 class="ailab-kicker">Research Depth</h4>
+          <div class="ailab-stack">
+            @for (d of researchDepths; track d.id) {
+              <button
+                type="button"
+                class="ailab-depth"
+                [class.ailab-depth--active]="selectedDepth() === d.id"
+                (click)="selectDepth(d.id)"
+              >
+                <iconify-icon [icon]="d.icon" class="ailab-depth__ic"></iconify-icon>
+                <div class="ailab-depth__text">
+                  <div class="ailab-depth__title">{{ d.title }}</div>
+                  <div class="ailab-depth__sub">{{ d.description }}</div>
+                </div>
+              </button>
+            }
+          </div>
+        </section>
+
+        <section class="ailab-section">
+          <h4 class="ailab-kicker">Agent Selection</h4>
+          <div class="ailab-agent-list">
+            @for (a of agentToggles; track a.id) {
+              <div class="ailab-agent-row">
+                <div class="ailab-agent-row__label">
+                  <iconify-icon [icon]="a.icon" class="ailab-agent-row__ic"></iconify-icon>
+                  <span>{{ a.label }}</span>
+                </div>
+                <button
+                  type="button"
+                  class="ailab-switch"
+                  [class.ailab-switch--on]="isAgentOn(a.id)"
+                  (click)="toggleAgent(a.id)"
+                  [attr.aria-pressed]="isAgentOn(a.id)"
+                >
+                  <span class="ailab-switch__thumb"></span>
+                </button>
+              </div>
+            }
+          </div>
+        </section>
+      </div>
+      <div class="ailab-aside__dock">
+        <button type="button" class="btn btn-primary ailab-run">
+          <iconify-icon icon="lucide:zap"></iconify-icon>
+          Run AI Lab
+        </button>
+      </div>
+    </aside>
+
+    <main class="ailab-main">
+      <div class="ailab-main__scroll">
+        <div class="ailab-main__inner">
+          <div class="ailab-panel">
+            <div class="ailab-progress-block">
+              <div class="ailab-progress-block__head">
+                <span class="ailab-kicker">Overall Progress</span>
+                <span class="ailab-progress-block__stat">4 of 6 Agents Complete — 68%</span>
+              </div>
+              <div class="ailab-bar ailab-bar--lg">
+                <div class="ailab-bar__fill ailab-bar__fill--dark" style="width: 68%"></div>
+              </div>
+            </div>
+            <div class="ailab-panel__divider">
+              <div class="ailab-progress-block__head">
+                <h2 class="ailab-running-title">
+                  <iconify-icon class="ailab-spin" icon="lucide:loader-2"></iconify-icon>
+                  Competitor Agent analyzing 47 companies...
+                </h2>
+                <span class="ailab-running-eta">~4 mins remaining</span>
+              </div>
+              <div class="ailab-bar ailab-bar--sm">
+                <div class="ailab-bar__fill ailab-bar__fill--cyan" style="width: 45%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ailab-agent-groups">
+            <section>
+              <h3 class="ailab-group-title">
+                <iconify-icon icon="lucide:check-circle-2" class="ailab-group-title__ic ailab-group-title__ic--ok"></iconify-icon>
+                Completed
+              </h3>
+              <div class="ailab-grid-2">
+                @for (c of completedAgents; track c.title) {
+                  <article class="ailab-agent-card ailab-agent-card--done">
+                    <div class="ailab-agent-card__top">
+                      <div class="ailab-agent-card__head">
+                        <div class="ailab-ic-tile">
+                          <iconify-icon [icon]="c.icon"></iconify-icon>
+                        </div>
+                        <div>
+                          <h4 class="ailab-agent-card__name">
+                            {{ c.title }}
+                            <iconify-icon class="ailab-ic-ok" icon="lucide:check-circle-2"></iconify-icon>
+                          </h4>
+                          <p class="ailab-agent-card__sub">{{ c.subtitle }}</p>
+                        </div>
+                      </div>
+                      <span class="ailab-status ailab-status--muted">complete</span>
+                    </div>
+                    <div class="ailab-insight">
+                      <span class="ailab-insight__label">Insight:</span>
+                      {{ c.insight }}
+                    </div>
+                  </article>
+                }
+              </div>
+            </section>
+
+            <section>
+              <h3 class="ailab-group-title">
+                <iconify-icon icon="lucide:loader-2" class="ailab-group-title__ic ailab-spin"></iconify-icon>
+                Running
+              </h3>
+              <div class="ailab-grid-2">
+                @for (r of runningAgents; track r.title) {
+                  <article class="ailab-agent-card ailab-agent-card--run">
+                    <div class="ailab-agent-card__top">
+                      <div class="ailab-agent-card__head">
+                        <div class="ailab-ic-tile ailab-ic-tile--cyan">
+                          <iconify-icon [icon]="r.icon"></iconify-icon>
+                        </div>
+                        <div>
+                          <h4 class="ailab-agent-card__name">
+                            {{ r.title }}
+                            <span class="ailab-live-dot" aria-hidden="true"><span></span><span></span></span>
+                          </h4>
+                          <p class="ailab-agent-card__sub">{{ r.subtitle }}</p>
+                        </div>
+                      </div>
+                      <span class="ailab-status ailab-status--cyan">running</span>
+                    </div>
+                    <div class="ailab-bar ailab-bar--sm ailab-bar--inset">
+                      <div class="ailab-bar__fill" [style.width.%]="r.progress"></div>
+                    </div>
+                  </article>
+                }
+              </div>
+            </section>
+
+            <section>
+              <h3 class="ailab-group-title">
+                <iconify-icon icon="lucide:clock" class="ailab-group-title__ic"></iconify-icon>
+                Queued
+              </h3>
+              <div class="ailab-grid-2">
+                @for (q of queuedAgents; track q.title) {
+                  <article class="ailab-agent-card ailab-agent-card--queue">
+                    <div class="ailab-agent-card__top">
+                      <div class="ailab-agent-card__head">
+                        <div class="ailab-ic-tile ailab-ic-tile--muted">
+                          <iconify-icon [icon]="q.icon"></iconify-icon>
+                        </div>
+                        <div>
+                          <h4 class="ailab-agent-card__name ailab-agent-card__name--muted">{{ q.title }}</h4>
+                          <p class="ailab-agent-card__sub ailab-muted">{{ q.subtitle }}</p>
+                        </div>
+                      </div>
+                      <span class="ailab-status ailab-status--queue">queued</span>
+                    </div>
+                  </article>
+                }
+              </div>
+            </section>
+          </div>
+
+          <div class="ailab-report">
+            <div class="ailab-report__header">
+              <div>
+                <span class="ailab-report__eyebrow">Live Output</span>
+                <h1 class="ailab-report__h1">Intelligence Report</h1>
+              </div>
+              <span class="ailab-badge-cyan">
+                <iconify-icon class="ailab-spin" icon="lucide:loader-2"></iconify-icon>
+                68% Generated
+              </span>
+            </div>
+
+            <div class="ailab-report__row">
+              <div class="ailab-panel ailab-panel--pad-lg ailab-report__exec">
+                <h3 class="ailab-kicker ailab-kicker--mb">Executive Summary</h3>
+                <p class="ailab-prose">
+                  Cyphary enters a highly validated, rapidly expanding market segment ($4.2B TAM). While competition is
+                  entrenched, the proposed feature set targets an underserved niche in predictive analytics. Technical
+                  feasibility is exceptionally high, and market timing aligns perfectly with the recent shift towards
+                  AI-augmented workflows in mid-market B2B.
+                </p>
+              </div>
+              <div class="ailab-panel ailab-panel--pad-lg ailab-score">
+                <h3 class="ailab-kicker ailab-kicker--mb">Feasibility Score</h3>
+                <div class="ailab-score__ring">
+                  <span>84</span>
+                </div>
+                <div class="ailab-score__grid">
+                  <div><div class="ailab-muted-xs">Tech</div><div class="ailab-score__n ailab-score__n--ok">92</div></div>
+                  <div><div class="ailab-muted-xs">Market</div><div class="ailab-score__n ailab-score__n--ok">88</div></div>
+                  <div><div class="ailab-muted-xs">Finance</div><div class="ailab-score__n ailab-score__n--warn">76</div></div>
+                  <div><div class="ailab-muted-xs">Timing</div><div class="ailab-score__n ailab-score__n--warn">79</div></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="ailab-panel ailab-panel--pad-lg">
+              <h3 class="ailab-kicker ailab-kicker--row">
+                <iconify-icon icon="lucide:pie-chart"></iconify-icon>
+                Market Intelligence
+              </h3>
+              <div class="ailab-mi-grid">
+                <div>
+                  <div class="ailab-muted-xs ailab-mi-label">Total Addressable Market</div>
+                  <div class="ailab-mi-val">$4.2B</div>
+                </div>
+                <div>
+                  <div class="ailab-muted-xs ailab-mi-label">YoY Growth Rate</div>
+                  <div class="ailab-mi-val ailab-mi-val--green">+23%</div>
+                </div>
+                <div>
+                  <div class="ailab-muted-xs ailab-mi-label">Target Segment (SAM)</div>
+                  <div class="ailab-mi-val">$850M</div>
+                </div>
+              </div>
+              <div class="ailab-panel__divider ailab-mi-breakdown">
+                <div class="ailab-muted-sm ailab-mi-breakdown__title">Market Breakdown by Industry</div>
+                <div class="ailab-segbar">
+                  <div class="ailab-segbar__p ailab-segbar__p--primary" style="width: 45%" title="SaaS (45%)"></div>
+                  <div class="ailab-segbar__p ailab-segbar__p--cyan" style="width: 30%" title="Fintech (30%)"></div>
+                  <div class="ailab-segbar__p ailab-segbar__p--blue" style="width: 15%" title="Healthcare (15%)"></div>
+                  <div class="ailab-segbar__p ailab-segbar__p--muted" style="width: 10%" title="Other (10%)"></div>
+                </div>
+                <div class="ailab-legend">
+                  <span><span class="ailab-dot ailab-dot--primary"></span> SaaS (45%)</span>
+                  <span><span class="ailab-dot ailab-dot--cyan"></span> Fintech (30%)</span>
+                  <span><span class="ailab-dot ailab-dot--blue"></span> Healthcare (15%)</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="ailab-panel ailab-panel--pad-lg">
+              <h3 class="ailab-kicker ailab-kicker--row">
+                <iconify-icon icon="lucide:crosshair"></iconify-icon>
+                Competitive Landscape
+                <iconify-icon class="ailab-spin-sm" icon="lucide:loader-2"></iconify-icon>
+              </h3>
+              <div class="ailab-chart">
+                <div class="ailab-chart__axis"></div>
+                <div class="ailab-chart__dot ailab-chart__dot--1"></div>
+                <div class="ailab-chart__dot ailab-chart__dot--2"></div>
+                <div class="ailab-chart__dot ailab-chart__dot--3"></div>
+                <div class="ailab-chart__dot ailab-chart__dot--4"></div>
+                <div class="ailab-chart__dot ailab-chart__dot--5"></div>
+                <div class="ailab-chart__lbl ailab-chart__lbl--x">Market Share →</div>
+                <div class="ailab-chart__lbl ailab-chart__lbl--y">Feature Richness →</div>
+                <div class="ailab-chart__overlay">
+                  <iconify-icon icon="lucide:scatter-chart" class="ailab-chart__overlay-ic"></iconify-icon>
+                  <span>Plotting Competitors...</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="ailab-grid-2">
+              <div class="ailab-panel ailab-panel--pad-lg ailab-skeleton-wrap">
+                <h3 class="ailab-kicker ailab-kicker--row">
+                  <iconify-icon icon="lucide:sparkles"></iconify-icon>
+                  Sharpening Suggestions
+                </h3>
+                <div class="ailab-skel-rows">
+                  <div class="ailab-skel-row">
+                    <div class="ailab-skel-avatar"></div>
+                    <div class="ailab-skel-lines">
+                      <div class="ailab-skel-line ailab-skel-line--75"></div>
+                      <div class="ailab-skel-line"></div>
+                      <div class="ailab-skel-line ailab-skel-line--85"></div>
+                    </div>
+                  </div>
+                  <div class="ailab-skel-row">
+                    <div class="ailab-skel-avatar"></div>
+                    <div class="ailab-skel-lines">
+                      <div class="ailab-skel-line ailab-skel-line--66"></div>
+                      <div class="ailab-skel-line"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="ailab-panel ailab-panel--pad-lg ailab-skeleton-wrap">
+                <h3 class="ailab-kicker ailab-kicker--row">
+                  <iconify-icon icon="lucide:alert-triangle"></iconify-icon>
+                  Risk Register
+                </h3>
+                <div class="ailab-table-skel">
+                  @for (row of [1, 2, 3, 4]; track row) {
+                    <div class="ailab-table-skel__row">
+                      <div class="ailab-skel-line ailab-skel-line--33"></div>
+                      <div class="ailab-skel-line ailab-skel-line--25"></div>
+                      <div class="ailab-skel-line ailab-skel-line--25"></div>
+                    </div>
+                  }
+                </div>
+              </div>
+            </div>
+
+            <div class="ailab-opportunity">
+              <iconify-icon class="ailab-opportunity__bg-ic" icon="lucide:lightbulb"></iconify-icon>
+              <div class="ailab-opportunity__inner">
+                <div class="ailab-opportunity__head">
+                  <div class="ailab-opportunity__badge">
+                    <iconify-icon icon="lucide:sparkles"></iconify-icon>
+                  </div>
+                  <h3 class="ailab-opportunity__kicker">Hidden Opportunity</h3>
+                </div>
+                <h4 class="ailab-opportunity__title">Vertical Integration in Healthcare</h4>
+                <p class="ailab-opportunity__body">
+                  While you are targeting general B2B SaaS, the AI noted a 400% spike in search volume for predictive
+                  analytics in healthcare logistics. Expanding compliance features early could capture this blue ocean
+                  before major incumbents pivot.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <aside class="ailab-aside ailab-aside--right">
+      <div class="ailab-tabs">
+        @for (t of rightTabs; track t.id) {
+          <button
+            type="button"
+            class="ailab-tabs__btn"
+            [class.ailab-tabs__btn--active]="activeTab() === t.id"
+            (click)="selectTab(t.id)"
+          >
+            {{ t.label }}
+          </button>
+        }
+      </div>
+      <div class="ailab-aside__scroll ailab-aside__scroll--chat">
+        @if (activeTab() === 'assistant') {
+          <div class="ailab-chat-card">
+            <div class="ailab-chat-card__head">
+              <div class="ailab-ic-tile ailab-ic-tile--cyan">
+                <iconify-icon icon="lucide:bot"></iconify-icon>
+              </div>
+              <span class="ailab-chat-card__name">Cyphary</span>
+            </div>
+            <p class="ailab-chat-card__msg">
+              I'm analyzing your product right now. Feel free to ask me questions about the findings or request specific
+              angles for the report.
+            </p>
+          </div>
+          <div class="ailab-suggest-block">
+            <h4 class="ailab-kicker">Suggested</h4>
+            @for (p of suggestedPrompts; track p) {
+              <button type="button" class="ailab-chip">{{ p }}</button>
+            }
+          </div>
+        } @else {
+          <p class="ailab-placeholder">{{ activeTab() === 'history' ? 'No history yet.' : 'No saved chats yet.' }}</p>
+        }
+      </div>
+      <div class="ailab-aside__input">
+        <div class="ailab-input-row">
+          <div class="ailab-input-row__fake">Ask about the report...</div>
+          <button type="button" class="btn btn-primary ailab-input-row__send" aria-label="Send">
+            <iconify-icon icon="lucide:send"></iconify-icon>
+          </button>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Child shells: compile-time anchors; Idea Lab UI will split into these components. -->
+  <div class="ailab-child-shells" aria-hidden="true">
+    <app-agent-card />
+    <app-progress-tracker />
+    <app-intelligence-report />
+    <app-feasibility-score />
+    <app-ai-lab-assistant />
+  </div>
+</div>

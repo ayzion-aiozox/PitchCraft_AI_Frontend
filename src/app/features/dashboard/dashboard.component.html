@@ -1,46 +1,341 @@
-<div class="main-wrapper">
-  <app-page-header
-    title="Command Center"
-    searchPlaceholder="Search leads, products, or strategies..."
-  ></app-page-header>
-  <main
-    class="content-area"
-    [class.content-area--mobile]="breakpoint.isMobile()"
-    [class.content-area--tablet]="breakpoint.isTablet()"
-    [class.content-area--desktop]="breakpoint.isDesktop()"
-  >
-    <!-- Zone 1: KPIs -->
-    <section class="kpi-grid">
-      <app-kpi-grid [kpis]="kpis"></app-kpi-grid>
+<div class="command-center">
+  <header class="cc-header">
+    <div class="cc-header__left">
+      <!-- Shown only when sidebar is collapsed (styles/_app_shell.scss) -->
+      <img
+        src="assets/images/cyphary-logo.svg"
+        alt="Cyphary"
+        class="cyphary-logo cyphary-logo--command cc-header__brand"
+        width="200"
+        height="38"
+      />
+    </div>
+    <div class="cc-header__center">
+      <span class="cc-header__line1">Command Center</span>
+      <span class="cc-header__line2"
+        >Good morning, {{ userFirstName }} — {{ today | date : 'EEEE, MMM d' }}</span
+      >
+    </div>
+    <div class="cc-header__right">
+      <button type="button" class="cc-product-switch" aria-label="Switch product">
+        <span class="cc-product-dot"></span>
+        <span class="cc-product-name">{{ productName }}</span>
+        <iconify-icon icon="lucide:chevron-down" style="font-size: 12px; color: #94a3b8"></iconify-icon>
+      </button>
+      <button type="button" class="cc-bell" aria-label="Notifications">
+        <iconify-icon icon="lucide:bell" style="font-size: 16px; color: #64748b"></iconify-icon>
+        <span class="cc-bell-badge" aria-hidden="true"></span>
+      </button>
+      <div class="cc-avatar" aria-hidden="true">{{ userInitials }}</div>
+    </div>
+  </header>
+
+  <div class="cc-scroll">
+    <section class="cc-hero">
+      <div class="cc-hero__glow" aria-hidden="true"></div>
+      <div class="cc-hero__a">
+        <div class="cc-hero__eyebrow">
+          <div class="cc-hero__eyebrow-line"></div>
+          <span class="cc-hero__eyebrow-text">Marketing Vitality</span>
+          <div class="cc-hero__eyebrow-line"></div>
+        </div>
+        <div class="cc-hero__sub">Pipeline health this week</div>
+        <div class="cc-hero__score-row">
+          <span class="cc-hero__score">{{ vitalityScore }}</span>
+          <span class="cc-hero__score-max">/100</span>
+        </div>
+        <div class="cc-hero__insight">
+          <iconify-icon icon="lucide:info"></iconify-icon>
+          <span>{{ heroInsight }}</span>
+        </div>
+      </div>
+
+      <div class="cc-hero__b">
+        <div class="cc-hero__dist-head">
+          <span class="cc-hero__dist-label">Score distribution</span>
+          <span class="cc-hero__dist-cur">Current: <strong>{{ vitalityScore }}</strong></span>
+        </div>
+        <div class="cc-track-wrap">
+          <div class="cc-track" aria-hidden="true">
+            <div class="cc-track__1"></div>
+            <div class="cc-track__2"></div>
+            <div class="cc-track__3"></div>
+          </div>
+          <div class="cc-track__marker" [style.left]="trackMarkerLeft()"></div>
+        </div>
+        <div class="cc-zone-labels" aria-hidden="true">
+          <span class="cc-lbl-critical">0 Critical</span>
+          <span class="cc-lbl-mod">40 Moderate</span>
+          <span class="cc-lbl-strong">70 Strong</span>
+          <span class="cc-lbl-100">100</span>
+        </div>
+        <div class="cc-micro-grid">
+          @for (m of microStats; track m.label) {
+            <div class="cc-micro-card">
+              <div class="cc-micro-label">{{ m.label }}</div>
+              <div class="cc-micro-val">{{ m.value }}</div>
+              <div class="cc-micro-bar">
+                <div class="cc-micro-bar__fill" [style.width.%]="m.value"></div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="cc-hero__c">
+        <button type="button" class="cc-hero-btn cc-hero-btn--primary">
+          <iconify-icon icon="lucide:wrench" style="font-size: 13px"></iconify-icon>
+          Fix Campaign
+        </button>
+        <button type="button" class="cc-hero-btn cc-hero-btn--secondary">
+          <iconify-icon icon="lucide:bar-chart-2" style="font-size: 16px"></iconify-icon>
+          View Report
+        </button>
+        <a routerLink="/ai" class="cc-hero-btn cc-hero-btn--ghost" style="text-decoration: none">
+          <iconify-icon icon="lucide:sparkles" style="font-size: 16px"></iconify-icon>
+          Ask AI
+        </a>
+      </div>
     </section>
 
-    <!-- Zone 2: AI Assistant Widget -->
-    <section class="ai-section">
-      <app-ai-assistant-widget 
-        [messages]="messages"
-        [isTyping]="isTyping"
-        [quickActions]="quickActions"
-        (sendMessage)="onSendMessage($event)"
-        (quickAction)="onQuickAction($event)">
-      </app-ai-assistant-widget>
+    <section class="cc-kpi-row">
+      @for (kpi of kpis; track kpi.label; let i = $index) {
+        <div class="cc-kpi-card">
+          <div class="cc-kpi-top">
+            <div
+              class="cc-kpi-ic"
+              [style.background]="kpiAccentBg(i)"
+              [style.color]="kpiAccentFg(i)"
+            >
+              <iconify-icon [icon]="kpi.icon"></iconify-icon>
+            </div>
+            <div
+              class="cc-kpi-badge"
+              [class.cc-kpi-badge--green]="kpi.trend.isPositive"
+              [class.cc-kpi-badge--red]="!kpi.trend.isPositive"
+            >
+              <iconify-icon [icon]="kpi.trend.isPositive ? 'lucide:trending-up' : 'lucide:trending-down'"></iconify-icon>
+              <span>{{ kpi.badgeCaption }}</span>
+            </div>
+          </div>
+          <div class="cc-kpi-num">{{ kpiValueFmt(kpi) }}</div>
+          <div class="cc-kpi-lbl">{{ kpi.label }}</div>
+          <div class="cc-kpi-bot">
+            <span class="cc-kpi-sub">{{ kpi.footerText }}</span>
+            <div class="cc-spark" [attr.data-spark]="i">
+              @for (b of sparkBars(i); track $index) {
+                <div class="cc-spark-bar" [style.height.px]="b.h" [style.background]="b.bg"></div>
+              }
+            </div>
+          </div>
+          <div class="cc-accent-bar" [style.background]="kpiAccentBar(i)"></div>
+        </div>
+      }
     </section>
 
-    <!-- Zone 3: Priority Feed -->
-    <section class="priority-section">
-      <app-priority-feed 
-        [actions]="actions"
-        (dismiss)="onDismissAction($event)">
-      </app-priority-feed>
+    <section class="cc-main">
+      <div class="cc-card cc-pipeline">
+        <div class="cc-card-head">
+          <span class="cc-card-head-lbl">Pipeline Overview</span>
+          <button type="button" class="cc-pill-btn">
+            <iconify-icon icon="lucide:calendar" style="font-size: 13px; color: #64748b"></iconify-icon>
+            Last 30 Days
+            <iconify-icon icon="lucide:chevron-down" style="font-size: 11px; color: #64748b"></iconify-icon>
+          </button>
+        </div>
+        <div class="cc-pipeline-stages">
+          @for (row of pipelineRows; track row.label) {
+            <div class="cc-pipe-row" [class.cc-pipe-row--hi]="row.highlighted">
+              <span class="cc-stage-lbl">{{ row.label }}</span>
+              <div class="cc-pipe-track">
+                <div class="cc-pipe-fill" [style.width.%]="row.pct" [style.background]="row.color"></div>
+              </div>
+              <span class="cc-stage-pct" [style.color]="row.color">{{ row.pct }}%</span>
+              <span class="cc-stage-drop" [class.cc-stage-drop--crit]="row.criticalDrop">{{ row.drop }}</span>
+            </div>
+          }
+          <div class="cc-action-strip">
+            <span>45% of leads have no strategy — biggest revenue leak</span>
+            <button type="button">Fix Now →</button>
+          </div>
+        </div>
+        <div class="cc-pipe-pills">
+          <span class="cc-pipe-pill cc-pipe-pill--g">• Best: Leads 95%</span>
+          <span class="cc-pipe-pill cc-pipe-pill--r">• Watch: Strategy −45%</span>
+        </div>
+      </div>
+
+      <div class="cc-card cc-col2">
+        <div class="cc-card-head">
+          <span class="cc-card-head-lbl">Active Campaigns</span>
+          <span class="cc-camp-pill">12 Running</span>
+        </div>
+        @for (c of campaigns; track c.name) {
+          <div class="cc-camp-row">
+            <div class="cc-camp-top">
+              <span class="cc-camp-name">{{ c.name }}</span>
+              <span
+                class="cc-camp-status"
+                [class.cc-st-ok]="c.status === 'healthy'"
+                [class.cc-st-warn]="c.status === 'warning'"
+                [class.cc-st-crit]="c.status === 'critical'"
+              >
+                @switch (c.status) {
+                  @case ('healthy') {
+                    Healthy
+                  }
+                  @case ('warning') {
+                    Needs Attention
+                  }
+                  @case ('critical') {
+                    Critical
+                  }
+                }
+              </span>
+            </div>
+            <div class="cc-camp-stats">
+              <span>Open<strong>{{ c.open }}</strong></span>
+              <span>Replies<strong>{{ c.replies }}</strong></span>
+              <span>Meetings<strong>{{ c.meetings }}</strong></span>
+            </div>
+            <div class="cc-camp-bar">
+              <div class="cc-camp-bar__f" [style.width.%]="c.barPct" [style.background]="c.barColor"></div>
+            </div>
+            <span class="cc-camp-link">View →</span>
+          </div>
+        }
+        <div class="cc-camp-sum">
+          <div class="cc-camp-sum-st">
+            <div>
+              <div class="lbl">Total Sent</div>
+              <div class="val">1,247</div>
+            </div>
+            <div>
+              <div class="lbl">Avg Open</div>
+              <div class="val">26%</div>
+            </div>
+            <div>
+              <div class="lbl">Total Meetings</div>
+              <div class="val">19</div>
+            </div>
+          </div>
+          <button type="button" class="cc-new-camp">
+            <iconify-icon icon="lucide:plus" style="font-size: 14px; color: #475569"></iconify-icon>
+            New Campaign
+          </button>
+        </div>
+      </div>
+
+      <div class="cc-col3">
+        <div class="cc-card">
+          <div class="cc-card-head">
+            <span class="cc-card-head-lbl">Top Unactioned Leads</span>
+            <span class="cc-leads-pill">8 Waiting</span>
+          </div>
+          @for (lead of leads; track lead.name) {
+            <div class="cc-lead-row">
+              <div class="cc-lead-av" [style.background]="lead.avatarBg">{{ lead.initials }}</div>
+              <div class="cc-lead-info">
+                <div class="cc-lead-name">{{ lead.name }}</div>
+                <div class="cc-lead-role">{{ lead.role }}</div>
+              </div>
+              <div
+                class="cc-lead-sc"
+                [class.cc-sc-g]="lead.scoreVariant === 'g'"
+                [class.cc-sc-c]="lead.scoreVariant === 'c'"
+                [class.cc-sc-a]="lead.scoreVariant === 'a'"
+              >
+                {{ lead.score }}
+              </div>
+              <iconify-icon class="cc-lead-arrow" icon="lucide:arrow-right" style="font-size: 14px; color: #94a3b8"></iconify-icon>
+            </div>
+          }
+          <a class="cc-lead-link">Generate Strategies for All →</a>
+        </div>
+
+        <div class="cc-card">
+          <div class="cc-mp-head">
+            <span class="cc-card-head-lbl">Market Pulse</span>
+            <div class="cc-live">
+              <div class="cc-live-dot cc-pulse-dot"></div>
+              <span class="cc-live-txt">LIVE</span>
+            </div>
+          </div>
+          <div class="cc-topics">
+            @for (t of topics; track t.text) {
+              <span class="cc-topic" [class.cc-topic--hot]="t.kind === 'hot'" [class.cc-topic--med]="t.kind === 'med'" [class.cc-topic--cool]="t.kind === 'cool'">{{
+                t.text
+              }}</span>
+            }
+          </div>
+          <div class="cc-comp-alert">
+            <iconify-icon icon="lucide:alert-circle" style="font-size: 15px; color: #f59e0b; flex-shrink: 0"></iconify-icon>
+            <span>{{ competitiveAlert }}</span>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- Zone 4: Pipeline Funnel -->
-    <section class="funnel-section">
-      <app-pipeline-funnel [funnelStages]="funnelStages"></app-pipeline-funnel>
+    <section class="cc-todo-sec">
+      <div class="cc-card">
+        <div class="cc-todo-head">
+          <span class="cc-card-head-lbl">What to Do Today</span>
+          <span class="cc-todo-badge">5 Actions</span>
+        </div>
+        <div class="cc-todo-grid">
+          @for (td of todos; track td.title) {
+            <div class="cc-todo-card">
+              <div class="cc-todo-ic" [style.background]="td.iconBg">
+                <iconify-icon [icon]="td.icon" [style.color]="td.iconColor"></iconify-icon>
+              </div>
+              <div
+                class="cc-todo-urg"
+                [class.cc-u-crit]="td.urgency === 'critical'"
+                [class.cc-u-warn]="td.urgency === 'warning'"
+                [class.cc-u-info]="td.urgency === 'info'"
+              >
+                {{ td.urgency === 'critical' ? 'CRITICAL' : td.urgency === 'warning' ? 'WARNING' : 'INFO' }}
+              </div>
+              <div class="cc-todo-title">{{ td.title }}</div>
+              <div class="cc-todo-desc">{{ td.desc }}</div>
+              <button
+                type="button"
+                class="cc-todo-btn"
+                [class.cc-tb-crit]="td.btnVariant === 'crit'"
+                [class.cc-tb-warn]="td.btnVariant === 'warn'"
+                [class.cc-tb-info]="td.btnVariant === 'info'"
+              >
+                {{ td.btn }}
+              </button>
+            </div>
+          }
+        </div>
+      </div>
     </section>
 
-    <!-- Zone 5: Vitality Score -->
-    <section class="vitality-section">
-      <app-vitality-score [score]="vitalityScore"></app-vitality-score>
+    <section class="cc-act-sec">
+      <div class="cc-card">
+        <div class="cc-card-head">
+          <span class="cc-card-head-lbl">Recent Activity</span>
+          <div class="cc-live">
+            <div class="cc-live-dot cc-pulse-dot"></div>
+            <span class="cc-live-txt">LIVE</span>
+          </div>
+        </div>
+        <div class="cc-act-scroll">
+          @for (a of activities; track a.desc) {
+            <div class="cc-act-item">
+              <span class="cc-act-link">View →</span>
+              <div class="cc-act-mod">
+                <div class="cc-act-dot" [style.background]="a.dot"></div>
+                <span>{{ a.module }}</span>
+              </div>
+              <div class="cc-act-desc">{{ a.desc }}</div>
+              <div class="cc-act-time">{{ a.time }}</div>
+            </div>
+          }
+        </div>
+      </div>
     </section>
-  </main>
+  </div>
 </div>
