@@ -3,12 +3,12 @@
   <div class="sidebar__header">
     <a routerLink="/dashboard" class="logo" aria-label="Cyphary home">
       <img
-        src="assets/images/cyphary-logo.svg"
+        [src]="collapsed ? 'assets/images/cyphary-mark-c.svg' : 'assets/images/cyphary-logo.svg'"
         alt="Cyphary"
         class="cyphary-logo cyphary-logo--sidebar"
         [class.cyphary-logo--sidebar-collapsed]="collapsed"
-        width="160"
-        height="32"
+        [attr.width]="collapsed ? 32 : 160"
+        [attr.height]="collapsed ? 32 : 32"
       />
     </a>
     <button type="button" class="sidebar__toggle" (click)="toggleSidebar()" [attr.title]="collapsed ? 'Expand sidebar' : 'Collapse sidebar'">

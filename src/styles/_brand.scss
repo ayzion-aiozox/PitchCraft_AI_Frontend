@@ -17,9 +17,11 @@
 }
 
 .cyphary-logo--sidebar-collapsed {
-  height: 24px;
-  max-width: 40px;
-  object-position: left center;
+  height: 32px;
+  width: 32px;
+  max-width: 32px;
+  object-fit: contain;
+  object-position: center;
 }
 
 .cyphary-logo--command {
